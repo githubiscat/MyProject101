@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+
+{% block style %}
+    <style type="text/css">
+        .post {
+            border-bottom-style: dashed;
+            border-bottom-color: lightslategrey;
+            border-bottom-width: 1px;
+        }
+        .post_title {
+            font-size: 18px!important;
+        }
+        .post span {
+            font-size: 14px;
+            margin-left: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    {% if tag %}
+        标签页: {{ tag.name }}
+    {% elif category %}
+        分类页: {{ category.name }}
+    {% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+    {% for post in postlist %}
+        <div class="post">
+            <span class="post_title"><a href="{% url 'post' post.id %}">{{ post.title }}</a></span>
+            <span class="post_auther">作者: {{ post.owner.username }}</span>
+            <span class="post_category">分类: {{ post.category.name }}</span>
+            <span class="post_tag">标签:
+                {% for t in post.tag.all %}
+                    {{ t.name }}
+                {% endfor %}
+            </span>
+            <p class="post_desc">{{ post.desc }}</p>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}

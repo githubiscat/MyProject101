@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h1>{{ post.title }}</h1>
+    <span>作者: {{ post.owner.username }}</span>
+    &nbsp;&nbsp;
+    <span>分类: {{ post.category.name }}</span>
+    &nbsp;&nbsp;
+    <span> 标签:
+        {% for t in post.tag.all %}
+            {{ t.name }}、
+        {% endfor %}
+    </span>
+    <br>
+    <p>简介: {{ post.desc|safe }}</p>
+    <hr>
+    <p>{{ post.content|safe }}</p>
+
+</div>
+
+<div>
+    <button><a href="/">返回首页</a></button>
+</div>
+</body>
+</html>

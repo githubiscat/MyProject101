@@ -5,9 +5,10 @@ from django.urls import reverse
 from django.utils.html import format_html
 
 from comment.models import Comment
+from typeidea.custom_site import custom_site
 
 
-@admin.register(Comment)
+@admin.register(Comment, site=custom_site)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('target', 'con', 'nickname',
                     'email', 'status', 'created_time', 'operator')
@@ -26,7 +27,7 @@ class CommentAdmin(admin.ModelAdmin):
 
     def operator(self, obj):
         return format_html('<a href="{}">编辑</a>',
-                           reverse('admin:comment_comment_change', args=(obj.id,))
+                           reverse('cus_admin:comment_comment_change', args=(obj.id,))
         )
     operator.short_description = '操作'
 

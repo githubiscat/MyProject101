@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            {% if tag %}
+            标签页: {{ tag.name }}
+            {% elif category %}
+            分类页: {{ category.name }}
+            {% endif %}
+        {% endblock %}--Typeidea博客
+    </title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        #main_div {
+            margin: 0;
+            padding: 0;
+            background-color: red;
+        }
+
+        #head {
+            width: 100%;
+            min-height: 50px;
+            background-color: #417690;
+        }
+
+        #sidebar {
+            width: calc(30% - 20px);
+            margin: 0;
+            padding: 10px;
+            position: relative;
+            float: right;
+            background-color: antiquewhite;
+            min-height: 300px;
+        }
+
+        #content {
+            width: calc(70% - 20px);
+            margin: 0;
+            padding: 10px;
+            position: relative;
+            float: left;
+            background-color: greenyellow;
+        }
+
+        #foot {
+            width: 100%;
+            min-height: 5px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            float: left;
+        }
+
+        #foot_category {
+            width: 100%;
+            min-height: 5px;
+            background-color: pink;
+        }
+
+        #foot_information {
+            width: 100%;
+            text-align: center;
+            min-height: 5px;
+            background-color: blue;
+        }
+        {# #}
+        #category_nav {
+            padding: 10px 20px;
+            background-color: #417690;
+            color: aliceblue;
+        }
+
+        #all_tag {
+            padding: 10px 20px;
+        }
+
+        .nav_bar {
+            margin: 0 10px;
+            color: aliceblue;
+        }
+
+        #all_tag span {
+            margin: 0 20px;
+        }
+
+        #all_tag a {
+            text-decoration: none;
+            color: pink;
+        }
+
+        .nav_bar a {
+            color: aliceblue;
+        }
+    </style>
+    {% block style %}
+
+    {% endblock %}
+</head>
+<body>
+
+<div id="main_div">
+
+    <div id="head">
+        {% block head %}
+            <div id="category_nav">
+                <span style="font-size: 30px;">Typeidea</span>
+                <span style="margin-right: 20px">--Gai的博客</span>
+                {% for nav in navs %}
+                    <span class="nav_bar">
+                        <a href="{% url 'category' nav.id %}"
+                        style="text-decoration: none;left: 20px">
+                            {{ nav.name }}
+                        </a>
+                    </span>
+                {% endfor %}
+            </div>
+
+            <div id="all_tag">
+                {% for tag in tags %}
+                    <span>
+                        <a href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
+                    </span>
+                {% endfor %}
+
+            </div>
+        {% endblock %}
+    </div>
+
+    <div id="sidebar">
+        {% block sidebar %}
+             {% for sidebar in sidebars %}
+                <h4>{{ sidebar.title }}</h4>
+                <p>{{ sidebar.content_html }}</p>
+            {% endfor %}
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+
+    <div id="foot">
+        <div id="foot_category">
+            {% block category %}
+                 <div>
+                    <span>分类:</span>
+                    {% for cate in category %}
+                        <span>{{ cate.name }}</span>
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        </div>
+        <div id="foot_information">
+            友情链接: <a href="https://www.the5fire.com/who_online/">thr5fire</a>
+            &nbsp;|&nbsp;
+            Typeidea©Gai
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

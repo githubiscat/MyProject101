@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'typeidea',  # 因为templates模板被定义在这个总目录下, 所以需要注册这个目录app
     'blog',
     'comment',
     'config',
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'typeidea.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
