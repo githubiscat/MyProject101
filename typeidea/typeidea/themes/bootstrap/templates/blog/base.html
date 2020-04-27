@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            {% if tag %}
+                标签页: {{ tag.name }}
+            {% elif category %}
+                分类页: {{ category.name }}
+            {% endif %}
+        {% endblock %}--Typeidea博客
+    </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script type="application/javascript"
+            src="{% static 'js/jquery.slim.min.js' %}"></script>
+    <script type="application/javascript"
+            src="{% static 'js/popper.min.js' %}"></script>
+    <script type="application/javascript"
+            src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block style %}
+
+    {% endblock %}
+</head>
+<body>
+
+<div id="main_div">
+
+    <div id="head">
+        {% block head %}
+            <div id="category_nav">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="/">Typeidea</a>
+                    <button class="navbar-toggler" type="button"
+                            data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse"
+                         id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/">首页 <span
+                                        class="sr-only">(current)</span></a>
+                            </li>
+                            {% for nav in navs %}
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{% url 'category' nav.id %}">{{ nav.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search"
+                                   placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0"
+                                    type="submit">Search
+                            </button>
+                        </form>
+                    </div>
+                </nav>
+
+            </div>
+            <div class="jumbotron">
+                <h1 class="display-4">Typeidea</h1>
+                <p class="lead">基于Django的多人博客系统</p>
+            </div>
+        {% endblock %}
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-9" style="border-right: 1px solid lavender">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            <div class="col-3">
+                {% block sidebar %}
+                    {% for sidebar in sidebars %}
+
+                        <div class="card"
+                             style="width: 18rem;margin-bottom: 10px">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ sidebar.title }}</h5>
+                                <p class="card-text">{{ sidebar.content_html }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <div id="foot">
+        <div id="foot_category">
+            <ul class="nav">
+                <li class="nav-item"><a href="javascript:return false"
+                                        class="nav-link">更多类别: </a></li>
+                {% for cate in categorys %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{% url 'category' cate.id %}">{{ cate.name }}</a>
+                    </li>
+                {% endfor %}
+                {% for tag in tags %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+        <hr>
+        <div class="container power" style="text-align: center">
+            <span class="text-muted">
+                友情链接:
+                <a href="https://www.the5fire.com/who_online/">thr5fire</a>
+                |&nbsp;Typeidea©Gai
+            </span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

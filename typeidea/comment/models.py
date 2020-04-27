@@ -27,5 +27,10 @@ class Comment(models.Model):
         return cls.objects.filter(status=cls.STATUS_NORMAL)\
             .select_related('target').order_by('-created_time')
 
+    @classmethod
+    def get_latest(cls):
+        return cls.objects.filter(status=cls.STATUS_NORMAL)\
+            .select_related('target').order_by('-created_time')[:5]
+
     class Meta:
         verbose_name = verbose_name_plural = '评论'

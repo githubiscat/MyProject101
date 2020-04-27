@@ -53,10 +53,11 @@ class SideBar(models.Model):
                                          verbose_name='状态')
     owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='作者')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    weight = models.PositiveIntegerField(default=1, verbose_name='权重')
 
     @classmethod
     def get_all(cls):
-        return cls.objects.filter(status=cls.STATUS_SHOW)
+        return cls.objects.filter(status=cls.STATUS_SHOW).order_by('weight')
 
     @property
     def content_html(self):
@@ -73,7 +74,7 @@ class SideBar(models.Model):
             context =  {
                 'posts': Post.hot_posts()
             }
-            return render_to_string('config/blocks/sidebar_posts.html', context)
+            return render_to_string('config/blocks/sidebar_posts_hot.html', context)
         elif self.display_type == self.DISPLAY_LATEST:
             context = {
                 'posts': Post.latest_posts()
@@ -81,7 +82,7 @@ class SideBar(models.Model):
             result = render_to_string('config/blocks/sidebar_posts.html', context)
         elif self.display_type == self.DISPLAY_COMMENT:
             context = {
-                'comments': Comment.get_all()
+                'comments': Comment.get_latest()
             }
             result = render_to_string('config/blocks/sidebar_comments.html', context)
         return result

@@ -16,16 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 
-from blog.views import post_list, post_detail
+from blog.views import IndexView, CategoryView, TagView, PostDetailView
 from config.views import links
 from typeidea.custom_site import custom_site
 
 urlpatterns = [
-    re_path(r'^$', post_list),
-    re_path(r'^category/(?P<category_id>\d+)/$', post_list, name='category'),
-    re_path(r'^tag/(?P<tag_id>\d+)/$', post_list, name='tag'),
-    re_path(r'^post/(?P<post_id>\d+).html$', post_detail, name='post'),
+    # class view
+    re_path(r'^$', IndexView.as_view()),
+    re_path(r'^category/(?P<category_id>\d+)/$', CategoryView.as_view(), name='category'),
+    re_path(r'^tag/(?P<tag_id>\d+)/$', TagView.as_view(), name='tag'),
+    re_path(r'^post/(?P<post_id>\d+).html$', PostDetailView.as_view(), name='post'),
     re_path(r'^links/$', links),
+    # func view
+    # re_path(r'^$', post_list),
+    # re_path(r'^category/(?P<category_id>\d+)/$', post_list, name='category'),
+    # re_path(r'^tag/(?P<tag_id>\d+)/$', post_list, name='tag'),
+    # re_path(r'^post/(?P<post_id>\d+).html$', post_detail, name='post'),
+    # re_path(r'^links/$', links),
 
     re_path(r'^superadmin/', admin.site.urls),
     re_path(r'^admin/', custom_site.urls)

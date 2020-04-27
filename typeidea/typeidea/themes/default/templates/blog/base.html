@@ -123,6 +123,9 @@
             </div>
 
             <div id="all_tag">
+                <span>
+                        <a href="/">首页</a>
+                </span>
                 {% for tag in tags %}
                     <span>
                         <a href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
@@ -153,7 +156,7 @@
             {% block category %}
                  <div>
                     <span>分类:</span>
-                    {% for cate in category %}
+                    {% for cate in categorys %}
                         <span>{{ cate.name }}</span>
                     {% endfor %}
                 </div>

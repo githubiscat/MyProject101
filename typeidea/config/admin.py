@@ -22,10 +22,10 @@ class LinkAdmin(admin.ModelAdmin):
 @admin.register(SideBar, site=custom_site)
 class SiteBar(admin.ModelAdmin):
     list_display = ('title', 'display_type', 'content',
-                    'status', 'owner', 'created_time')
+                    'status', 'owner', 'created_time', 'weight')
 
     fields = ('title', 'display_type', 'content',
-              'status')
+              'status', 'weight')
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user

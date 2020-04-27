@@ -63,7 +63,7 @@ class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
     # admin 表中显示的字段
     list_display = ['title', 'category', 'status',
-                    'owner', 'created_time', 'operator']
+                    'owner', 'created_time', 'operator', 'pv', 'uv']
     # 那些字段可以作为链接, 点击可以进入编辑页面
     list_display_links = []
 
@@ -95,6 +95,11 @@ class PostAdmin(admin.ModelAdmin):
             'fields': (
                 'desc',
                 'content'
+            )
+        }),
+        ('流量统计', {
+            'fields': (
+                ('pv', 'uv'),
             )
         }),
         ('其他', {

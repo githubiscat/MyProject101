@@ -1,52 +1,78 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from django.views.generic import ListView, DetailView
+
 from blog.models import Tag, Post, Category
 from config.models import SideBar
 
-
-def post_list(request, category_id=None, tag_id=None):
-    mask = ''  #用于显示分类的一个标志位
-    tag = None
-    category = None
-    if tag_id:
-        postlist, tag = Post.get_by_tag(tag_id)
-    elif category_id:
-        postlist, category = Post.get_by_category(category_id)
-    else:
-        postlist = Post.objects.filter(status=Post.STATUS_NORMAL)
-    sidebars = SideBar.get_all()
-    tags = Tag.get_all()
-    data = {
-        'postlist': postlist,
-        'mask': mask,
-        'tag': tag,
-        'tags': tags,
-        'category': category,
-        'sidebars': sidebars,
-    }
-    data.update(Category.get_navs())
-    return render(request, template_name='blog/list.html', context=data)
+""" 类视图
+类视图有着更好的封装, 解耦了http 的get post put delete patch 等请求, 对应不同的请求method
+类视图对应相应的get() post()来处理不同的请求, 此外基于类View Django 还提供了 TemplateView
+DetailView ListView 等CBV(class-based-view). 封装的程度更高只需要配置特定的参数和方法即
+可实现类似function-view的逻辑. 虽然开发者的代码看起来更少了,但是后台django 有大量的代码去
+解析开发者配置信息,并作出相应的处理. 
+相应的配置参数作用在下面代码中会做出解释 
+"""
 
 
-def post_detail(request, post_id=None):
-    context = 'post_id is {}'.format(post_id)
-    if post_id:
-        try:
-            post = Post.objects.get(id=post_id)
-        except Post.DoesNotExist:
-            post = None
-    else:
-        post = None
-    data = {
-        'post': post,
-        'tags': Tag.get_all(),
-        'sidebars': SideBar.get_all(),
-    }
-    data.update(Category.get_navs())
-
-    return render(request, template_name='blog/detail.html', context=data)
+class CommonViewMixin:
+    """ 获取通用的部分 侧边栏 热导航等  """
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {'sidebars': SideBar.get_all(), }
+        )
+        context.update(Category.get_navs())
+        context.update({'tags': Tag.get_all()})
+        return context
 
 
+class IndexView(CommonViewMixin, ListView):
+    # model = Post  # model 指定class based View要使用的数据库model
+    queryset = Post.latest_posts()  # 指定cbv 要使用的查询集(过滤数据后), 与model二选一, 只用model时 django会进行普通all()查询
+    paginate_by = 8  # 分页 每页显示的数量
+    context_object_name = 'postlist'  # 传递到模板的上下文对象的名称 (默认到模板中是object_list)
+    template_name = 'blog/list.html'  # 指定要渲染的模板
 
+
+class CategoryView(IndexView):
+    """根据category 分类过滤展示文章列"""
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get('category_id')
+        category = get_object_or_404(Category, pk=category_id)
+        context.update(
+            {'category': category}
+        )
+        return context
+
+    def get_queryset(self):
+        """ 重写queryset,根据分类过滤 """
+        queryset = super().get_queryset()
+        category_id = self.kwargs.get('category_id')
+        return queryset.filter(category_id=category_id)
+
+
+class TagView(IndexView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_id = self.kwargs.get('tag_id')
+        tag = get_object_or_404(Tag, pk=tag_id)
+        context.update({
+            'tag': tag,
+        })
+        return  context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        tag_id = self.kwargs.get('tag_id')
+        return queryset.filter(tag__id=tag_id)
+
+class PostDetailView(CommonViewMixin, DetailView):
+    queryset = Post.get_all()
+    print(queryset)
+    template_name = 'blog/detail.html'
+    context_object_name = 'post'
+    pk_url_kwarg = 'post_id'

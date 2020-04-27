@@ -1,0 +1,10 @@
+<ul style="list-style: circle">
+    {% for comment in comments %}
+        <li>
+            <a href="/post/{{ comment.target.id }}.html">
+                {{ comment.target.title }}
+            </a> <br>
+            <span style="font-size: 12px; color: #858585"> {{ comment.nickname }}: {{ comment.content|slice:':20' }}</span>
+        </li>
+    {% endfor %}
+</ul>

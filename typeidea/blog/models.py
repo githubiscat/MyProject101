@@ -33,7 +33,7 @@ class Category(models.Model):
                 normal_categories.append(cate)
         return {
             'navs': nav_categories,
-            'category':normal_categories
+            'categorys': normal_categories,
         }
 
     class Meta:
@@ -88,8 +88,8 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag, verbose_name='标签')
     owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='作者')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-    pv = models.PositiveIntegerField(default=1)
-    uv = models.PositiveIntegerField(default=1)
+    pv = models.PositiveIntegerField(default=1, verbose_name='访问量')
+    uv = models.PositiveIntegerField(default=1, verbose_name='访客量')
 
     def __str__(self):
         return self.title
@@ -122,17 +122,19 @@ class Post(models.Model):
         else:
             postlist = category.post_set.filter(status=Post.STATUS_NORMAL)\
                 .select_related('owner').prefetch_related('tag')
-            print(postlist.query)
-
         return postlist, category
 
     @classmethod
     def hot_posts(cls):
         """ 获取最热文章排名, 根据访问量 """
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
+        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:5]
 
     @classmethod
     def latest_posts(cls):
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')
+        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')[:5]
+
+    @classmethod
+    def get_all(cls):
+        return  cls.objects.filter(status=cls.STATUS_NORMAL)
 
 

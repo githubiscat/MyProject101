@@ -1,0 +1,115 @@
+{% extends 'blog/base.html' %}
+
+{% block style %}
+    <style type="text/css">
+        #list_type {
+
+            font-size: 16px;
+        }
+        .post {
+            border-bottom-style: dashed;
+            border-bottom-color: lightslategrey;
+            border-bottom-width: 1px;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        .post_title {
+            font-size: 18px!important;
+        }
+        .post span {
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .post_desc {
+            margin: 5px 5px 5px 20px;
+            font-size: 14px;
+            font-family: STsong;
+        }
+
+        #paginator {
+            position: relative;
+            float: right;
+            margin: 20px 20px 0 0;
+        }
+        #list_type {
+            margin: 20px 0;
+        }
+        .type_title {
+            position: relative;
+        }
+        .type_title {
+            width: auto;
+            padding: 4px 6px;
+            border: 1px solid #417690;
+            background-color: #417690;
+            border-radius: 5px;
+            color: aliceblue;
+        }
+        .type_div {
+            width: auto;
+            margin: 0 10px;
+            padding: 3px 5px;
+            border: 1px solid lightpink;
+            border-radius: 5px;
+            background-color: pink;
+
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    {% if tag %}
+        标签页: {{ tag.name }}
+    {% elif category %}
+        分类页: {{ category.name }}
+    {% else %}
+        首页
+    {% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+    <div id="list_type">
+        {% if tag %}
+        <span class="type_title">按标签分类 >></span> <span class="type_div">{{ tag.name }}</span>
+        {% elif category %}
+        <span class="type_title">按类别分类 >></span><span class="type_div">{{ category.name }}</span>
+        {% endif %}
+    </div>
+    {% for post in postlist %}
+        <div class="post">
+            <span class="post_title"><a href="{% url 'post' post.id %}">{{ post.title }}</a></span>
+            <span class="post_auther">作者: {{ post.owner.username }}</span>
+            <span class="update_time">更新时间:{{ post.created_time }}</span><br>
+            <span class="post_category">分类: {{ post.category.name }}</span>
+            <span class="post_tag">标签:
+                {% for t in post.tag.all %}
+                    {{ t.name }}
+                {% endfor %}
+            </span>
+
+            {% if post.desc %}
+                <p class="post_desc">简介: {{ post.desc }}</p>
+            {% endif %}
+
+        </div>
+    {% endfor %}
+
+     <div id="paginator">
+        {% if page_obj %}
+
+            {% if page_obj.has_previous %}
+                <span><a href="?page={{ page_obj.previous_page_number }}">上一页</a></span>
+            {% endif %}
+            <span>第{{ page_obj.number }}页 / 共{{ paginator.num_pages }}页.</span>
+            {% if page_obj.has_next %}
+                <span><a href="?page={{ page_obj.next_page_number }}">下一页</a></span>
+
+            {% endif %}
+
+        {% endif %}
+        </div>
+
+{% endblock %}
