@@ -1,0 +1,1 @@
+$(function (){ var divW=$("div").width(); var divH = $("div").height();divW=divH;})

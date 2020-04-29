@@ -55,9 +55,10 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                        <form class="form-inline my-2 my-lg-0">
+                        <form action="/search/" class="form-inline my-2 my-lg-0" method="get">
                             <input class="form-control mr-sm-2" type="search"
-                                   placeholder="Search" aria-label="Search">
+                                   placeholder="Search" aria-label="Search"
+                                   value="{{ keyword }}" name="keyword">
                             <button class="btn btn-outline-success my-2 my-sm-0"
                                     type="submit">Search
                             </button>
@@ -122,7 +123,7 @@
         <div class="container power" style="text-align: center">
             <span class="text-muted">
                 友情链接:
-                <a href="https://www.the5fire.com/who_online/">thr5fire</a>
+                <a href="{% url 'link' %}">Links</a>
                 |&nbsp;Typeidea©Gai
             </span>
         </div>

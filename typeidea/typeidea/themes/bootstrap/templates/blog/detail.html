@@ -1,5 +1,5 @@
 {% extends 'blog/base.html' %}
-
+{% load static %}
 {% block title %}
     {{ post.title }}
 {% endblock %}
@@ -10,15 +10,118 @@
             margin-right: 20px;
             font-size: 13px;
         }
+
+        .reply_form {
+            display: none;
+        }
+
+        .reply_form, .comment_form {
+            font-size: 14px;
+            width: 80%;
+        }
+
+        .reply_form *, .comment_form * {
+            font-size: 14px;
+        }
+
+        .list-group-item {
+            border-style: none !important;
+            margin-bottom: 15px;
+            padding-left: 0;
+        }
+
+        .one_comment, .one_replys {
+            width: 100%;
+        }
+
+        .one_comment *, .one_replys * {
+            font-size: 14px;
+        }
+
+        .user_image {
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            padding-right: 10px !important;
+            padding-left: 5px !important;
+            text-align: right;
+        }
+
+        .comment_info_normel {
+            margin-bottom: 10px;
+        }
+
+        .comment_info, .reply_info {
+            padding-left: 5px !important;
+        }
+
+        .comment_nickname {
+            font-size: 18px;
+            color: #444444;
+            font-weight: bold;
+            font-family: Arial;
+        }
+
+        .reply_nickname {
+            font-size: 16px;
+            color: #444444;
+            font-weight: bold;
+            font-family: Arial;
+        }
+
+        .comment_time {
+            font-family: Arial;
+            font-weight: normal;
+            color: #858585;
+        }
+
+        .reply_button {
+            float: right;
+        {#display: block;#}
+            text-decoration: none;
+        }
+
+        .reply_button:hover {
+            text-decoration: none;
+        }
+
+        #comment_title {
+        {#font-size: 20px;#}
+            margin: 40px 0 20px;
+            color: #555;
+        }
+
+        .comment_info_content {
+            color: #333333;
+        }
+
+        .one_comment_replys {
+            width: 95%;
+            float: right;
+        }
+
+        .reply_info_content {
+            color: #333333;
+            margin-bottom: 10px;
+
+        }
+        .reply_info_content_old {
+            color: #666666;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
     </style>
 {% endblock %}
 
 {% block content %}
     <h2 style="font-family: STsong">{{ post.title }}</h2>
-    <span class="post_info">作者: <a href="javascript:return false">{{ post.owner.username }}</a></span>
+    <span class="post_info">作者: <a
+            href="{% url 'auther' post.owner.id %}">{{ post.owner.username }}</a></span>
     <span class="post_info">更新于 {{ post.created_time }}</span>
     <span class="post_info">阅读数: {{ post.pv }}</span>
-    <span class="post_info">分类: <a href="{% url 'post' post.id %}">{{ post.category.name }}</a></span>
+    <span class="post_info">分类: <a
+            href="{% url 'post' post.id %}">{{ post.category.name }}</a></span>
     <span class="post_info"> 标签:
         {% for t in post.tag.all %}
             <a href="{% url 'tag' t.id %}">{{ t.name }}</a>
@@ -30,5 +133,200 @@
     {% endif %}
     <hr>
     <p>{{ post.content|safe }}</p>
+    <hr>
+    <div id="comment">
+        <div id="comment_title"><h4>{{ post.comment_set.count }}条评论</h4></div>
+
+        <ul class="list-group">
+            {% for comment in post.comment_set.all %}
+                <li class="list-group-item">
+                    <div class="one_comment row">
+                        <div class="user_image col-2">
+                            <div style="float:right; width: 80%">
+                                <img class="user_image"
+                                     src="{% static 'image/youke.jpg' %}">
+                            </div>
+                        </div>
+                        <div class="comment_info col-10">
+                            <div class="comment_info_normel">
+                                <span class="comment_nickname">{{ comment.nickname }}</span>
+                                <span style="margin-right: 20px;"> 发表了评论: </span>
+                                <span class="comment_time">{{ comment.created_time }}</span>
+                                <a class="reply_button" href="#">
+                                    <span style="font-family: Microsoft YaHei">
+                                        <svg
+                                                class="bi bi-reply-fill"
+                                                width="1em" height="1em"
+                                                viewBox="0 0 16 16"
+                                                fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg">
+  <path d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
+</svg>回复</span>
+                                </a>
+                            </div>
+                            <p class="comment_info_content">
+                                {{ comment.content|linebreaksbr|urlize }}
+                            </p>
+                        </div>
+                    </div>
+
+                    {% for reply in comment.reply_set.all %}
+
+                            <div class="one_comment_replys">
+                                <div class="one_replys row">
+                                    <div class="user_image col-2">
+                                        <div style="float:right; width: 70%">
+                                            <img class="user_image" src="{% static 'image/youke.jpg' %}">
+                                        </div>
+                                    </div>
+                                    <div class="reply_info col-10">
+                                        <div class="reply_info_normel">
+                                            <span class="reply_nickname">{{ reply.from_name }}</span>
+                                            <span style="margin-right:5px;margin-left: 5px;">回复了:</span>
+                                            <span class="reply_nickname" style="margin-right: 20px">{{ reply.to_name }}</span>
+                                            <span class="comment_time">{{ reply.created_time }}</span>
+                                            <a class="reply_button" href="#">
+                                    <span style="font-family: Microsoft YaHei">
+                                        <svg
+                                                class="bi bi-reply-fill"
+                                                width="1em" height="1em"
+                                                viewBox="0 0 16 16"
+                                                fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg">
+  <path d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
+</svg>回复</span>
+                                            </a></div>
+                                        {% ifequal reply.reply_type 1  %}
+                                            <p class="reply_info_content_old">
+                                            ##
+                                            {{ reply.get_reply_target_content.content|linebreaksbr|urlize }}
+                                            ##
+                                            </p>
+                                        {% endifequal %}
+                                        <p class="reply_info_content">
+                                            {{ reply.content|linebreaksbr|urlize }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                    {% endfor %}
+
+                    <div class="reply_form">
+
+                        <form class="form-group" action="/reply/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ comment.id }}"
+                                   name="commentid">
+                            <input type="hidden" value="{{ post.id }}"
+                                   name="postid">
+                            <input type="hidden" value="{{ comment.nickname }}"
+                                   name="to_name">
+                            <input type="hidden" value="{{ comment.id }}"
+                                   name="reply_id">
+                            <input type="hidden" value="0" name="reply_type">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">{{ reply_form.from_name.label }}</span>
+                                        </div>
+                                        {{ reply_form.from_name }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">{{ reply_form.from_email.label }}</span>
+                                        </div>
+                                        {{ reply_form.from_email }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">{{ reply_form.from_website.label }}</span>
+                                        </div>
+                                        {{ reply_form.from_website }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    {{ reply_form.content }}
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                提交回复
+                            </button>
+                            <br>
+                        </form>
+                    </div>
+
+                </li>
+            {% endfor %}
+
+        </ul>
+        <div class="comment_form">
+            <form class="form-group" action="/comment/" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ post.id }}" name="postid">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">{{ comment_form.nickname.label }}</span>
+                            </div>
+                            {{ comment_form.nickname }}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">{{ comment_form.email.label }}</span>
+                            </div>
+                            {{ comment_form.email }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">{{ comment_form.website.label }}</span>
+                            </div>
+                            {{ comment_form.website }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        {{ comment_form.content }}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    提交评论
+                </button>
+                <br>
+            </form>
+        </div>
+    </div>
+
 
 {% endblock %}
+
+<script >$(document).ready(function(){alert('yunxi')})</script>
+{#<script >$(document).ready(function (){ alert('yunxi');var divW = $(".user_image").width(); var divH = $(".user_image").height(); divH=divW;})</script>#}

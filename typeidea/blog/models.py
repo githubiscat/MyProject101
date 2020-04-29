@@ -135,6 +135,6 @@ class Post(models.Model):
 
     @classmethod
     def get_all(cls):
-        return  cls.objects.filter(status=cls.STATUS_NORMAL)
+        return  cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')
 
 

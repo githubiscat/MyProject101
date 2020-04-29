@@ -16,17 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 
-from blog.views import IndexView, CategoryView, TagView, PostDetailView
-from config.views import links
+from blog.views import IndexView, CategoryView, TagView, PostDetailView, \
+    SearchView, AutherView
+from comment.views import CommentView, reply_comment
+from config.views import LinkListView
 from typeidea.custom_site import custom_site
 
 urlpatterns = [
     # class view
     re_path(r'^$', IndexView.as_view()),
+    re_path(r'^auther/(?P<owner_id>\d+)/$', AutherView.as_view(), name='auther'),
     re_path(r'^category/(?P<category_id>\d+)/$', CategoryView.as_view(), name='category'),
     re_path(r'^tag/(?P<tag_id>\d+)/$', TagView.as_view(), name='tag'),
     re_path(r'^post/(?P<post_id>\d+).html$', PostDetailView.as_view(), name='post'),
-    re_path(r'^links/$', links),
+    re_path(r'^search/$', SearchView.as_view(), name='search'),
+    re_path(r'^links/$', LinkListView.as_view(), name='link'),
+    re_path(r'^comment/$', CommentView, name='comment'),
+    re_path(r'^reply/$', reply_comment, name='reply'),
     # func view
     # re_path(r'^$', post_list),
     # re_path(r'^category/(?P<category_id>\d+)/$', post_list, name='category'),

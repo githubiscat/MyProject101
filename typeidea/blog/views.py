@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -5,6 +6,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from blog.models import Tag, Post, Category
+from comment.forms import CommentForm, ReplyForm
+from comment.models import Comment
 from config.models import SideBar
 
 """ 类视图
@@ -31,7 +34,7 @@ class CommonViewMixin:
 
 class IndexView(CommonViewMixin, ListView):
     # model = Post  # model 指定class based View要使用的数据库model
-    queryset = Post.latest_posts()  # 指定cbv 要使用的查询集(过滤数据后), 与model二选一, 只用model时 django会进行普通all()查询
+    queryset = Post.get_all()  # 指定cbv 要使用的查询集(过滤数据后), 与model二选一, 只用model时 django会进行普通all()查询
     paginate_by = 8  # 分页 每页显示的数量
     context_object_name = 'postlist'  # 传递到模板的上下文对象的名称 (默认到模板中是object_list)
     template_name = 'blog/list.html'  # 指定要渲染的模板
@@ -76,3 +79,42 @@ class PostDetailView(CommonViewMixin, DetailView):
     template_name = 'blog/detail.html'
     context_object_name = 'post'
     pk_url_kwarg = 'post_id'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            # 'comment_list': Comment.objects
+            #     .filter(Q(status=Comment.STATUS_NORMAL) & Q(post_id=post_id))
+            #     .order_by('created_time'),
+            'comment_form': CommentForm,
+            'reply_form': ReplyForm,
+        })
+        return context
+
+class SearchView(IndexView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'keyword': self.request.GET.get('keyword', '')
+        })
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        keyword = self.request.GET.get('keyword', '')
+        if not keyword:
+            return queryset
+        print(keyword)
+        # Q(owner__username__icontains=keyword) 根据用户名做查询
+        return queryset.filter(Q(title__icontains=keyword)
+                               | Q(desc__icontains=keyword)
+                               | Q(content__icontains=keyword))
+
+class AutherView(IndexView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        auther_id = self.kwargs.get('owner_id')
+        return queryset.filter(owner_id=auther_id)
+
+
+
+
