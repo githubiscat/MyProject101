@@ -1,8 +1,15 @@
 // $(function (){ var divW=$("div").width(); var divH = $("div").height();divW=divH;})
 function show_reply_form(this_button,comment_id, reply_id, reply_type, to_name) {
-        $('.reply_form').hide();
+        let form_div;
+    $('.reply_form').hide();
         $('.reply_form_form').empty();
-        const form_div = $(this_button).parent('div').parent('div').parent('div').next('.reply_form');
+        if (reply_type == 1){
+            // 1代表回复的对象是一个回复
+            form_div = $(this_button).parent('div').parent('div').parent('div').next('.reply_form');
+        }else {
+            // 0 代表回复的对象是一个评论
+            form_div = $(this_button).parent('div').parent('div').next('div').children('.reply_form');
+        }
         const rp_form = $('#reply_form_base > .form-group').clone();
         $(rp_form).children('input[name="commentid"]').attr('value', comment_id);
         $(rp_form).children('input[name="reply_id"]').attr('value', reply_id);
@@ -17,6 +24,8 @@ function cancel_reply() {
     $('.reply_form').hide();
     $('reply_form_form').empty();
 }
+
+
 
 $(document).ready(function(){
   // $("button").click(function(){
