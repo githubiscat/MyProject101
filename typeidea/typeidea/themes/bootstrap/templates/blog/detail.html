@@ -11,8 +11,19 @@
             font-size: 13px;
         }
 
+        #reply_form_base {
+            font-size: 14px;
+            width: 80%;
+        }
+
+        #reply_form_base * {
+            font-size: 14px;
+        }
+
         .reply_form {
             display: none;
+            float: right;
+            margin-right: 30px;
         }
 
         .reply_form, .comment_form {
@@ -39,13 +50,22 @@
             font-size: 14px;
         }
 
-        .user_image {
-            width: 80%;
-            height: 80%;
-            border-radius: 50%;
+        .image_col {
             padding-right: 10px !important;
             padding-left: 5px !important;
             text-align: right;
+        }
+
+        .user_image {
+        {#width: 80%;#}{#height: 80%;#} width: 5vw;
+            height: 5vw;
+            border-radius: 50%;
+        }
+
+        .user_image_reply {
+        {#width: 80%;#}{#height: 80%;#} width: 4vw;
+            height: 4vw;
+            border-radius: 50%;
         }
 
         .comment_info_normel {
@@ -78,8 +98,7 @@
 
         .reply_button {
             float: right;
-        {#display: block;#}
-            text-decoration: none;
+        {#display: block;#} text-decoration: none;
         }
 
         .reply_button:hover {
@@ -87,8 +106,7 @@
         }
 
         #comment_title {
-        {#font-size: 20px;#}
-            margin: 40px 0 20px;
+        {#font-size: 20px;#} margin: 40px 0 20px;
             color: #555;
         }
 
@@ -104,6 +122,7 @@
         .reply_info_content {
             color: #333333;
         }
+
         .reply_info_content_old {
             color: #666666;
             font-style: italic;
@@ -139,8 +158,9 @@
             {% for comment in post.comment_set.all %}
                 <li class="list-group-item">
                     <div class="one_comment row">
-                        <div class="user_image col-2">
-                            <div style="float:right; width: 80%">
+                        <div class="image_col col-2">
+                            <div class="user_image_div"
+                                 style="float:right; width: 70%">
                                 <img class="user_image"
                                      src="{% static 'image/youke.jpg' %}">
                             </div>
@@ -168,22 +188,31 @@
                         </div>
                     </div>
 
+                     <div class="one_comment_replys">
                     {% for reply in comment.reply_set.all %}
-
-                            <div class="one_comment_replys">
-                                <div class="one_replys row">
-                                    <div class="user_image col-2">
-                                        <div style="float:right; width: 70%">
-                                            <img class="user_image" src="{% static 'image/youke.jpg' %}">
-                                        </div>
+                            <div class="one_replys row">
+                                <div class="image_col col-2">
+                                    <div class="user_image_div"
+                                         style="float:right; width: 60%">
+                                        <img class="user_image_reply"
+                                             src="{% static 'image/youke.jpg' %}">
                                     </div>
-                                    <div class="reply_info col-10">
-                                        <div class="reply_info_normel">
-                                            <span class="reply_nickname">{{ reply.from_name }}</span>
-                                            <span style="margin-right:5px;margin-left: 5px;">回复了:</span>
-                                            <span class="reply_nickname" style="margin-right: 20px">{{ reply.to_name }}</span>
-                                            <span class="comment_time">{{ reply.created_time }}</span>
-                                            <a class="reply_button" href="#">
+                                </div>
+                                <div class="reply_info col-10">
+                                    <div class="reply_info_normel">
+                                        <span class="reply_nickname">{{ reply.from_name }}</span>
+                                        <span style="margin-right:5px;margin-left: 5px;">回复了:</span>
+                                        <span class="reply_nickname"
+                                              style="margin-right: 20px">{{ reply.to_name }}</span>
+                                        <span class="comment_time">{{ reply.created_time }}</span>
+                                        <a class="reply_button"
+                                           href="javascript:void(0)"
+                                           onclick="show_reply_form(this,
+                                                   comment_id={{ comment.id }},
+                                                   reply_id={{ reply.id}},
+                                                   reply_type=1,
+                                                   to_name='{{ reply.from_name }}',
+                                                   )">
                                     <span style="font-family: Microsoft YaHei">
                                         <svg
                                                 class="bi bi-reply-fill"
@@ -193,39 +222,46 @@
                                                 xmlns="http://www.w3.org/2000/svg">
   <path d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
 </svg>回复</span>
-                                            </a></div>
-                                        {% ifequal reply.reply_type 1  %}
-                                            <p class="reply_info_content_old">
+                                        </a></div>
+                                    {% ifequal reply.reply_type 1 %}
+                                        <p class="reply_info_content_old">
                                             ##
-                                            {{ reply.get_reply_target_content.content|linebreaksbr|urlize }}
+                                            {{ reply.get_reply_target_content.from_content|linebreaksbr|urlize }}
                                             ##
-                                            </p>
-                                        {% endifequal %}
-                                        <p class="reply_info_content">
-                                            {{ reply.content|linebreaksbr|urlize }}
                                         </p>
-                                    </div>
+                                    {% endifequal %}
+                                    <p class="reply_info_content">
+                                        {{ reply.from_content|linebreaksbr|urlize }}
+                                    </p>
                                 </div>
                             </div>
-
-
-
+                            <div class="reply_form">
+                                <div style="font-style: italic; margin-bottom: 5px">
+                                    正在回复
+                                    <span size="16px" style="font-weight: bold">{{ reply.from_name }}</span>
+                                    &nbsp;&nbsp;
+                                    <a href="javascript:void(0)" onclick="cancel_reply()">取消</a>
+                                </div>
+                                <div class="reply_form_form"></div>
+                            </div>
                     {% endfor %}
+                     </div>
+                </li>
+            {% endfor %}
+        </ul>
 
-                    <div class="reply_form">
-
+        <div id="reply_form_base">
                         <form class="form-group" action="/reply/" method="post">
-                            {% csrf_token %}
                             <input type="hidden" value="{{ comment.id }}"
                                    name="commentid">
                             <input type="hidden" value="{{ post.id }}"
                                    name="postid">
                             <input type="hidden" value="{{ comment.nickname }}"
                                    name="to_name">
-                            <input type="hidden" value="{{ comment.id }}"
+                            <input type="hidden" value="{{ reply.id }}"
                                    name="reply_id">
                             <input type="hidden" value="0" name="reply_type">
-
+                            {% csrf_token %}
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <div class="input-group">
@@ -259,21 +295,16 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    {{ reply_form.content }}
+                                    {{ reply_form.from_content }}
                                 </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary">
                                 提交回复
                             </button>
-                            <br>
                         </form>
-                    </div>
+        </div>
 
-                </li>
-            {% endfor %}
-
-        </ul>
         <div class="comment_form">
             <form class="form-group" action="/comment/" method="post">
                 {% csrf_token %}
@@ -322,9 +353,6 @@
             </form>
         </div>
     </div>
-
-
 {% endblock %}
 
-<script >$(document).ready(function(){alert('yunxi')})</script>
 {#<script >$(document).ready(function (){ alert('yunxi');var divW = $(".user_image").width(); var divH = $(".user_image").height(); divH=divW;})</script>#}

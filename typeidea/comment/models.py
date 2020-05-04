@@ -62,7 +62,7 @@ class Reply(models.Model):
     from_email = models.EmailField(verbose_name='回复人邮箱')
     from_website = models.URLField(verbose_name='回复人站点')
     to_name = models.CharField(max_length=100, verbose_name='被回复人昵称')
-    content = models.CharField(max_length=1024, verbose_name='回复内容')
+    from_content = models.CharField(max_length=1024, verbose_name='回复内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
     @classmethod

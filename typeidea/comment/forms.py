@@ -68,7 +68,7 @@ class ReplyForm(forms.ModelForm):
                    'title': '友情链接你的个人网站. 没有就不填.'}
         )
     )
-    content = forms.CharField(
+    from_content = forms.CharField(
         label='内容',
         max_length=1600,
         widget=forms.widgets.Textarea(
@@ -82,4 +82,4 @@ class ReplyForm(forms.ModelForm):
 
     class Meta:
         model = Reply
-        fields= ['from_name', 'from_email', 'from_website', 'content']
+        fields= ['from_name', 'from_email', 'from_website', 'from_content']

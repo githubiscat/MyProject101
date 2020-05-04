@@ -45,7 +45,7 @@ class CommentAdmin(admin.ModelAdmin):
 class ReplyAdmin(admin.ModelAdmin):
     list_display = ('id','comment', 'reply_id', 'reply_type',
                     'from_name', 'from_email', 'from_website',
-                    'to_name', 'content', 'created_time', 'status')
+                    'to_name', 'from_content', 'created_time', 'status')
     # list_display_links = ['con']
     fields = (
         'reply_type',

@@ -27,12 +27,9 @@ def CommentView(request):
             return HttpResponse('提交失败, 请返回! <a href="{}">返回</a>'.format(reverse('post',kwargs={'post_id': post_id})))
 
 
-
-
 def reply_comment(request):
     if request.method == "POST":
         reply_form = ReplyForm(request.POST)
-        print(reply_form)
         # all_value = request.POST.get_all()
         comment_id = request.POST.get('commentid')
         post_id = request.POST.get('postid')
