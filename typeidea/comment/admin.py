@@ -36,6 +36,10 @@ class CommentAdmin(admin.ModelAdmin):
         return c[:20] + '...'
     con.short_description = '内容'
 
+    def get_queryset(self, request):
+        # 过滤数据 只显示当前登录用户写的文章的评论和回复
+        qs = super(CommentAdmin, self).get_queryset(request)
+        return qs.filter(target__owner=request.user)
 
     def save_model(self, request, obj, form, change):
         obj.nickname = str(request.user)
@@ -68,6 +72,11 @@ class ReplyAdmin(admin.ModelAdmin):
         c = obj.content
         return c[:20] + '...'
     con.short_description = '内容'
+
+    def get_queryset(self, request):
+        qs = super(ReplyAdmin, self).get_queryset(request)
+        return qs.filter(comment__target__owner=request.user)
+
 
 
     # def save_model(self, request, obj, form, change):

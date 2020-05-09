@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from config.models import Link, SideBar
+from typeidea.base_admin import BaseOwnerAdmin
 from typeidea.custom_site import custom_site
 
 
@@ -20,7 +21,7 @@ class LinkAdmin(admin.ModelAdmin):
         return super(LinkAdmin, self).save_model(request, obj, form, change)
 
 @admin.register(SideBar, site=custom_site)
-class SiteBar(admin.ModelAdmin):
+class SiteBar(BaseOwnerAdmin):
     list_display = ('title', 'display_type', 'content',
                     'status', 'owner', 'created_time', 'weight')
 

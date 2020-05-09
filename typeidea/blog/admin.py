@@ -7,6 +7,7 @@ from django.utils.html import format_html
 
 from blog.adminforms import PostAdminForm
 from blog.models import Category, Tag, Post
+from typeidea.base_admin import BaseOwnerAdmin
 from typeidea.custom_site import custom_site
 
 
@@ -17,7 +18,7 @@ class PostInline(admin.TabularInline):
 
 
 @admin.register(Category, site=custom_site)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(BaseOwnerAdmin):
     inlines = [PostInline]
     list_display = ('name', 'status', 'is_nav','created_time', 'post_count')
     fields = ('name', 'status', 'is_nav')
@@ -33,7 +34,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Tag, site=custom_site)
-class TagAdmin(admin.ModelAdmin):
+class TagAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'created_time')
     fields = ('name', 'status')
 
