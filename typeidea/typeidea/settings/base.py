@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'blog',
     'comment',
     'config',
+    'xadmin',  # pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2
+    'crispy_forms',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +47,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # pv uv 访问统计中间件
+    'blog.middleware.user_id.UserIDMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -1,3 +1,4 @@
+import mistune
 from django import forms
 
 from comment.models import Comment, Reply
@@ -34,10 +35,13 @@ class CommentForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': '评论内容', 'rows': 6}
         )
     )
-    # def clean_content(self):
-    #     content = self.cleaned_data.get('content', '')
-    #     if len(content) == 0:
-    #         raise forms.ValidationError('评论内容不能为空!')
+
+    def clean_content(self):
+        content = self.cleaned_data.get('content', '')
+        if len(content) == 0:
+            raise forms.ValidationError('评论内容不能为空!')
+        # content = mistune.markdown(content)
+        return content
 
     class Meta:
         model = Comment
@@ -75,10 +79,13 @@ class ReplyForm(forms.ModelForm):
             attrs={'class': 'form-control', 'placeholder': '回复内容', 'rows': 6}
         )
     )
-    # def clean_content(self):
-    #     content = self.cleaned_data.get('content', '')
-    #     if len(content) == 0:
-    #         raise forms.ValidationError('评论内容不能为空!')
+
+    def clean_from_content(self):
+        from_content = self.cleaned_data.get('from_content', '')
+        if len(from_content) == 0:
+            raise forms.ValidationError('评论内容不能为空!')
+        # from_content = mistune.markdown(from_content)
+        return from_content
 
     class Meta:
         model = Reply

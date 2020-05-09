@@ -40,7 +40,7 @@
 
         .list-group-item {
             border-style: none !important;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             padding-left: 0;
         }
 
@@ -49,9 +49,14 @@
             margin-bottom: 5px;
         }
 
-        .one_comment *, .one_replys * {
+        .one_comment p, .one_replys p {
             font-size: 14px;
         }
+
+        .normel_font {
+            font-size: 14px;
+        }
+
 
         .image_col {
             padding-right: 10px !important;
@@ -131,6 +136,10 @@
             font-style: italic;
             margin-bottom: 5px;
         }
+
+        .comment_info_content p,.reply_info_content_old p, .reply_info_content p {
+            margin-bottom: 2px;
+        }
     </style>
 {% endblock %}
 
@@ -171,7 +180,7 @@
                         <div class="comment_info col-10">
                             <div class="comment_info_normel">
                                 <span class="comment_nickname">{{ comment.nickname }}</span>
-                                <span style="margin-right: 20px;"> 发表了评论: </span>
+                                <span class="normel_font" style="margin-right: 20px;"> 发表了评论: </span>
                                 <span class="comment_time">{{ comment.created_time }}</span>
                                 <a class="reply_button"
                                    href="javascript:void(0)"
@@ -181,7 +190,7 @@
                                            reply_id={{ comment.id }},
                                            reply_type=0,
                                            to_name='{{ comment.nickname }}')">
-                                           <span style="font-family: Microsoft YaHei">
+                                           <span class="normel_font" style="font-family: Microsoft YaHei">
                                            <svg
                                                    class="bi bi-reply-fill"
                                                    width="1em" height="1em"
@@ -193,17 +202,17 @@
                                 </a>
                             </div>
                             <p class="comment_info_content">
-                                {{ comment.content|linebreaksbr|urlize }}
+                                    {{ comment.content|linebreaksbr|urlize }}
                             </p>
                         </div>
                         <div class="col-12" style="float: right">
                             <div class=" reply_form" style="margin-right: 0">
                                 <div style="font-style: italic; margin-bottom: 5px">
-                                正在回复
+                                    <span class="normel_font">正在回复</span>
                                 <span size="16px"
                                       style="font-weight: bold">{{ comment.nickname }}</span>
                                 &nbsp;&nbsp;
-                                <a href="javascript:void(0)"
+                                <a class="normel_font" href="javascript:void(0)"
                                    onclick="cancel_reply()">取消</a>
                             </div>
                             <div class="reply_form_form"></div>
@@ -225,7 +234,7 @@
                                 <div class="reply_info col-10">
                                     <div class="reply_info_normel">
                                         <span class="reply_nickname">{{ reply.from_name }}</span>
-                                        <span style="margin-right:5px;margin-left: 5px;">回复了:</span>
+                                        <span class="normel_font" style="margin-right:5px;margin-left: 5px;">回复了:</span>
                                         <span class="reply_nickname"
                                               style="margin-right: 20px">{{ reply.to_name }}</span>
                                         <span class="comment_time">{{ reply.created_time }}</span>
@@ -237,7 +246,7 @@
                                                    reply_type=1,
                                                    to_name='{{ reply.from_name }}',
                                                    )">
-                                    <span style="font-family: Microsoft YaHei">
+                                    <span class="normel_font" style="font-family: Microsoft YaHei">
                                         <svg
                                                 class="bi bi-reply-fill"
                                                 width="1em" height="1em"
@@ -255,17 +264,17 @@
                                         </p>
                                     {% endifequal %}
                                     <p class="reply_info_content">
-                                        {{ reply.from_content|linebreaksbr|urlize }}
+                                        {{ reply.from_content|linebreaksbr|urlize}}
                                     </p>
                                 </div>
                             </div>
                             <div class="reply_form">
                                 <div style="font-style: italic; margin-bottom: 5px">
-                                    正在回复
+                                    <span class="normel_font">正在回复</span>
                                     <span size="16px"
                                           style="font-weight: bold">{{ reply.from_name }}</span>
                                     &nbsp;&nbsp;
-                                    <a href="javascript:void(0)"
+                                    <a class="normel_font" href="javascript:void(0)"
                                        onclick="cancel_reply()">取消</a>
                                 </div>
                                 <div class="reply_form_form"></div>
@@ -325,7 +334,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary normel_font">
                     提交回复
                 </button>
             </form>
@@ -372,7 +381,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary normel_font">
                     提交评论
                 </button>
                 <br>

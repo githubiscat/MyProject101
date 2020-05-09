@@ -15,7 +15,7 @@ class Comment(models.Model):
                                verbose_name='评论目标')
     content = models.CharField(max_length=2000, verbose_name='内容')
     nickname = models.CharField(max_length=50, verbose_name='昵称')
-    website = models.URLField(verbose_name='网站')
+    website = models.URLField(verbose_name='网站', blank=True)
     email = models.EmailField(verbose_name='邮箱')
     status = models.PositiveIntegerField(default=STATUS_NORMAL,
                                          choices=STATUS_ITEMS,
@@ -60,7 +60,7 @@ class Reply(models.Model):
                                                   verbose_name='回复类型')
     from_name = models.CharField(max_length=100, verbose_name='回复人昵称')
     from_email = models.EmailField(verbose_name='回复人邮箱')
-    from_website = models.URLField(verbose_name='回复人站点')
+    from_website = models.URLField(verbose_name='回复人站点', blank=True)
     to_name = models.CharField(max_length=100, verbose_name='被回复人昵称')
     from_content = models.CharField(max_length=1024, verbose_name='回复内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')

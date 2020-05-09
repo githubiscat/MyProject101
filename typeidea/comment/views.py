@@ -23,8 +23,9 @@ def CommentView(request):
 
 
         else:
-            print(comment_form.errors)
-            return HttpResponse('提交失败, 请返回! <a href="{}">返回</a>'.format(reverse('post',kwargs={'post_id': post_id})))
+            return HttpResponse(
+                '提交失败, 请返回! <a href="{}">返回</a> <br> Error: {}'.format(
+                    reverse('post',kwargs={'post_id': post_id}), comment_form.errors))
 
 
 def reply_comment(request):
