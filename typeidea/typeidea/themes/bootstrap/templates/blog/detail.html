@@ -6,6 +6,15 @@
 
 {% block style %}
     <style type="text/css">
+        .post_content {
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+        .post_content img{
+            max-width: 95% !important;
+            height: auto !important;
+            {#overflow: hidden;#}
+        }
         .post_info {
             margin-right: 20px;
             font-size: 13px;
@@ -140,6 +149,24 @@
         .comment_info_content p,.reply_info_content_old p, .reply_info_content p {
             margin-bottom: 2px;
         }
+
+        {#  水平线文字样式  #}
+        .hr_line {
+            height: 0;
+            border-top: 1px solid rgba(0,0,0,.1);
+            text-align: center;
+            font-size: 14px;
+            margin: 40px 0 10px 0;
+        }
+        .hr_text {
+            position: relative;
+            top: -11px;
+            background-color: #fff;
+            padding-left: 5px;
+            padding-right: 5px;
+            color: #858585;
+        }
+
     </style>
 {% endblock %}
 
@@ -158,11 +185,15 @@
     </span>
     <br>
     {% if post.desc %}
-        <p style="font-size: 13px">简介: {{ post.desc|safe }}</p>
+        <p style="font-size: 13px">简介: {{ post.desc }}</p>
     {% endif %}
     <hr>
-    <p>{{ post.content|safe }}</p>
-    <hr>
+    <div class="post_content">{{ post.content|safe }}</div>
+
+    <div class="hr_line">
+        <span class="hr_text">文章到底了</span>
+    </div>
+
     <div id="comment">
         <div id="comment_title"><h4>{{ post.comment_set.count }}条评论</h4></div>
 

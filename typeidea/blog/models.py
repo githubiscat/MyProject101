@@ -79,19 +79,21 @@ class Post(models.Model):
         (STATUS_DRAFT, '草稿'),
     )
 
+    category = models.ForeignKey(Category, on_delete=models.PROTECT,
+                                 verbose_name='分类')
+    tag = models.ManyToManyField(Tag, verbose_name='标签')
     title = models.CharField(max_length=255, verbose_name='标题')
     desc = models.CharField(max_length=1024, blank=True, verbose_name='摘要')
     content = models.TextField(verbose_name='正文', help_text='正文为MarkDown')
     status = models.PositiveIntegerField(default=STATUS_NORMAL,
                                          choices=STATUS_ITEMS,
                                          verbose_name='状态')
-    category = models.ForeignKey(Category, on_delete=models.PROTECT,
-                                 verbose_name='分类')
-    tag = models.ManyToManyField(Tag, verbose_name='标签')
     owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='作者')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     pv = models.PositiveIntegerField(default=1, verbose_name='访问量')
     uv = models.PositiveIntegerField(default=1, verbose_name='访客量')
+    attached_file = models.CharField(max_length=2048, blank=True, verbose_name='附件')
+
 
     def __str__(self):
         return self.title
@@ -142,5 +144,28 @@ class Post(models.Model):
     @cached_property
     def tags(self):
         return ','.join(self.tag.values_list('name', flat=True))
+
+
+class PostUploadFile(models.Model):
+    STATUS_USED = 1
+    STATUS_UNUSED = 0
+    STATUS_ITEMS = (
+        (STATUS_USED, '使用中'),
+        (STATUS_UNUSED, '未使用'),
+    )
+    cookie_stamp = models.CharField(max_length=128, verbose_name='编辑文章时的标识')
+    file_path = models.CharField(max_length=1028,
+                                 verbose_name='上传文件路径',
+                                 blank=True)
+    status = models.PositiveSmallIntegerField(default=STATUS_UNUSED,
+                                              choices=STATUS_ITEMS,
+                                              verbose_name='引用状态')
+    post = models.PositiveIntegerField(verbose_name='所属文章', null=True)
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+
+
+    def how_long_time(self):
+        """查看数据对象已经创建了多长时间"""
+        pass
 
 

@@ -66,6 +66,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 typeidea/*/migrations/0*.py
+typeidea/typeidea/media/*
 #typeidea/config/migrations/0001_initial.py
 # Flask stuff:
 instance/

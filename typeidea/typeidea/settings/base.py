@@ -31,13 +31,18 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
+    'ckeditor',  #可视化编辑器 pip install django-ckeditor
+    'ckeditor_uploader',
     'typeidea',  # 因为templates模板被定义在这个总目录下, 所以需要注册这个目录app
     'blog',
     'comment',
     'config',
-    'xadmin',  # pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2
+     # pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2
+    'xadmin',
     'crispy_forms',
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,3 +139,31 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/tmp/static'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'themes', THEME, 'static'),]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# xadmin管理后台
+XADMIN_TITLE = '满满屋-记录你的生活每一天'
+XADMIN_FOOTER_TITLE = 'Power By gai520.com'
+
+# 配置 ckeditor富文本编辑器
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 800,
+        'tabSpaces': 4,
+        'extraPlugins': 'codesnippet,uploadimage',  # 配置代码插件, uploadimage 拖动上传
+    }
+}
+
+CKEDITOR_UPLOAD_PATH = 'article_images'  # 文件上传路径
+CKEDITOR_RESTRICT_BY_USER = True  # 限制用户在编辑器中只能查看自己上传的文件
+# CKEDITOR_IMAGE_BACKEND = True  # 使用图片缩略图
+# CKEDITOR_ALLOW_NONIMAGE_FILES = False  # 只允许上传图片
+
+# 图片水印名称
+IMAGE_WATERMARK_TEXT = '@gai520.com'
+DEFAULT_FILE_STORAGE = 'typeidea.storage.WatermarkStorage'

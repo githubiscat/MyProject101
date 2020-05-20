@@ -13,9 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import xadmin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps import views as sitemap_views
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 
 from blog.rss import LatestPostFeed
 from blog.sitemap import PostSitemap
@@ -23,6 +26,7 @@ from blog.views import IndexView, CategoryView, TagView, PostDetailView, \
     SearchView, AutherView
 from comment.views import CommentView, reply_comment
 from config.views import LinkListView
+from typeidea.autocomplete import TagAutocomplete, CategoryAutocomplete
 from typeidea.custom_site import custom_site
 
 urlpatterns = [
@@ -48,6 +52,12 @@ urlpatterns = [
     # re_path(r'^links/$', links),
 
     re_path(r'^superadmin/', admin.site.urls),
-    re_path(r'^admin/', custom_site.urls)
+    re_path(r'^admin/', custom_site.urls),
+    re_path(r'^xadmin/', xadmin.site.urls, name='xadmin'),
+    re_path(r'^category-autocomplete/$', CategoryAutocomplete.as_view(),
+            name='category-autocomplete'),
+    re_path(r'^tag-autocomplete/$', TagAutocomplete.as_view(), name='tag-autocomplete'),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
+
     # path(r'admin/', custom_site.urls)
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

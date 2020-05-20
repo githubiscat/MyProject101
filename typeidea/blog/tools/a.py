@@ -1,0 +1,4 @@
+
+
+a = eval('')
+print(a)
