@@ -11,7 +11,7 @@ from xadmin.filters import RelatedFieldListFilter, manager
 from xadmin.layout import Fieldset, Row, Container
 
 from blog.adminforms import PostAdminForm
-from blog.models import Category, Tag, Post, PostUploadFile
+from blog.models import Category, Tag, Post
 from blog.tools import find_HTML_mediafile_src
 from blog.tools.clean_junk_file import CleanJunkFile
 from typeidea.base_adminx import BaseOwnerAdmin
@@ -96,18 +96,15 @@ class PostAdmin(BaseOwnerAdmin):
     form_layout = (
         Fieldset(
             '基础信息',
-            Row('title', 'category'),
-            'status',
+            Row('title', ),
+            Row('status', 'category'),
+            Row('tag',)
 
         ),
         Fieldset(
             '内容信息',
             'desc',
             'content',
-        ),
-        Fieldset(
-            '其他',
-            'tag',
         ),
     )
 
@@ -152,10 +149,10 @@ class PostAdmin(BaseOwnerAdmin):
         src_list = find_HTML_mediafile_src.find_all(post_content)
         old_src_list = []
         if self.new_obj.id and self.new_obj.attached_file:
-                old_src_list = eval(self.new_obj.attached_file)
+            old_src_list = eval(self.new_obj.attached_file)
         self.new_obj.attached_file = str(src_list)
         self.new_obj.owner = self.request.user
-        ret = super().save_models()  #保存数据
+        ret = super().save_models()  # 保存数据
 
         # new_obj 是xadmin创建或更改内容是创建的数据库对象
         obj = self.new_obj

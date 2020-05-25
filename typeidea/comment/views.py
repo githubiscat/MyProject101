@@ -13,14 +13,12 @@ def CommentView(request):
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         post_id = request.POST.get('postid')
-
         if comment_form.is_valid():
             instance = comment_form.save(commit=False)
             instance.target_id = int(post_id)
             instance.save()
             succeed = True
             return redirect(reverse('post',kwargs={'post_id': post_id}))
-
 
         else:
             return HttpResponse(

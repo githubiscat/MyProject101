@@ -53,7 +53,8 @@ class SideBar(models.Model):
                                          verbose_name='状态')
     owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='作者')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-    weight = models.PositiveIntegerField(default=1, verbose_name='权重')
+    weight = models.PositiveIntegerField(default=1, verbose_name='权重',
+                                         help_text='数字越小,权重越大,排名越靠前')
 
     @classmethod
     def get_all(cls):
@@ -71,7 +72,7 @@ class SideBar(models.Model):
         if self.display_type == self.DISPLAY_HTML:
             result = self.content
         elif self.display_type == self.DISPLAY_HOT:
-            context =  {
+            context = {
                 'posts': Post.hot_posts()
             }
             return render_to_string('config/blocks/sidebar_posts_hot.html', context)
@@ -86,6 +87,9 @@ class SideBar(models.Model):
             }
             result = render_to_string('config/blocks/sidebar_comments.html', context)
         return result
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = verbose_name_plural = '侧边栏'

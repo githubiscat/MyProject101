@@ -11,7 +11,9 @@ from blog.models import Category, Tag, Post
 
 
 class PostAdminForm(forms.ModelForm):
-    desc = forms.CharField(widget=forms.Textarea, label='摘要', required=False)
+    desc = forms.CharField(widget=forms.Textarea(attrs={'rows': 4,}),
+                           label='摘要',
+                           required=False,)
     # 一对多
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),

@@ -152,7 +152,7 @@ XADMIN_FOOTER_TITLE = 'Power By gai520.com'
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
-        'height': 300,
+        'height': 400,
         'width': 800,
         'tabSpaces': 4,
         'extraPlugins': 'codesnippet,uploadimage',  # 配置代码插件, uploadimage 拖动上传

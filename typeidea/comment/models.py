@@ -14,7 +14,7 @@ class Comment(models.Model):
     target = models.ForeignKey(Post, on_delete=models.PROTECT,
                                verbose_name='评论目标')
     content = models.CharField(max_length=2000, verbose_name='内容')
-    nickname = models.CharField(max_length=50, verbose_name='昵称')
+    nickname = models.CharField(max_length=32, verbose_name='昵称')
     website = models.URLField(verbose_name='网站', blank=True)
     email = models.EmailField(verbose_name='邮箱')
     status = models.PositiveIntegerField(default=STATUS_NORMAL,
@@ -32,6 +32,9 @@ class Comment(models.Model):
         return cls.objects.filter(status=cls.STATUS_NORMAL)\
             .select_related('target').order_by('-created_time')[:5]
 
+    def __str__(self):
+        return 'C_id' + str(self.id)
+
     class Meta:
         verbose_name = verbose_name_plural = '评论'
 
@@ -46,8 +49,8 @@ class Reply(models.Model):
     REPLY_COMMENT = 0
     REPLY_REPLY = 1
     REPLY_ITEMS = (
-        (REPLY_COMMENT, '回复目标是评论'),
-        (REPLY_REPLY, '回复目标是回复')
+        (REPLY_COMMENT, '对评论回复'),
+        (REPLY_REPLY, '对回复回复')
     )
     status = models.PositiveSmallIntegerField(default=STATUS_NORMAL,
                                               choices=STATUS_ITEMS,
@@ -58,10 +61,10 @@ class Reply(models.Model):
     reply_type = models.PositiveSmallIntegerField(default=REPLY_COMMENT,
                                                   choices=REPLY_ITEMS,
                                                   verbose_name='回复类型')
-    from_name = models.CharField(max_length=100, verbose_name='回复人昵称')
+    from_name = models.CharField(max_length=32, verbose_name='回复人昵称')
     from_email = models.EmailField(verbose_name='回复人邮箱')
     from_website = models.URLField(verbose_name='回复人站点', blank=True)
-    to_name = models.CharField(max_length=100, verbose_name='被回复人昵称')
+    to_name = models.CharField(max_length=32, verbose_name='被回复人昵称')
     from_content = models.CharField(max_length=1024, verbose_name='回复内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 

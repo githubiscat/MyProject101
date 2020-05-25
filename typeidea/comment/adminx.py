@@ -1,22 +1,24 @@
+import xadmin
 from django.contrib import admin
 
 # Register your models here.
 from django.urls import reverse
 from django.utils.html import format_html
+from xadmin.layout import Row
 
 from comment.models import Comment, Reply
 from typeidea.custom_site import custom_site
 
 
-@admin.register(Comment, site=custom_site)
-class CommentAdmin(admin.ModelAdmin):
+@xadmin.sites.register(Comment)
+class CommentAdmin:
     list_display = ('target', 'con', 'nickname',
                     'email', 'status', 'created_time', 'operator')
-    list_display_links = ['con']
-    fields = (
+    list_display_links = ('con',)
+    form_layout = (
         'target',
         'content',
-        ('email', 'website'),
+        Row('email', 'website'),
         'status'
     )
     search_fields = ['target', 'contents', 'nickname']
@@ -27,7 +29,7 @@ class CommentAdmin(admin.ModelAdmin):
 
     def operator(self, obj):
         return format_html('<a href="{}">编辑</a>',
-                           reverse('cus_admin:comment_comment_change', args=(obj.id,))
+                           reverse('xadmin:comment_comment_change', args=(obj.id,))
         )
     operator.short_description = '操作'
 
@@ -36,22 +38,25 @@ class CommentAdmin(admin.ModelAdmin):
         return c[:20] + '...'
     con.short_description = '内容'
 
-    def get_queryset(self, request):
+    def get_list_queryset(self):
         # 过滤数据 只显示当前登录用户写的文章的评论和回复
-        qs = super(CommentAdmin, self).get_queryset(request)
+        request = self.request
+        qs = super().get_list_queryset()
         return qs.filter(target__owner=request.user)
 
-    def save_model(self, request, obj, form, change):
-        obj.nickname = str(request.user)
-        return super(CommentAdmin, self).save_model(request, obj, form, change)
+    def save_models(self):
+        request = self.request
+        self.new_obj.nickname = str(request.user)
+        return super().save_models()
 
-@admin.register(Reply, site=custom_site)
-class ReplyAdmin(admin.ModelAdmin):
+
+@xadmin.sites.register(Reply)
+class ReplyAdmin:
     list_display = ('id','comment', 'reply_id', 'reply_type',
                     'from_name', 'from_email', 'from_website',
                     'to_name', 'from_content', 'created_time', 'status')
     # list_display_links = ['con']
-    fields = (
+    form_layout = (
         'reply_type',
         'from_website',
         'status'
@@ -73,8 +78,9 @@ class ReplyAdmin(admin.ModelAdmin):
         return c[:20] + '...'
     con.short_description = '内容'
 
-    def get_queryset(self, request):
-        qs = super(ReplyAdmin, self).get_queryset(request)
+    def get_list_queryset(self):
+        request = self.request
+        qs = super().get_list_queryset()
         return qs.filter(comment__target__owner=request.user)
 
 

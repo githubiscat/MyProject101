@@ -1,0 +1,10 @@
+<ul style="list-style: circle">
+    {% for post in posts %}
+        <li>
+            <a href="/post/{{ post.id }}.html">{{ post.title }}</a>
+            <br>
+            <span style="color: #858585; font-size: 12px">更新时间: {{ post.created_time }}</span>
+        </li>
+    {% endfor %}
+
+</ul>

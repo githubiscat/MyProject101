@@ -76,6 +76,7 @@ class TagView(IndexView):
         tag_id = self.kwargs.get('tag_id')
         return queryset.filter(tag__id=tag_id)
 
+
 class PostDetailView(CommonViewMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
@@ -120,6 +121,7 @@ class PostDetailView(CommonViewMixin, DetailView):
         elif increase_uv:
             Post.objects.filter(pk=self.object.id).update(uv=F('uv') + 1)
 
+
 class SearchView(IndexView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -138,6 +140,7 @@ class SearchView(IndexView):
         return queryset.filter(Q(title__icontains=keyword)
                                | Q(desc__icontains=keyword)
                                | Q(content__icontains=keyword))
+
 
 class AutherView(IndexView):
     def get_queryset(self):
