@@ -11,6 +11,25 @@ $(document).ready(function () {
     var side_top = $('.sidebar-left').offset().top;   // 侧边栏上边距
     side_height = side_height + side_top;  // 实际需要的高度是侧边栏底部距离窗口的高度
     var w_height = window_height / 2;  //下拉窗口高度的一半就可以显示返回顶部按钮
+    // 导航条显示和隐藏
+    var nav_height = $('.navbar').outerHeight();  // 导航条的高度
+    var nav_width = $('.navbar').outerWidth();  // 导航条的宽度
+    var nav_top = $('.navbar').offset().top;  // 导航条到窗口的高度
+    var nav_to_top_height = nav_height + nav_top;  // 导航条底部到窗口顶部的高度
+    var scrollBefore = $(window).scrollTop();  // 滚动前的滑动条距离
+    var down_or_up = 0;  // 记录滑动条的方向, 避免大量的js操作
+    //固定布局
+    $('#navbar_back').css({
+        'height': nav_height,
+        'width': nav_width,
+    });
+    $('.navbar').css({
+        'position': 'fixed',
+        'z-index': 5,
+        'left': 0,
+        'top': 0,
+        'width': '100%',
+    });
     $(window).scroll(function () {
         //创建一个变量存储当前窗口下移的高度
         var scroTop = $(window).scrollTop();
@@ -42,6 +61,42 @@ $(document).ready(function () {
             }
         }
 
+        // 导航栏的显示和隐藏
+        let scrollAfter = $(window).scrollTop();
+        // 向下滑动时
+        if (scrollBefore < scrollAfter) {
+            //如果向下滑动距离超过了导航栏下边框位置
+            if (scrollAfter > nav_to_top_height && down_or_up < 1) {
+                //导航栏隐藏
+                console.log('导航条隐藏');
+                $('.navbar').slideUp(300);
+                down_or_up = 1  // 向下滑动状态设置为1
+            }
+            // 如果下滑动距离没有超过导航栏边框的位置
+            if (scrollAfter <= nav_to_top_height) {
+                // 导航栏透明
+                console.log('导航条透明');
+                $('.navbar').css({'opacity': 0.9})
+            }
+        }
+
+        // 向上滑动时
+        if (scrollBefore > scrollAfter) {
+            // 如果滚动条距离大于导航栏高度
+            if (scrollAfter > nav_to_top_height && down_or_up > -1) {
+                // 导航条显示
+                console.log('导航条显示');
+                $('.navbar').slideDown(300);
+                down_or_up = -1  // 向上滑动状态设置为-1
+            }
+            //如果滚动条距离小于导航栏高度
+            if (scrollAfter < nav_to_top_height) {
+                //导航栏不透明
+                console.log('导航条不透明');
+                $('.navbar').css({'opacity': 1})
+            }
+        }
+        scrollBefore = scrollAfter  // 重定义起始位置
     });
 
     //为返回顶部元素添加点击事件

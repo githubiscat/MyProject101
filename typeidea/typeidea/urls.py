@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps import views as sitemap_views
 from django.urls import path, re_path, include
+from django.views.generic import RedirectView
 
 from blog.rss import LatestPostFeed
 from blog.sitemap import PostSitemap
@@ -31,6 +32,7 @@ from typeidea.custom_site import custom_site
 
 urlpatterns = [
     # class view
+    re_path(r'^favicon.ico$', RedirectView.as_view(url=r'/static/image/favicon.ico')),
     re_path(r'^$', IndexView.as_view()),
     re_path(r'^auther/(?P<owner_id>\d+)/$', AutherView.as_view(), name='auther'),
     re_path(r'^category/(?P<category_id>\d+)/$', CategoryView.as_view(), name='category'),

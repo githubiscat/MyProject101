@@ -66,7 +66,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'typeidea.urls'
 
-THEME = 'bootstrap'  # 多种前端样式自由变换 修改次变量即可
+#THEME = 'bootstrap'  # 多种前端样式自由变换 修改次变量即可
+THEME = 'coolblog'
 
 TEMPLATES = [
     {

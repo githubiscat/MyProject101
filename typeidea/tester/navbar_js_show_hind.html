@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .nav_top_back {
+            margin: 0;
+            padding: 0;
+            height: auto;
+            width: auto;
+        }
+
+        .navbar_top {
+            width: 100%;
+            height: 100px;
+            background-color: #99ff99;
+        }
+    </style>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="application/javascript">
+        $(window).ready(function () {
+            var nav_height = $('.navbar_top').outerHeight();  // 导航条的高度
+            var nav_width = $('.navbar_top').outerWidth();  // 导航条的宽度
+            var nav_top = $('.navbar_top').offset().top;  // 导航条到窗口的高度
+            var nav_to_top_height = nav_height + nav_top;  // 导航条底部到窗口顶部的高度
+            var scrollBefore = $(window).scrollTop();  // 滚动前的滑动条距离
+            var down_or_up = 0;  // 记录滑动条的方向, 避免大量的js操作
+            //固定布局
+            $('.nav_top_back').css({
+                'height': nav_height,
+                'width': nav_width,
+            });
+            $('.navbar_top').css({
+                'position': 'fixed',
+                'z-index': 5,
+                'left': 0,
+                'top': 0,
+            });
+
+            // 首先状态有有三种;
+            // 1 导航条不可见后,才显示与隐藏(没有超过时是透明的))
+            // 2 正常位置时 向下隐藏,向上显示
+            // 3 向上滚动到要显示导航条时 导航条设置不透明
+            $(window).scroll(function () {
+                let scrollAfter = $(window).scrollTop();
+                // 向下滑动时
+                if (scrollBefore < scrollAfter) {
+                    //如果向下滑动距离超过了导航栏下边框位置
+                    if (scrollAfter > nav_to_top_height && down_or_up < 1){
+                        //导航栏隐藏
+                        console.log('导航条隐藏');
+                        $('.navbar_top').slideUp(300);
+                        down_or_up = 1  // 向下滑动状态设置为1
+                    }
+                    // 如果下滑动距离没有超过导航栏边框的位置
+                    if (scrollAfter <= nav_to_top_height) {
+                        // 导航栏透明
+                        console.log('导航条透明');
+                        $('.navbar_top').css({'opacity': 0.6})
+                    }
+                }
+
+                // 向上滑动时
+                if (scrollBefore > scrollAfter) {
+                    // 如果滚动条距离大于导航栏高度
+                    if (scrollAfter > nav_to_top_height && down_or_up > -1) {
+                        // 导航条显示
+                        console.log('导航条显示');
+                        $('.navbar_top').slideDown(300);
+                        down_or_up = -1  // 向上滑动状态设置为-1
+                    }
+                    //如果滚动条距离小于导航栏高度
+                    if (scrollAfter < nav_to_top_height) {
+                        //导航栏不透明
+                        console.log('导航条不透明');
+                        $('.navbar_top').css({'opacity': 1})
+                    }
+                }
+                scrollBefore = scrollAfter  // 重定义起始位置
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+
+    <div class="nav_top_back">
+        <div class="navbar_top">
+            我是一个导航条
+        </div>
+    </div>
+
+
+    <div style="width: 100%;height: 300px; background-color: #1111">
+        我是内容区
+    </div>
+
+    </body>
+
+    <div style="width: 100%;height: 300px; background-color: #1111">
+        我是内容区2
+    </div>
+
+    <div style="width: 100%;height: 300px; background-color: #1111">
+        我是内容区3
+    </div>
+
+</html>
