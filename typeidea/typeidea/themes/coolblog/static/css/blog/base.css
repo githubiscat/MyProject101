@@ -2,6 +2,34 @@ pre {
     width: 90%;
 }
 
+#main_div {
+    width: 96%;
+    margin: auto;
+}
+
+.col-lg-8, .col-lg-4, .breadcrumb {
+    padding-left: 10px!important;
+    padding-right: 10px !important;
+}
+
+@media screen and (min-width: 768px) {
+
+}
+
+@media (min-width: 992px) {
+    .col-lg-8 {
+        max-width: 70% !important;
+        flex: 0 0 70% !important;
+
+    }
+
+    .col-lg-4 {
+        max-width: 30% !important;
+        flex: 0 0 30% !important;
+
+    }
+}
+
 #navbar_back {
     margin: 0;
     padding: 0;
@@ -10,9 +38,10 @@ pre {
 }
 
 .nav-link:hover {
-    color: #ff6600!important;
+    color: #ff6600 !important;
     font-weight: bold;
 }
+
 .return_top {
     font-size: 24px;
     background: none;
@@ -41,6 +70,29 @@ pre {
 .return_top:hover {
     color: #ed5736;
     outline: none;
+}
+
+
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #666666;
+    content: '»';
+    padding: 0;
+
+}
+
+.breadcrumb-item {
+    padding: 0 2px!important;
+}
+
+.path_mark {
+    color: #666666;
+    font-size: 14px;
+}
+
+.path_mark_active {
+    color: #333333;
+    font-size: 14px;
 }
 
 .sidebar-left {

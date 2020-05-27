@@ -1,5 +1,11 @@
 // 这是返回顶部标签的js
 $(document).ready(function () {
+    // 设置轮播图高是宽的一半
+    var carosel_cont_height = $('#sticky_posts_carousel_container').width();
+    $('.carousel-inner').height(carosel_cont_height * 0.4);
+    $(window).resize(function(){
+            $('.carousel-inner').height(carosel_cont_height * 0.4);
+    });
     //为当前窗口添加滚动条滚动事件（适用于所有可滚动的元素和 window 对象（浏览器窗口））
     var window_height = $(window).height();  // 窗口的高度
     var content_top = $('.content-col').offset().top;  // 右侧内容区距离窗口顶部的距离

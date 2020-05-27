@@ -3,19 +3,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>
         {% block title %}
-            {% if tag %}
-                标签页: {{ tag.name }}
-            {% elif category %}
-                分类页: {{ category.name }}
-            {% endif %}
-        {% endblock %}--Typeidea博客
+
+        {% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet"
           href="{% static 'css/a11y-dark.css' %}">
     <link rel="stylesheet" href="{% static 'css/blog/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog/fonts.css' %}">
 
     <script type="application/javascript"
             src="{% static 'js/jquery.slim.min.js' %}"></script>
@@ -43,65 +42,118 @@
             <div id="category_nav">
                 <div id="navbar_back">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="/">
-                        <img id="logo_img" src="{% static 'image/logo.png' %}" alt="">
-                    </a>
+                        <a class="navbar-brand" href="/">
+                            <img id="logo_img"
+                                 src="{% static 'image/logo.png' %}"
+                                 alt="www.gai520.com">
+                        </a>
 
-                    <button class="navbar-toggler" type="button"
-                            data-toggle="collapse"
-                            data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                        <button class="navbar-toggler" type="button"
+                                data-toggle="collapse"
+                                data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
 
-                    <div class="collapse navbar-collapse"
-                         id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/">首页 <span
-                                        class="sr-only">(current)</span></a>
-                            </li>
-                            {% for nav in navs %}
-                                <li class="nav-item">
-                                    <a class="nav-link"
-                                       href="{% url 'category' nav.id %}">{{ nav.name }}</a>
+                        <div class="collapse navbar-collapse"
+                             id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/">首页 <span
+                                            class="sr-only">(current)</span></a>
                                 </li>
-                            {% endfor %}
-                        </ul>
-                        <form action="/search/" class="form-inline my-2 my-lg-0"
-                              method="get">
-                            <input class="form-control mr-sm-2" type="search"
-                                   placeholder="Search" aria-label="Search"
-                                   value="{{ keyword }}" name="keyword">
-                            <button class="btn btn-outline-success my-2 my-sm-0"
-                                    type="submit">Search
-                            </button>
-                        </form>
-                    </div>
-                </nav>
+                                {% for nav in navs %}
+                                    <li class="nav-item active">
+                                        <a class="nav-link"
+                                           href="{% url 'category' nav.id %}">{{ nav.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <form action="/search/"
+                                  class="form-inline my-2 my-lg-0"
+                                  method="get">
+                                <input class="form-control mr-sm-2"
+                                       type="search"
+                                       placeholder="Search" aria-label="Search"
+                                       value="{{ keyword }}" name="keyword">
+                                <button class="btn btn-outline-success my-2 my-sm-0"
+                                        type="submit">Search
+                                </button>
+                            </form>
+                        </div>
+                    </nav>
                 </div>
 
             </div>
-            <div class="jumbotron">
-                <h1 class="display-4">Typeidea</h1>
-                <p class="lead">基于Django的多人博客系统</p>
-            </div>
         {% endblock %}
     </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb"
+            style="margin-bottom: 0; background:none;padding-left:0; padding-right: 0 ">
+            <li><span class="path_mark">当前位置:&nbsp;</span></li>
+            {% ifequal path_mark 'index' %}
+                <li class="breadcrumb-item"
+                    aria-current="page">
+                    <a class="path_mark_active" href="/">首页</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item">
+                    <a class="path_mark" href="/">首页</a>
+                </li>
+            {% endifequal %}
 
-    <div class="container">
+
+            {% ifequal path_mark 'category' %}
+                <li class="breadcrumb-item"
+                    aria-current="page">
+                    <a class="path_mark_active"
+                       href="{% url 'category' category.id %}">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% endifequal %}
+
+            {% ifequal path_mark 'tag' %}
+                <li class="breadcrumb-item"
+                    aria-current="page">
+                    <a class="path_mark_active"
+                       href="{% url 'tag' tag.id %}">{{ tag.id }}</a>
+                </li>
+            {% endifequal %}
+
+            {% ifequal path_mark 'post' %}
+                <li class="breadcrumb-item">
+                    <a class="path_mark"
+                       href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="path_mark_active">{{ post.title }}</span>
+                </li>
+            {% endifequal %}
+
+
+            {% ifequal path_mark 'search' %}
+                <li class="breadcrumb-item">
+                    <span class="path_mark_active">搜索结果</span>
+                </li>
+            {% endifequal %}
+
+        </ol>
+    </nav>
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-9" style="border-right: 1px solid lavender">
+            <div class="col-lg-8">
                 <div class="content-col">
                     {% block content %}
+
 
                     {% endblock %}
                 </div>
 
             </div>
-            <div class="col-lg-3 sidebar-col">
+            <div class="col-lg-4 sidebar-col">
                 <div class="sidebar-left">
                     {% block sidebar %}
                         {% for sidebar in sidebars %}
@@ -162,10 +214,10 @@
             <div class="container power"
                  style="text-align: center; margin-bottom: 20px">
             <span class="text-muted">
-                友情链接:
-                <a href="{% url 'link' %}">Links</a>
-                |&nbsp;Typeidea©Gai
-            </span>
+                Copyright © gai520.com 版权所有
+            </span><br>
+                <span class="text-muted">京ICP备200018329号-1</span>&nbsp;
+                <a href="/sidemap.xml" target="_blank" style="color: #6c757d">站点地图</a>
             </div>
         </div>
     </div>

@@ -36,6 +36,13 @@ class CommonViewMixin:
 
 
 class IndexView(CommonViewMixin, ListView):
+    def get_context_data(self, **kwargs):
+        print('aaaa')
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'path_mark': 'index',
+        })
+        return context
     # model = Post  # model 指定class based View要使用的数据库model
     queryset = Post.get_all()  # 指定cbv 要使用的查询集(过滤数据后), 与model二选一, 只用model时 django会进行普通all()查询
     paginate_by = 8  # 分页 每页显示的数量
@@ -49,9 +56,11 @@ class CategoryView(IndexView):
         context = super().get_context_data(**kwargs)
         category_id = self.kwargs.get('category_id')
         category = get_object_or_404(Category, pk=category_id)
-        context.update(
-            {'category': category}
-        )
+        context.update({
+            'category': category,
+            'path_mark': 'category',
+
+        })
         return context
 
     def get_queryset(self):
@@ -68,8 +77,9 @@ class TagView(IndexView):
         tag = get_object_or_404(Tag, pk=tag_id)
         context.update({
             'tag': tag,
+            'path_mark': 'tag',
         })
-        return  context
+        return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -96,6 +106,7 @@ class PostDetailView(CommonViewMixin, DetailView):
             #     .order_by('created_time'),
             'comment_form': CommentForm,
             'reply_form': ReplyForm,
+            'path_mark': 'post'
         })
         return context
 
@@ -126,7 +137,8 @@ class SearchView(IndexView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'keyword': self.request.GET.get('keyword', '')
+            'keyword': self.request.GET.get('keyword', ''),
+            'path_mark': 'search',
         })
         return context
 
