@@ -9,14 +9,25 @@ body {
     color: #444444;
 }
 
+.title_font_24 {
+    font-size: 24px;
+    color: #444444;
+}
+
 .post_desc_font {
     font-size: 12px;
+    color: #999999;
+}
+
+.desc_font_14 {
+    font-size: 14px;
     color: #999999;
 }
 
 .post_text_font {
     font-size: 14px;
     color: #666666;
+    line-height: 22px;
 }
 
 .div_boder {

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset=utf-8>
+        <title>css边角丝带效果</title>
+        <style type="text/css">
+            .test {
+                display: flex;
+                /* flex布局 ,适用一维布局，即行或者列*/
+                flex-direction: row;
+                /* 主轴方向为水平方向，起点在左端 */
+                justify-content: center;
+                /* 主轴排列方式 */
+                color: #fff;
+                /* 字体颜色 */
+                font-size: 50px;
+                /* 字体大小 */
+                width: 200px;
+                /* 容器的宽度 */
+                height: 200px;
+                /* 容器的高度度 */
+                background-image: linear-gradient(to bottom right, #49BCF5 50%, rgba(242, 242, 242, 0) 50%);
+                /* 从原点到右下角渐变 */
+                border-radius: 10px 0 0 0;
+                /* 右上角圆角 */
+            }
+            .word {
+                transform: rotate(-45deg);
+                /* 文字旋转 */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="test">
+            <span class="word">临时</span>
+        </div>
+    </body>
+</html>

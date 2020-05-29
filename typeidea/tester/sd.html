@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        .silk-ribbon {
+            display: block;
+            width: 48%;
+            height: 188px;
+            position: relative;
+            float: left;
+            margin-bottom: 30px;
+            background-color: #ccc;
+            color: white;
+        }
+
+
+
+        .silk-ribbon3 {
+            display: inline-block;
+            position: absolute;
+            width: 150px;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 15px;
+            background: #FF9900;
+            left: -8px;
+            top: 50px
+        }
+
+        .silk-ribbon3:before, .silk-ribbon3:after {
+            content: "";
+            position: absolute;
+        }
+
+        .silk-ribbon3:before {
+            height: 0;
+            width: 0;
+            border-bottom: 8px solid #993300;
+            border-left: 8px solid transparent;
+            top: -8px;
+            left: 0;
+        }
+
+        .silk-ribbon3:after {
+            height: 0;
+            width: 0;
+            border-top: 25px solid transparent;
+            border-bottom: 25px solid transparent;
+            border-left: 15px solid #FF9900;
+            right: -15px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="silk-ribbon"><span class="silk-ribbon3">丝带效果3</span></div>
+</body>
+</html>

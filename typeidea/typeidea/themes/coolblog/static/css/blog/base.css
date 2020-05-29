@@ -85,6 +85,11 @@ pre {
 }
 
 
+#side_breadcrumb {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 .breadcrumb-item + .breadcrumb-item::before {
     color: #666666;

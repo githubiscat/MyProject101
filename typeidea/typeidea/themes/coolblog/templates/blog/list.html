@@ -15,6 +15,11 @@
             overflow: hidden;
             display: block;
             position: relative;
+            cursor:pointer;
+        }
+
+        .post:hover {
+            border: 1px solid #FF9933;;
         }
 
         .post span, .post p {
@@ -77,41 +82,50 @@
                 height: 150px;
                 overflow: hidden;
                 float: left;
-                padding: 10px 20px;
+                padding: 5px 20px;
             }
 
             .card_post_title {
                 width: 100%;
-                height: 25%;
-                padding: 5px;
+                height: 34px;
                 text-overflow: ellipsis;
                 overflow: hidden;
-                -webkit-line-clamp: 2;
+                white-space: nowrap;
+                padding: 4px 0;
+                line-height: 26px;
             }
 
             .card_post_desc {
+                display: -webkit-box;
                 width: 100%;
-                height: 60%;
-                padding: 5px;
+                height: 74px;
+                padding: 4px 0;
                 text-overflow: ellipsis;
                 overflow: hidden;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
             }
 
             .card_post_other {
                 width: 100%;
-                height: 15%;
-                padding: 0 5px;
+                height: 32px;
+                padding: 6px 0 2px 0;
                 text-overflow: ellipsis;
                 overflow: hidden;
-                -webkit-line-clamp: 1;
+                white-space: nowrap;
+                line-height: 24px;
+            }
+
+            .card_post_other_minscreen {
+                display: none;
             }
 
         }
 
         @media screen and (max-width: 767px) {
             .card_img_cont {
-                width: 120px;
-                height: 90px;
+                width: 100px;
+                height: 75px;
                 overflow: hidden;
                 background-color: #b1dfbb;
                 border-radius: 10px;
@@ -125,20 +139,36 @@
             }
 
             .card_post {
-                width: calc(100% - 120px);
-                height: 90px;
+                width: calc(100% - 100px);
+                height: 75px;
                 overflow: hidden;
                 float: left;
-                padding: 5px 5px;
+                padding: 2px 5px;
+            }
+
+            .card_post_desc {
+                display: -webkit-box;
+                width: 100%;
+                height: 74px;
+                padding: 4px 0;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
             }
 
             .card_post_title {
+                display: -webkit-box;
                 width: 100%;
-                height: 80%;
-                padding: 0 5px 5px 5px;
+                height: 45px;
+                padding: 0 5px;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 font-size: 16px!important;
+                line-height: 22px;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+
             }
             .card_post_title > a {
                 font-size: 16px!important;
@@ -149,12 +179,18 @@
             }
 
             .card_post_other {
+                display: none;
+
+            }
+
+            .card_post_other_minscreen {
                 width: 100%;
-                height: 20%;
-                padding: 0 5px;
+                height: 26px;
+                padding: 8px 5px 2px 5px;
                 text-overflow: ellipsis;
                 overflow: hidden;
-                -webkit-line-clamp: 1;
+                line-height: 16px;
+                white-space: nowrap;
             }
         }
 
@@ -236,7 +272,7 @@
 
     {% for post in postlist %}
         {# 新写的文章卡片列#}
-        <div class="card post div_boder" style="padding: 10px;">
+        <div class="card post div_boder" style="padding: 10px;" onclick="window.open('{% url 'post' post.id %}','_self')">
             <div class="card_img_cont">
                 <img class="card_img"
                      src="/media/article_images/root/2020/05/28/1a1f6f0b3be22eaebc5f70a0989b4a25.png"
@@ -248,20 +284,26 @@
                        href="{% url 'post' post.id %}">{{ post.title }}</a>
                 </div>
                 <div class="card_post_desc post_text_font">
-                    {{ post.desc }} <a
-                        href="{% url 'post' post.id %}"> 详情>></a>
+                    {{ post.desc }}
                 </div>
                 <div class="card_post_other post_desc_font">
-                    <span class="card-link post_desc_font">作者: <a
-                            href="{% url 'auther' post.owner.id %}">{{ post.owner.username }}</a></span>
-                    <span class="card-link post_desc_font">分类: <a
+                    <span class=" desc_font_14">分类: <a class="desc_font_14"
                             href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>
-                    <span class="card-link post_desc_font">标签:
+                    <span class=" desc_font_14">标签:
                         {% for tag in post.tag.all %}
-                            <a href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
+                            <a class="desc_font_14" href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
                         {% endfor %}
                     </span>
                     <span class="card-link post_desc_font">更新时间: {{ post.created_time }}</span>
+                </div>
+                <div class="card_post_other_minscreen desc_font_14">
+                    {{ post.created_time }}
+                    &nbsp;&nbsp;
+                    <svg class="bi bi-eye" style="margin-bottom: 4px" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                      <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    {{ post.pv }}
                 </div>
             </div>
         </div>

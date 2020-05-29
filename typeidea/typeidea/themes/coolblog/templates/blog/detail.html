@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block title %}
-{#    {{ block.super }}#}
+    {#    {{ block.super }}#}
     {{ post.title }}
 {% endblock %}
 
@@ -170,14 +170,299 @@
             color: #858585;
         }
 
+        #post_text {
+            width: 100%;
+            min-height: 50vh;
+            background-color: #FFFFFF;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        #post_text:hover {
+            border: 1px solid #FF9933;
+        }
+
+        #post_text_tag {
+            margin: 0 0 5px 0;
+            padding: 0 10px;
+        }
 
 
+        @media screen and (min-width: 768px) {
+            #post_title {
+                width: 100%;
+                height: 54px;
+                padding: 5px 10px;
+                opacity: 1;
+                position: relative;
+            }
+
+            .silk-ribbon {
+                display: inline-block;
+                position: absolute;
+                width: 80%;
+                height: 50px;
+                line-height: 50px;
+                padding-left: 25px;
+                background: #FF9900;
+                left: -8px;
+                top: 10px;
+                padding-right: 15px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .silk-ribbon-text {
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                line-height: 50px;
+                height: 50px;
+                width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                opacity: 1;
+            }
+
+            .silk-ribbon-back {
+                display: inline-block;
+                position: absolute;
+                width: calc(80% + 15px);
+                height: 50px;
+                line-height: 50px;
+                padding-left: 25px;
+                background: #DDDDDD;
+                left: 0;
+                top: 0;
+                padding-right: 15px
+            }
+
+            .silk-ribbon:before, .silk-ribbon:after {
+                content: "";
+                position: absolute;
+                overflow: auto !important;
+            }
+
+            .silk-ribbon-back:before, .silk-ribbon-back:after {
+                content: "";
+                position: absolute;
+            }
+
+            .silk-ribbon:before {
+                height: 0;
+                width: 0;
+                border-bottom: 8px solid #993300;
+                border-left: 8px solid transparent;
+                top: -8px;
+                left: 0;
+            }
+
+            .silk-ribbon:after {
+                height: 0;
+                width: 0;
+                border-top: 25px solid transparent;
+                border-bottom: 25px solid transparent;
+                border-left: 15px solid #FF9900;
+                right: -15px;
+            }
+
+            .silk-ribbon-back:after {
+                height: 0;
+                width: 0;
+                border-top: 25px solid transparent;
+                border-bottom: 25px solid transparent;
+                border-left: 15px solid #DDDDDD;
+                right: -15px;
+            }
+
+            #post_other_info {
+                min-height: 20px;
+                width: 100%;
+                margin: 10px 0;
+                padding: 0 15px;
+                line-height: 20px;
+            }
+
+        }
+
+        @media screen and (max-width: 767px) {
+            #post_title {
+                width: 100%;
+                height: 50px;
+                padding: 5px 10px;
+                opacity: 1;
+                position: relative;
+            }
+
+            .silk-ribbon {
+                display: inline-block;
+                position: absolute;
+                width: calc(90% - 15px);
+                height: 40px;
+                line-height: 40px;
+                padding-left: 25px;
+                background: #FF9900;
+                left: -8px;
+                top: 10px;
+                padding-right: 15px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .silk-ribbon-text {
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                line-height: 40px;
+                height: 40px;
+                width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                opacity: 1;
+                font-size: 18px!important;
+                font-weight: bold;
+            }
+
+            .silk-ribbon-back {
+                display: inline-block;
+                position: absolute;
+                width: 90%;
+                height: 40px;
+                line-height: 40px;
+                padding-left: 25px;
+                background: #DDDDDD;
+                left: 0;
+                top: 0;
+                padding-right: 15px
+            }
+
+            .silk-ribbon:before, .silk-ribbon:after {
+                content: "";
+                position: absolute;
+                overflow: auto !important;
+            }
+
+            .silk-ribbon-back:before, .silk-ribbon-back:after {
+                content: "";
+                position: absolute;
+            }
+
+            .silk-ribbon:before {
+                height: 0;
+                width: 0;
+                border-bottom: 8px solid #993300;
+                border-left: 8px solid transparent;
+                top: -8px;
+                left: 0;
+            }
+
+            .silk-ribbon:after {
+                height: 0;
+                width: 0;
+                border-top: 20px solid transparent;
+                border-bottom: 20px solid transparent;
+                border-left: 15px solid #FF9900;
+                right: -15px;
+            }
+
+            .silk-ribbon-back:after {
+                height: 0;
+                width: 0;
+                border-top: 20px solid transparent;
+                border-bottom: 20px solid transparent;
+                border-left: 15px solid #DDDDDD;
+                right: -15px;
+            }
+
+            #post_other_info {
+                min-height: 20px;
+                width: 100%;
+                margin: 10px 0;
+                padding: 0 15px;
+                line-height: 20px;
+                font-size: 12px!important;
+            }
+        }
+
+    #post_text_content {
+        padding: 20px;
+        width: 100%;
+        min-height: 10px;
+    }
 
     </style>
+
 {% endblock %}
 
 {% block content %}
-    {{ block.super }}
+
+    <div id="post_text" class="div_boder">
+        <div id="post_text_tag" class="desc_font_14">
+            <svg class="bi bi-file-text" style="margin-bottom: 2px" width="1em"
+                 height="1em" viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>
+                <path fill-rule="evenodd"
+                      d="M4.5 10.5A.5.5 0 0 1 5 10h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+            正文
+        </div>
+        <div id="post_title" style="font-family: STsong">
+            <span class="silk-ribbon-back"></span>
+            <span class="silk-ribbon">
+                <span class="silk-ribbon-text title_font_24" title="{{ post.title }}" onclick="window.alert('文章标题: {{ post.title }}')">
+                    {{ post.title }}
+                </span>
+
+            </span>
+        </div>
+
+        <div id="post_other_info" class="desc_font_14">
+            {# 日期 #}
+            <svg class="bi bi-clock"  style="margin-bottom: 2px" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z"/>
+              <path fill-rule="evenodd" d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            {{ post.created_time|date:'Y年m月d日' }}&nbsp;&nbsp;
+            {# 评论量 #}
+            <svg class="bi bi-chat-square-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+              <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+            </svg>
+            {{ post.comment_set.count }}&nbsp;&nbsp;
+            {# 访问量 #}
+            <svg class="bi bi-eye" style="margin-bottom: 2px" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+              <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>
+            {{ post.pv }}&nbsp;&nbsp;
+            {# 分类 #}
+           <svg class="bi bi-bookmark" style="margin-bottom: 2px" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 12l5 3V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12l5-3zm-4 1.234l4-2.4 4 2.4V3a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10.234z"/>
+            </svg>
+            <a href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>&nbsp;&nbsp;
+            {# 标签 #}
+            <svg class="bi bi-tag" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M.5 2A1.5 1.5 0 0 1 2 .5h4.586a1.5 1.5 0 0 1 1.06.44l7 7a1.5 1.5 0 0 1 0 2.12l-4.585 4.586a1.5 1.5 0 0 1-2.122 0l-7-7A1.5 1.5 0 0 1 .5 6.586V2zM2 1.5a.5.5 0 0 0-.5.5v4.586a.5.5 0 0 0 .146.353l7 7a.5.5 0 0 0 .708 0l4.585-4.585a.5.5 0 0 0 0-.708l-7-7a.5.5 0 0 0-.353-.146H2z"/>
+              <path fill-rule="evenodd" d="M2.5 4.5a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm2-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+            </svg>
+            {% for t in post.tag.all %}
+                <a href="{% url 'tag' t.id %}">{{ t.name }}</a>
+            {% endfor %}
+        </div>
+        <div id="post_text_content" class="post_content">
+            {{ post.content|safe }}
+        </div>
+
+    </div>
+
+
+
+
+
 
     <h2 style="font-family: STsong">{{ post.title }}</h2>
     <span class="post_info">作者: <a
