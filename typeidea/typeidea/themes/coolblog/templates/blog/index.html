@@ -1,0 +1,169 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/blog/postlist.css' %}">
+    <script type="application/javascript">
+
+
+    </script>
+{% endblock %}
+
+{% block title %}
+    {% if tag %}
+        标签页: {{ tag.name }}
+    {% elif category %}
+        分类页: {{ category.name }}
+    {% else %}
+        首页
+    {% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+    {{ block.super }}
+    {# 首页轮播图 #}
+    <div id="sticky_posts_carousel_container">
+        <div id="carouselExampleCaptions" class="carousel slide"
+             data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleCaptions" data-slide-to="0"
+                    class="active"></li>
+                <li data-target="#carouselExampleCaptions"
+                    data-slide-to="1"></li>
+                <li data-target="#carouselExampleCaptions"
+                    data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/media/article_images/root/2020/05/28/img_1483.PNG"
+                         class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="color: red">第一张图片</h5>
+                        <p>第一图</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/media/article_images/root/2020/05/28/img_1484.PNG"
+                         class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="color: red">第二张图片</h5>
+                        <p>第二图</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/media/article_images/root/2020/05/27/lsneho.PNG"
+                         class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="color: red">第三张图片</h5>
+                        <p>第三图</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleCaptions"
+               role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon"
+                      aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleCaptions"
+               role="button" data-slide="next">
+                <span class="carousel-control-next-icon"
+                      aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+    {% for post in postlist %}
+        {# 新写的文章卡片列#}
+        <div class="card post div_boder" style="padding: 10px;"
+             onclick="window.open('{% url 'post' post.id %}','_self')">
+            <div class="card_img_cont">
+                <span class="silk-ribbon-2"><span>{{ post.category.name }}</span></span>
+                <div class="card_img_back">
+                    <img class="card_img"
+                     src="/media/article_images/root/2020/05/28/1a1f6f0b3be22eaebc5f70a0989b4a25.png"
+                     alt="">
+                </div>
+
+            </div>
+            <div class="card_post">
+                <div class="card_post_title post_title_font_big">
+                    <a class="post_title_font_big"
+                       href="{% url 'post' post.id %}">{{ post.title }}</a>
+                </div>
+                <div class="card_post_desc post_text_font">
+                    {{ post.desc }}
+                </div>
+                <div class="card_post_other post_desc_font">
+                    <span class=" desc_font_14">分类: <a class="desc_font_14"
+                                                       href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>
+                    <span class=" desc_font_14">标签:
+                        {% for tag in post.tag.all %}
+                            <a class="desc_font_14"
+                               href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </span>
+                    <span class="card-link post_desc_font">更新时间: {{ post.created_time }}</span>
+                </div>
+                <div class="card_post_other_minscreen desc_font_14">
+                    {{ post.created_time|date:'Y年m月d日' }}
+                    &nbsp;&nbsp;
+                    <svg class="bi bi-eye" style="margin-bottom: 4px"
+                         width="1em" height="1em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                        <path fill-rule="evenodd"
+                              d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    {{ post.pv }}
+                </div>
+            </div>
+        </div>
+
+        {#        <div class="card post div_boder">#}
+        {##}
+        {#            <div class="card-body ">#}
+        {#                <h5 class="catd-title post_title_font_big"><a#}
+        {#                        class="post_title_font_big"#}
+        {#                        href="{% url 'post' post.id %}">{{ post.title }}</a>#}
+        {#                </h5>#}
+        {#                <span class="card-link post_desc_font">作者: <a#}
+        {#                        href="{% url 'auther' post.owner.id %}">{{ post.owner.username }}</a></span>#}
+        {#                <span class="card-link post_desc_font">分类: <a#}
+        {#                        href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>#}
+        {#                <span class="card-link post_desc_font">标签:#}
+        {#                    {% for tag in post.tag.all %}#}
+        {#                        <a href="{% url 'tag' tag.id %}">{{ tag.name }}</a>#}
+        {#                    {% endfor %}#}
+        {#                </span>#}
+        {#                <span class="card-link post_desc_font">更新时间: {{ post.created_time }}</span>#}
+        {#                <p class="card-text post_desc_font">{{ post.desc }} <a#}
+        {#                        href="{% url 'post' post.id %}"> 详情>></a></p>#}
+        {##}
+        {#            </div>#}
+        {##}
+        {#        </div>#}
+    {% endfor %}
+
+
+    <div id="paginator">
+        {% if page_obj %}
+
+            {% if page_obj.has_previous %}
+                <span><a
+                        href="?page={{ page_obj.previous_page_number }}">上一页</a></span>
+            {% endif %}
+            <span>第{{ page_obj.number }}页 / 共{{ paginator.num_pages }}页.</span>
+            {% if page_obj.has_next %}
+                <span><a
+                        href="?page={{ page_obj.next_page_number }}">下一页</a></span>
+
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+{% endblock %}

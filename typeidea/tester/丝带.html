@@ -1,38 +1,91 @@
 <!DOCTYPE HTML>
 <html lang="en">
-    <head>
-        <meta charset=utf-8>
-        <title>css边角丝带效果</title>
-        <style type="text/css">
-            .test {
-                display: flex;
-                /* flex布局 ,适用一维布局，即行或者列*/
-                flex-direction: row;
-                /* 主轴方向为水平方向，起点在左端 */
-                justify-content: center;
-                /* 主轴排列方式 */
-                color: #fff;
-                /* 字体颜色 */
-                font-size: 50px;
-                /* 字体大小 */
-                width: 200px;
-                /* 容器的宽度 */
-                height: 200px;
-                /* 容器的高度度 */
-                background-image: linear-gradient(to bottom right, #49BCF5 50%, rgba(242, 242, 242, 0) 50%);
-                /* 从原点到右下角渐变 */
-                border-radius: 10px 0 0 0;
-                /* 右上角圆角 */
+<head>
+    <meta charset=utf-8>
+    <title>css边角丝带效果</title>
+    <style type="text/css">
+
+        .back {
+            display: block;
+            width: 200px;
+            height: 150px;
+            position: relative;
+            float: left;
+            margin-bottom: 30px;
+            background-color: #ccc;
+            color: white;
+        }
+
+        .back:nth-child(even) {
+            margin-right: 4%;
+        }
+
+        @media (max-width: 500px) {
+
+            .back:nth-child(even) {
+                margin-right: 0;
             }
-            .word {
-                transform: rotate(-45deg);
-                /* 文字旋转 */
-            }
-        </style>
-    </head>
-    <body>
-        <div class="test">
-            <span class="word">临时</span>
-        </div>
-    </body>
+        }
+
+        .silk-ribbon-2 {
+            position: absolute;
+            top: -6px;
+            right: 10px;
+        }
+
+        .silk-ribbon-2:after {
+            position: absolute;
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 38px solid transparent;
+            border-right: 38px solid transparent;
+            border-top: 10px solid #FF9933;
+        }
+
+        .silk-ribbon-2 span {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            background: #FF9933;
+            font-size: 14px;
+            line-height: 1;
+            padding: 8px 8px 4px;
+            border-top-right-radius: 8px;
+            width: 60px;
+        }
+
+        .silk-ribbon-2 span:before, .silk-ribbon-2 span:after {
+            position: absolute;
+            content: "";
+            display: block;
+        }
+
+        .silk-ribbon-2 span:before {
+            background: #FF9933;
+            height: 6px;
+            width: 6px;
+            left: -6px;
+            top: 0;
+        }
+
+        .silk-ribbon-2 span:after {
+            background: #993300;
+            height: 6px;
+            width: 8px;
+            border-radius: 8px 8px 0 0;
+            left: -8px;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="back">
+        <span class="silk-ribbon-2"><span>测试</span></span>
+    </div>
+
+</body>
 </html>

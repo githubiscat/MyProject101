@@ -24,8 +24,19 @@ body {
     color: #999999;
 }
 
+.text_font_14 {
+    font-size: 14px;
+    color: #666666;
+}
+
 .post_text_font {
     font-size: 14px;
+    color: #666666;
+    line-height: 22px;
+}
+
+.text_font_16 {
+    font-size: 16px;
     color: #666666;
     line-height: 22px;
 }
@@ -34,5 +45,7 @@ body {
     border: 1px solid #DDDDDD;
     box-shadow: 0 1px 1px #CCCCCC;
 }
+
+
 
 

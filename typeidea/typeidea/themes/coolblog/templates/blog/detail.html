@@ -124,11 +124,6 @@
             text-decoration: none;
         }
 
-        #comment_title {
-        {#font-size: 20px;#} margin: 40px 0 20px;
-            color: #555;
-        }
-
         .comment_info_content {
             color: #333333;
         }
@@ -158,7 +153,7 @@
             border-top: 1px solid rgba(0, 0, 0, .1);
             text-align: center;
             font-size: 14px;
-            margin: 40px 0 10px 0;
+            margin: 20px;
         }
 
         .hr_text {
@@ -279,9 +274,41 @@
             #post_other_info {
                 min-height: 20px;
                 width: 100%;
-                margin: 10px 0;
-                padding: 0 15px;
+                margin: 20px 0 15px 0;
+                padding: 0 20px;
                 line-height: 20px;
+            }
+
+            #last_next_post {
+                width: 100%;
+                height: 50px;
+                padding: 0;
+                margin: 10px 0;
+            }
+
+            #last_post {
+                width: 50%;
+                height: 50px;
+                padding: 5px 10px;
+                float: left;
+                border: 1px solid #DDDDDD;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                background-color: #FFFFFF;
+
+            }
+
+            #next_post {
+                width: 50%;
+                height: 50px;
+                padding: 5px 10px;
+                float: right;
+                border: 1px solid #DDDDDD;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                background-color: #FFFFFF;
             }
 
         }
@@ -321,7 +348,7 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
                 opacity: 1;
-                font-size: 18px!important;
+                font-size: 18px !important;
                 font-weight: bold;
             }
 
@@ -382,15 +409,88 @@
                 margin: 10px 0;
                 padding: 0 15px;
                 line-height: 20px;
-                font-size: 12px!important;
+                font-size: 12px !important;
             }
+
+            #last_next_post {
+                width: 100%;
+                height: 105px;
+                padding: 0;
+                margin: 10px 0;
+            }
+
+            #last_post {
+                width: 100%;
+                height: 50px;
+                padding: 5px 10px;
+                margin-bottom: 5px;
+                border: 1px solid #DDDDDD;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                background-color: #FFFFFF;
+
+            }
+
+            #next_post {
+                width: 100%;
+                height: 50px;
+                padding: 5px 10px;
+                margin-top: 5px;
+                border: 1px solid #DDDDDD;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                background-color: #FFFFFF;
+            }
+
+            .last_next_post_attr svg, .last_next_post_title svg{
+                display: none;
+            }
+
         }
 
-    #post_text_content {
-        padding: 20px;
-        width: 100%;
-        min-height: 10px;
-    }
+        #post_text_content {
+            padding: 20px;
+            width: 100%;
+            min-height: 10px;
+        }
+
+        #post_desc {
+            padding: 0 20px 10px 20px;
+            width: 100%;
+            min-height: 10px;
+        }
+
+        #comment {
+            background-color: #FFFFFF;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        #comment_title {
+            padding-bottom: 20px;
+        }
+
+
+        #next_post:hover, #last_post:hover {
+            background-color: #FF9933;
+        }
+
+        #next_post:hover div, #last_post:hover div {
+            color: #FFFFFF;
+        }
+
+        .last_next_post_attr, .last_next_post_title {
+            padding: 0;
+            margin: 0;
+            height: 20px;
+            line-height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
 
     </style>
 
@@ -400,20 +500,21 @@
 
     <div id="post_text" class="div_boder">
         <div id="post_text_tag" class="desc_font_14">
-            <svg class="bi bi-file-text" style="margin-bottom: 2px" width="1em"
-                 height="1em" viewBox="0 0 16 16" fill="currentColor"
-                 xmlns="http://www.w3.org/2000/svg">
+            <svg class="bi bi-book" width="1em" height="1em" viewBox="0 0 16 16"
+                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
-                      d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>
+                      d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z"/>
                 <path fill-rule="evenodd"
-                      d="M4.5 10.5A.5.5 0 0 1 5 10h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                      d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z"/>
             </svg>
-            正文
+            正在阅读
         </div>
         <div id="post_title" style="font-family: STsong">
             <span class="silk-ribbon-back"></span>
             <span class="silk-ribbon">
-                <span class="silk-ribbon-text title_font_24" title="{{ post.title }}" onclick="window.alert('文章标题: {{ post.title }}')">
+                <span class="silk-ribbon-text title_font_24"
+                      title="{{ post.title }}"
+                      onclick="window.alert('文章标题: {{ post.title }}')">
                     {{ post.title }}
                 </span>
 
@@ -422,73 +523,136 @@
 
         <div id="post_other_info" class="desc_font_14">
             {# 日期 #}
-            <svg class="bi bi-clock"  style="margin-bottom: 2px" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z"/>
-              <path fill-rule="evenodd" d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+            <svg class="bi bi-clock" style="margin-bottom: 2px" width="1em"
+                 height="1em" viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z"/>
+                <path fill-rule="evenodd"
+                      d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
             </svg>
             {{ post.created_time|date:'Y年m月d日' }}&nbsp;&nbsp;
             {# 评论量 #}
-            <svg class="bi bi-chat-square-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-              <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+            <svg class="bi bi-chat-square-dots" width="1em" height="1em"
+                 viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
             </svg>
             {{ post.comment_set.count }}&nbsp;&nbsp;
             {# 访问量 #}
-            <svg class="bi bi-eye" style="margin-bottom: 2px" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
-              <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            <svg class="bi bi-eye" style="margin-bottom: 2px" width="1em"
+                 height="1em" viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                <path fill-rule="evenodd"
+                      d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
             </svg>
             {{ post.pv }}&nbsp;&nbsp;
             {# 分类 #}
-           <svg class="bi bi-bookmark" style="margin-bottom: 2px" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M8 12l5 3V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12l5-3zm-4 1.234l4-2.4 4 2.4V3a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10.234z"/>
+            <svg class="bi bi-bookmark" style="margin-bottom: 2px" width="1em"
+                 height="1em" viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M8 12l5 3V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12l5-3zm-4 1.234l4-2.4 4 2.4V3a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10.234z"/>
             </svg>
             <a href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>&nbsp;&nbsp;
             {# 标签 #}
-            <svg class="bi bi-tag" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M.5 2A1.5 1.5 0 0 1 2 .5h4.586a1.5 1.5 0 0 1 1.06.44l7 7a1.5 1.5 0 0 1 0 2.12l-4.585 4.586a1.5 1.5 0 0 1-2.122 0l-7-7A1.5 1.5 0 0 1 .5 6.586V2zM2 1.5a.5.5 0 0 0-.5.5v4.586a.5.5 0 0 0 .146.353l7 7a.5.5 0 0 0 .708 0l4.585-4.585a.5.5 0 0 0 0-.708l-7-7a.5.5 0 0 0-.353-.146H2z"/>
-              <path fill-rule="evenodd" d="M2.5 4.5a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm2-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+            <svg class="bi bi-tag" width="1em" height="1em" viewBox="0 0 16 16"
+                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M.5 2A1.5 1.5 0 0 1 2 .5h4.586a1.5 1.5 0 0 1 1.06.44l7 7a1.5 1.5 0 0 1 0 2.12l-4.585 4.586a1.5 1.5 0 0 1-2.122 0l-7-7A1.5 1.5 0 0 1 .5 6.586V2zM2 1.5a.5.5 0 0 0-.5.5v4.586a.5.5 0 0 0 .146.353l7 7a.5.5 0 0 0 .708 0l4.585-4.585a.5.5 0 0 0 0-.708l-7-7a.5.5 0 0 0-.353-.146H2z"/>
+                <path fill-rule="evenodd"
+                      d="M2.5 4.5a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm2-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
             </svg>
             {% for t in post.tag.all %}
                 <a href="{% url 'tag' t.id %}">{{ t.name }}</a>
             {% endfor %}
         </div>
-        <div id="post_text_content" class="post_content">
+
+        <div id="post_desc" class="desc_font_14">
+            <svg class="bi bi-file-text" style="margin-bottom: 2px" width="1em"
+                 height="1em" viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>
+                <path fill-rule="evenodd"
+                      d="M4.5 10.5A.5.5 0 0 1 5 10h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+            简介:&nbsp;&nbsp;{{ post.desc }}
+        </div>
+        <div style="width: 100%;padding: 0 20px">
+            <hr color="#EEEEEEE">
+        </div>
+        <div id="post_text_content" class="post_content text_font_16">
             {{ post.content|safe }}
         </div>
 
     </div>
 
+    <div id="last_next_post">
+        {% if post.get_last_post %}
+            <div id="last_post" onclick="window.open('{% url "post" post.get_last_post.id %}', '_self')">
+            <div class="last_next_post_attr text_font_14">
+                <svg class="bi bi-caret-left-fill" style="margin-bottom: 2px"
+                     width="1em" height="1em" viewBox="0 0 16 16"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                </svg>
+                上一篇
+            </div>
+            <div class="last_next_post_title text_font_14">{{ post.get_last_post.title }}</div>
+        </div>
+        {% else %}
+            <div id="last_post">
+            <div class="last_next_post_attr text_font_14">
+                <svg class="bi bi-caret-left-fill" style="margin-bottom: 2px"
+                     width="1em" height="1em" viewBox="0 0 16 16"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                </svg>
+                上一篇
+            </div>
+            <div class="last_next_post_title text_font_14">已经是最新的文章了</div>
+        </div>
+        {% endif %}
 
 
+        {% if post.get_next_post %}
+            <div id="next_post" onclick="window.open('{% url "post" post.get_next_post.id %}', '_self')">
+            <div class="last_next_post_attr text_font_14">
+                下一篇
+                <svg class="bi bi-caret-right-fill" style="margin-bottom: 2px"
+                     width="1em" height="1em" viewBox="0 0 16 16"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                </svg>
+            </div>
+            <div class="last_next_post_title text_font_14">{{ post.get_next_post.title }}</div>
+            </div>
+        {% else %}
+            <div id="next_post">
+            <div class="last_next_post_attr text_font_14">
+                下一篇
+                <svg class="bi bi-caret-right-fill" style="margin-bottom: 2px"
+                     width="1em" height="1em" viewBox="0 0 16 16"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                </svg>
+            </div>
+            <div class="last_next_post_title text_font_14">已经是最后文章了</div>
+            </div>
+        {% endif %}
 
 
-
-    <h2 style="font-family: STsong">{{ post.title }}</h2>
-    <span class="post_info">作者: <a
-            href="{% url 'auther' post.owner.id %}">{{ post.owner.username }}</a></span>
-    <span class="post_info">更新于 {{ post.created_time }}</span>
-    <span class="post_info">阅读数: {{ post.pv }}</span>
-    <span class="post_info">分类: <a
-            href="{% url 'post' post.id %}">{{ post.category.name }}</a></span>
-    <span class="post_info"> 标签:
-        {% for t in post.tag.all %}
-            <a href="{% url 'tag' t.id %}">{{ t.name }}</a>
-        {% endfor %}
-    </span>
-    <br>
-    {% if post.desc %}
-        <p style="font-size: 13px">简介: {{ post.desc }}</p>
-    {% endif %}
-    <hr>
-    <div class="post_content">{{ post.content|safe }}</div>
-
-    <div class="hr_line">
-        <span class="hr_text">文章到底了</span>
     </div>
 
-    <div id="comment">
-        <div id="comment_title"><h4>{{ post.comment_set.count }}条评论</h4></div>
+    <div id="comment" class="div_boder">
+        <div id="comment_title"
+             class="title_font_24">{{ post.comment_set.count }}条评论
+        </div>
 
         <ul class="list-group">
             {% for comment in post.comment_set.all %}

@@ -47,7 +47,7 @@ class IndexView(CommonViewMixin, ListView):
     queryset = Post.get_all()  # 指定cbv 要使用的查询集(过滤数据后), 与model二选一, 只用model时 django会进行普通all()查询
     paginate_by = 8  # 分页 每页显示的数量
     context_object_name = 'postlist'  # 传递到模板的上下文对象的名称 (默认到模板中是object_list)
-    template_name = 'blog/list.html'  # 指定要渲染的模板
+    template_name = 'blog/index.html'  # 指定要渲染的模板
 
 
 class CategoryView(IndexView):
@@ -69,6 +69,7 @@ class CategoryView(IndexView):
         category_id = self.kwargs.get('category_id')
         return queryset.filter(category_id=category_id)
 
+    template_name = 'blog/list.html'
 
 class TagView(IndexView):
     def get_context_data(self, **kwargs):
@@ -85,6 +86,8 @@ class TagView(IndexView):
         queryset = super().get_queryset()
         tag_id = self.kwargs.get('tag_id')
         return queryset.filter(tag__id=tag_id)
+
+    template_name = 'blog/list.html'
 
 
 class PostDetailView(CommonViewMixin, DetailView):
@@ -153,12 +156,16 @@ class SearchView(IndexView):
                                | Q(desc__icontains=keyword)
                                | Q(content__icontains=keyword))
 
+    template_name = 'blog/list.html'
+
 
 class AutherView(IndexView):
     def get_queryset(self):
         queryset = super().get_queryset()
         auther_id = self.kwargs.get('owner_id')
         return queryset.filter(owner_id=auther_id)
+
+    template_name = 'blog/list.html'
 
 
 

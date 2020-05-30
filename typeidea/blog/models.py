@@ -145,6 +145,19 @@ class Post(models.Model):
     def tags(self):
         return ','.join(self.tag.values_list('name', flat=True))
 
+    @property
+    def get_next_post(self):
+        return Post.objects.values('id', 'title').\
+            filter(status=Post.STATUS_NORMAL).\
+            filter(id__lt=self.id).order_by('id').last()
+
+    @property
+    def get_last_post(self):
+        return Post.objects.values('id', 'title').\
+            filter(status=Post.STATUS_NORMAL).\
+            filter(id__gt=self.id).order_by('id').first()
+
+
 
 class PostUploadFile(models.Model):
     STATUS_USED = 1
