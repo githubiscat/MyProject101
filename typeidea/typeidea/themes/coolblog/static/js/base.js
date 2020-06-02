@@ -50,7 +50,7 @@ $(document).ready(function () {
 
         // 侧边栏 如果侧边栏的滑到了底部 设置为绝对定位 不让其再滑动
         // 如果窗口滑动距离大于侧边栏距离窗口顶部高度(前提是右侧内容区高于左侧侧边栏)
-        if (content_height > side_height) {
+        if (content_height > side_height ) {
             if (s_height > side_height) {
                 $('.sidebar-left').addClass('sidebar-left-to-bottom');
                 $('.sidebar-left-to-bottom').css({
