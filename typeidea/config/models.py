@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.loader import render_to_string
 
+from blog.models import Category, Tag
+
 
 class Link(models.Model):
     STATUS_NORMAL = 1
@@ -31,6 +33,7 @@ class SideBar(models.Model):
     DISPLAY_LATEST = 2
     DISPLAY_HOT = 3
     DISPLAY_COMMENT = 4
+    DISPLAY_TAG = 5
     STATUS_SHOW = 1
     STATUS_HIDE = 0
     STATUS_ITEMS = (
@@ -42,6 +45,7 @@ class SideBar(models.Model):
         (DISPLAY_LATEST, '最新文章'),
         (DISPLAY_HOT, '最热文章'),
         (DISPLAY_COMMENT, '最近评论'),
+        (DISPLAY_TAG, '标签云')
     )
     title = models.CharField(max_length=50, verbose_name='标题')
     display_type = models.PositiveIntegerField(default=1, choices=SIDE_TYPE,
@@ -86,6 +90,11 @@ class SideBar(models.Model):
                 'comments': Comment.get_latest()
             }
             result = render_to_string('config/blocks/sidebar_comments.html', context)
+        elif self.display_type == self.DISPLAY_TAG:
+            context = {
+                'tags': Tag.get_all()
+            }
+            result = render_to_string('config/blocks/sidebar_tag_cloud.html', context)
         return result
 
     def __str__(self):

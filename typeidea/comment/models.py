@@ -6,9 +6,11 @@ from blog.models import Post
 class Comment(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
+    STATUS_ACTIVE = 2
     STATUS_ITEMS = (
-        (STATUS_NORMAL, '正常'),
-        (STATUS_DELETE, '删除')
+        (STATUS_NORMAL, '已审核'),
+        (STATUS_DELETE, '删除'),
+        (STATUS_ACTIVE, '待审核'),
     )
 
     target = models.ForeignKey(Post, on_delete=models.PROTECT,
@@ -17,7 +19,9 @@ class Comment(models.Model):
     nickname = models.CharField(max_length=32, verbose_name='昵称')
     website = models.URLField(verbose_name='网站', blank=True)
     email = models.EmailField(verbose_name='邮箱')
-    status = models.PositiveIntegerField(default=STATUS_NORMAL,
+    ip = models.CharField(max_length=16, verbose_name='IP地址', blank=True)
+    active_code = models.CharField(max_length=32, verbose_name='激活码', blank=True)
+    status = models.PositiveIntegerField(default=STATUS_ACTIVE,
                                          choices=STATUS_ITEMS,
                                          verbose_name='状态')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
@@ -32,6 +36,10 @@ class Comment(models.Model):
         return cls.objects.filter(status=cls.STATUS_NORMAL)\
             .select_related('target').order_by('-created_time')[:5]
 
+    @property
+    def get_normal_reply(self):
+        return self.reply_set.filter(status=1)  # 在Reply中status=1代表回复已经审核
+
     def __str__(self):
         return 'C_id' + str(self.id)
 
@@ -42,9 +50,11 @@ class Comment(models.Model):
 class Reply(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
+    STATUS_ACTIVE = 2
     STATUS_ITEMS = (
-        (STATUS_NORMAL, '正常'),
-        (STATUS_DELETE, '删除')
+        (STATUS_NORMAL, '已审核'),
+        (STATUS_DELETE, '删除'),
+        (STATUS_ACTIVE, '待审核'),
     )
     REPLY_COMMENT = 0
     REPLY_REPLY = 1
@@ -52,7 +62,7 @@ class Reply(models.Model):
         (REPLY_COMMENT, '对评论回复'),
         (REPLY_REPLY, '对回复回复')
     )
-    status = models.PositiveSmallIntegerField(default=STATUS_NORMAL,
+    status = models.PositiveSmallIntegerField(default=STATUS_ACTIVE,
                                               choices=STATUS_ITEMS,
                                               verbose_name='状态')
     comment = models.ForeignKey(Comment, on_delete=models.PROTECT,
@@ -64,6 +74,9 @@ class Reply(models.Model):
     from_name = models.CharField(max_length=32, verbose_name='回复人昵称')
     from_email = models.EmailField(verbose_name='回复人邮箱')
     from_website = models.URLField(verbose_name='回复人站点', blank=True)
+    ip = models.CharField(max_length=16, verbose_name='IP地址', blank=True)
+    active_code = models.CharField(max_length=32, verbose_name='激活码',
+                                   blank=True)
     to_name = models.CharField(max_length=32, verbose_name='被回复人昵称')
     from_content = models.CharField(max_length=1024, verbose_name='回复内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
@@ -80,7 +93,6 @@ class Reply(models.Model):
         if self.reply_type == 0:
             return None
         else:
-            print(self.reply_id)
             return self.get_reply_by_id(self.reply_id)
     class Meta:
         verbose_name = verbose_name_plural = '回复'

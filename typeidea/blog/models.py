@@ -158,6 +158,10 @@ class Post(models.Model):
             filter(id__gt=self.id).order_by('id').first()
 
 
+    @property
+    def get_normal_comment(self):
+        return self.comment_set.filter(status=1)  # Comment中status=1代表已经激活
+
 
 class PostUploadFile(models.Model):
     STATUS_USED = 1

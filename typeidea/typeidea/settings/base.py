@@ -52,9 +52,13 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 访问限制
+    'blog.middleware.access_restrictions.AccessRestrictionsMiddleware',
     # pv uv 访问统计中间件
     'blog.middleware.user_id.UserIDMiddleware',
-
+    # 限制用户非法提交大量垃圾评论
+    'blog.middleware.comment_filter.CommentFilterMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,6 +102,16 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": ''
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -131,6 +145,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+# 邮件通知
+EMAIL_HOST = "smtp.163.com"
+EMAIL_PORT = 25 # 大多都是25；若使用SSL，端口号465或587
+EMAIL_HOST_USER = "" #发送邮箱
+EMAIL_HOST_PASSWORD = "" # 使用的是QQ的授权码，不是你的密码
+EMAILE_USE_TLS = True #一定要是True，否则发不了
+EMAIL_FROM = "" #邮件发送人(邮件中所显示的发送人，和EMAIL_HOST_USER同)
+EMAIL_TO = []
+
+# 绑定的域名
+HOST_NAME = 'http://localhost:8099'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

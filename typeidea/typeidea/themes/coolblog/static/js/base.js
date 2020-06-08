@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
     $('.navbar').css({
         'position': 'fixed',
-        'z-index': 5,
+        'z-index': 9999,
         'left': 0,
         'top': 0,
         'width': '100%',
@@ -50,18 +50,21 @@ $(document).ready(function () {
 
         // 侧边栏 如果侧边栏的滑到了底部 设置为绝对定位 不让其再滑动
         // 如果窗口滑动距离大于侧边栏距离窗口顶部高度(前提是右侧内容区高于左侧侧边栏)
+
         if (content_height > side_height ) {
-            if (s_height > side_height) {
+            if (s_height > (side_height + 120)) {
                 $('.sidebar-left').addClass('sidebar-left-to-bottom');
                 $('.sidebar-left-to-bottom').css({
                     'left': side_left,
-                    'width': side_width
+                    'width': side_width,
+                    'bottom': 120,
 
                 })
             } else {
                 $('.sidebar-left-to-bottom').css({
                     'left': '',
                     'width': '',
+                    'bottom': '',
                 });
                 $('.sidebar-left').removeClass('sidebar-left-to-bottom')
             }

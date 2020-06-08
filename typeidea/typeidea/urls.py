@@ -25,10 +25,12 @@ from blog.rss import LatestPostFeed
 from blog.sitemap import PostSitemap
 from blog.views import IndexView, CategoryView, TagView, PostDetailView, \
     SearchView, AutherView
-from comment.views import CommentView, reply_comment
+from comment.views import CommentView, reply_comment, active_comment, \
+    refuse_comment, set_black
 from config.views import LinkListView
 from typeidea.autocomplete import TagAutocomplete, CategoryAutocomplete
 from typeidea.custom_site import custom_site
+
 
 urlpatterns = [
     # class view
@@ -45,6 +47,9 @@ urlpatterns = [
     # RSS
     re_path(r'^rss/$', LatestPostFeed(), name='rss'),
     re_path(r'^sitemap\.xml$', sitemap_views.sitemap, {'sitemaps': {'posts': PostSitemap}}),
+    re_path(r'^active/', active_comment, name='active'),
+    re_path(r'^refuse/', refuse_comment, name='refuse'),
+    re_path(r'^setblack/', set_black, name='setblack'),
 
     # func view
     # re_path(r'^$', post_list),

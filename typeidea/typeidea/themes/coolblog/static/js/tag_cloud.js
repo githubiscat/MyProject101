@@ -1,4 +1,4 @@
-var radius = 100;
+var radius = 80;
 var d = 200;
 var dtr = Math.PI / 180;
 var mcList = [];
@@ -22,7 +22,7 @@ window.onload = function () {
         aA[i].onmouseover = (function (obj) {
             return function () {
                 obj.on = true;
-                this.style.zIndex = 9999;
+                this.style.zIndex = 2;
                 this.style.color = '#fff';
                 this.style.padding = '5px 5px';
                 this.style.filter = "alpha(opacity=100)";

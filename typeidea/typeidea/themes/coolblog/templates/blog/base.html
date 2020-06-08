@@ -186,53 +186,8 @@
             </div>
         </div>
     </div>
-
-    <br>
-    <div class="container" id="foot">
-        <div class="row">
-            <div class="col-lg-9">
-                <div id="foot_category">
-                    <ul class="nav">
-                        <li class="nav-item"><a href="javascript:return false"
-                                                class="nav-link">更多类别: </a></li>
-                        {% for cate in categorys %}
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   href="{% url 'category' cate.id %}">{{ cate.name }}</a>
-                            </li>
-                        {% endfor %}
-                        {% for tag in tags %}
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
-                            </li>
-                        {% endfor %}
-
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3"></div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <hr>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="container power"
-                 style="text-align: center; margin-bottom: 20px">
-            <span class="text-muted">
-                Copyright © gai520.com 版权所有
-            </span><br>
-                <span class="text-muted">京ICP备200018329号-1</span>&nbsp;
-                <a href="/sidemap.xml" target="_blank" style="color: #6c757d">站点地图</a>
-            </div>
-        </div>
-    </div>
-
 </div>
+
 
 
 <button class="return_top">
@@ -245,5 +200,9 @@
     <p style="font-size: 14px; margin:0;padding: 0; text-align: center">返回顶部</p>
 </button>
 
+<div id="sitefoot" style="">
+    Copyright © gai520.com 版权所有 <br>
+    京ICP备200018329号-1 | <a href="/sitemap.xml" target="_blank" style="color: #FFFFFF">站点地图</a>
+</div>
 </body>
 </html>

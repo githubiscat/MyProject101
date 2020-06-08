@@ -651,11 +651,11 @@
 
     <div id="comment" class="div_boder">
         <div id="comment_title"
-             class="title_font_24">{{ post.comment_set.count }}条评论
+             class="title_font_24">{{ post.get_normal_comment.count }}条评论
         </div>
 
         <ul class="list-group">
-            {% for comment in post.comment_set.all %}
+            {% for comment in post.get_normal_comment %}
                 <li class="list-group-item">
                     <div class="one_comment row">
                         <div class="image_col col-2">
@@ -713,7 +713,7 @@
                     </div>
 
                     <div class="one_comment_replys">
-                        {% for reply in comment.reply_set.all %}
+                        {% for reply in comment.get_normal_reply %}
                             <div class="one_replys row">
                                 <div class="image_col col-2">
                                     <div class="user_image_div"

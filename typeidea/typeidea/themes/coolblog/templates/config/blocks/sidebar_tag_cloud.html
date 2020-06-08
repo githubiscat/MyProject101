@@ -1,0 +1,9 @@
+{% load static %}
+
+<div id="tag_cloud">
+    {% for tag in tags %}
+        <a href="{% url 'tag' tag.id %}" class="{% cycle 'tagc1' 'tagc2' 'tagc3' 'tagc4' %} tag_cloud_a">{{ tag.name }}</a>
+    {% endfor %}
+</div>
+
+<script src="{% static 'js/tag_cloud.js' %}" type="text/javascript"></script>

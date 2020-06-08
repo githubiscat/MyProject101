@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<span>你有一个新的评论待审核!</span><br><br>
+
+&emsp;<span style="font-weight: bold; margin:10px 0 5px 0">评论内容:</span>
+
+<div style="padding: 10px 20px; margin: 10px;font-weight: bold; border: 1px solid #666666">
+    {{ comment }}
+</div>
+
+&emsp;<span style="font-weight: bold; margin:10px 0 5px 0">目标文章:</span>
+
+<div style="padding: 0 20px; margin: 10px">< {{ post }} ></div>
+
+&emsp;<span style="font-weight: bold; margin:10px 0 5px 0">昵称:</span><span>&nbsp;&nbsp;{{ nickname }}</span><br>
+&emsp;<span style="font-weight: bold; margin:10px 0 5px 0">邮箱:</span><span>&nbsp;&nbsp;{{ email }}</span><br>
+&emsp;<span style="font-weight: bold; margin:10px 0 5px 0">友链:</span><span>&nbsp;&nbsp;{{ website }}</span><br>
+&emsp;<span style="font-weight: bold; margin:10px 0 5px 0">提示:</span><span>&nbsp;&nbsp;这是该用户今天发表的第</span>
+<span style="font-weight: bold;color: red"> {{ access_count }} </span>次评论.<br>
+&emsp;<span style="font-weight: bold; margin:10px 0 5px 0">IP:</span><span>&nbsp;&nbsp;{{ ip }}</span><br>
+<div style="padding: 30px 0">
+    你的意见是: &nbsp;&nbsp;
+    <a href="{{ active_path }}" style="color: green;font-weight: bold; font-size: 24px">通过</a>
+    &emsp;&emsp;
+    <a href="{{ refuse_path }}" style="font-weight: bold; color: red; font-size: 24px">拒绝</a>
+</div>
+<br>
+<span>紧急处理:</span>&nbsp;&nbsp;<a href="{{ setblack_path }}" style="color: red; font-weight: bold">禁止该用户访问本站</a>
+</body>
+</html>

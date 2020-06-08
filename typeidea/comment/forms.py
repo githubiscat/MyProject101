@@ -60,7 +60,7 @@ class CommentForm(forms.ModelForm):
         fields= ['nickname', 'email', 'website', 'content']
 
 
-class ReplyForm(forms.Form):
+class ReplyForm(forms.ModelForm):
     from_name = forms.CharField(
         label='昵称',
         max_length=16,
