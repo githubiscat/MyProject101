@@ -2,10 +2,11 @@ from datetime import date
 
 from django.core.cache import cache
 from django.db.models import Q, F
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render, get_object_or_404, render_to_response
 
 # Create your views here.
+from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView
 
 from blog.models import Tag, Post, Category
@@ -22,6 +23,17 @@ DetailView ListView 等CBV(class-based-view). 封装的程度更高只需要配�
 相应的配置参数作用在下面代码中会做出解释 
 """
 
+def return404(request, exception):
+    content = {
+        'title':'404页面未找到',
+        'sidebars': SideBar.get_all(),
+        'tags': Tag.get_all(),
+    }
+    content.update(Category.get_navs())
+    body = render_to_string('blog/404.html',context=content)
+    return HttpResponseNotFound(body)
+
+
 
 class CommonViewMixin:
     """ 获取通用的部分 侧边栏 热导航等  """
@@ -37,7 +49,6 @@ class CommonViewMixin:
 
 class IndexView(CommonViewMixin, ListView):
     def get_context_data(self, **kwargs):
-        print('aaaa')
         context = super().get_context_data(**kwargs)
         context.update({
             'path_mark': 'index',

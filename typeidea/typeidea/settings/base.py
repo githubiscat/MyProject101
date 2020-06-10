@@ -154,6 +154,7 @@ EMAILE_USE_TLS = True #一定要是True，否则发不了
 EMAIL_FROM = "" #邮件发送人(邮件中所显示的发送人，和EMAIL_HOST_USER同)
 EMAIL_TO = []
 
+
 # 绑定的域名
 HOST_NAME = 'http://localhost:8099'
 

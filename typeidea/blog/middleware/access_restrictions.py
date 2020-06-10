@@ -8,6 +8,7 @@ class AccessRestrictionsMiddleware(MiddlewareMixin):
         r_path = request.path
         # 对以下地址限制访问频率
         if r_path.startswith(('/post/','/tag/','/category/', '/search/')) or r_path=='/':
+
             if request.META.__contains__('HTTP_X_FORWARDED_FOR'):
                 remote_ip = request.META.get('HTTP_X_FORWARDED_FOR')
             elif request.META.__contains__('REMOTE_ADDR'):

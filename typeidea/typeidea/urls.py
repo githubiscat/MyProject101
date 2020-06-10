@@ -21,6 +21,7 @@ from django.contrib.sitemaps import views as sitemap_views
 from django.urls import path, re_path, include
 from django.views.generic import RedirectView
 
+from blog import views
 from blog.rss import LatestPostFeed
 from blog.sitemap import PostSitemap
 from blog.views import IndexView, CategoryView, TagView, PostDetailView, \
@@ -68,3 +69,5 @@ urlpatterns = [
 
     # path(r'admin/', custom_site.urls)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = "blog.views.return404"
