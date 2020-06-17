@@ -50,13 +50,15 @@ class CommonViewMixin:
 class IndexView(CommonViewMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        top_posts = Post.get_top()
         context.update({
             'path_mark': 'index',
+            'top_posts': top_posts,
         })
         return context
     # model = Post  # model 指定class based View要使用的数据库model
     queryset = Post.get_all()  # 指定cbv 要使用的查询集(过滤数据后), 与model二选一, 只用model时 django会进行普通all()查询
-    paginate_by = 8  # 分页 每页显示的数量
+    paginate_by = 10  # 分页 每页显示的数量
     context_object_name = 'postlist'  # 传递到模板的上下文对象的名称 (默认到模板中是object_list)
     template_name = 'blog/index.html'  # 指定要渲染的模板
 
@@ -163,6 +165,13 @@ class SearchView(IndexView):
             return queryset
         print(keyword)
         # Q(owner__username__icontains=keyword) 根据用户名做查询
+        q = queryset.filter(Q(title__icontains=keyword)
+                               | Q(desc__icontains=keyword)
+                               | Q(content__icontains=keyword))
+        if len(q):
+            return q
+        else:
+            pass
         return queryset.filter(Q(title__icontains=keyword)
                                | Q(desc__icontains=keyword)
                                | Q(content__icontains=keyword))

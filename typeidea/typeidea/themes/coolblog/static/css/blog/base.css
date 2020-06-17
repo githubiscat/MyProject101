@@ -52,35 +52,7 @@ pre {
     font-weight: bold;
 }
 
-.return_top {
-    font-size: 24px;
-    background: none;
-    border: none;
-    outline: none;
-    color: rgba(68, 68, 68, 0.9);
-    z-index: 2;
-    display: none;
-    position: fixed;
-    bottom: 8vh;
-    right: 0.5vw;
-    text-align: center;
-    font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif;
-}
 
-.return_top:focus,
-.return_top:hover,
-.return_top:active,
-.return_top:visited {
-    background: none;
-    border: none;
-    box-shadow: none;
-    outline: none;
-}
-
-.return_top:hover {
-    color: #ed5736;
-    outline: none;
-}
 
 
 #side_breadcrumb {
@@ -216,4 +188,89 @@ pre {
     font-size: 14px;
     line-height: 30px;
     color: #EEEEEE;
+}
+
+.little_tools {
+    position: fixed;
+    z-index: 5;
+    right: 15px;
+    bottom: 50px;
+    width: 35px;
+    height: auto;
+}
+
+.little_tools_button {
+    background-color: #f8f9fa;
+    border: 1px solid #DDDDDD;
+    margin-bottom: 5px;
+    opacity: 0.8;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+
+.little_tools_button:focus,
+.little_tools_button:hover,
+.little_tools_button:active,
+.little_tools_button:visited {
+    border: 1px solid #DDDDDD;
+    box-shadow: none;
+    outline: none;
+}
+
+.little_tools_button:hover {
+    color: #ed5736;
+    outline: none;
+}
+
+#post_catalog {
+    position: fixed;
+    z-index: 999;
+    right: 55px;
+    bottom: 50px;
+    width: 200px;
+    height: 240px;
+    opacity: 0.95;
+    border: 1px solid #999999;
+    display: none;
+}
+
+#post_catalog_list {
+    float: left;
+    overflow: paged-y;
+    width: 173px;
+    height: 100%;
+    background-color: #FFFFFF;
+    padding: 10px 2px 5px 2px;
+
+}
+
+#post_catalog_list a{
+    color: #333333;
+}
+
+#post_catalog_title {
+    float: right;
+    width: 25px;
+    height: 100%;
+    text-align: center;
+    /*writing-mode:vertical-lr;*/
+    margin: 0 auto;
+    border-left: 1px solid #DDDDDD;
+    background-color: #4d99bf;
+    color: #FFFFFF;
+}
+
+
+#post_catalog_button:after,
+#post_catalog_button:hover,
+#post_catalog_button{
+    border: none;
+    background-color: unset;
+    color: #FFFFFF;
+    padding: 0;
+    box-shadow: none;
+    outline: none;
 }

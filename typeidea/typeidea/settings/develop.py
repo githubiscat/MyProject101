@@ -10,7 +10,7 @@
 from .base import *  # NOQA
 
 
-DEBUG = False
+DEBUG = True
 
 DATABASES = {
     'default': {

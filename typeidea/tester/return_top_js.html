@@ -16,12 +16,14 @@
             height: 2000px;
             background-color: red;
         }
-        .rig{
+
+        .rig {
             width: 20%;
             float: right;
             height: 1200px;
             background: green;
         }
+
         .rig_bottom {
             position: fixed;
             float: left;
@@ -35,9 +37,9 @@
             background: none;
             border: none;
             outline: none;
-            outline-color: rgba(255,255,255,0);
-            color: rgba(68,68,68,0.9);
-            z-index:2;
+            outline-color: rgba(255, 255, 255, 0);
+            color: rgba(68, 68, 68, 0.9);
+            z-index: 2;
             display: none;
             position: fixed;
             bottom: 8vh;
@@ -48,18 +50,35 @@
 
         .return_top:active,
         .return_top:visited,
-        .return_top:hover{
+        .return_top:hover {
             background: none;
             border: none;
             box-shadow: none;
             outline: none;
             outline-color: rgba(255, 255, 255, 0);
         }
+
         .return_top:hover {
             color: #ed5736;
 
         }
 
+        .little_tools {
+            position: fixed;
+            z-index: 5;
+            right: 10px;
+            bottom: 50px;
+            width: 30px;
+            height: auto;
+        }
+
+        .little_tools_button {
+            background-color: #f8f9fa;
+            border: 1px solid #DDDDDD;
+            margin-bottom: 5px;
+            opacity: 0.8;
+
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -82,7 +101,6 @@
             var w_height = 200;
             $(window).scroll(function () {
                 //创建一个变量存储当前窗口下移的高度
-
                 var scroTop = $(window).scrollTop();
                 var s_height = scroTop + window_height;  //获取滚动条滚动距离+窗口高度
                 //判断当前窗口滚动高度
@@ -99,7 +117,7 @@
                         'left': side_left,
 
                     })
-                }else {
+                } else {
                     $('.rig_bottom').css({
                         'left': '',
                     });
@@ -112,11 +130,66 @@
                 //将当前窗口的内容区滚动高度改为0，即顶部
                 $("html,body").animate({scrollTop: 0}, "normal");
             });
+            $('.return_bottom').click(function () {
+                $('html,body').animate({scrollTop: $(document).height()}, 'normal')
+            })
 
         });
     </script>
 </head>
 <body>
+
+<div class="little_tools">
+    <button class="little_tools_button" title="目录">
+        <svg class="bi bi-list-ul" width="1em" height="1em" viewBox="0 0 16 16"
+             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+    </button>
+    <button class="little_tools_button" title="返回顶部">
+        <svg class="bi bi-caret-up" width="1em" height="1em" viewBox="0 0 16 16"
+             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+        </svg>
+    </button>
+    <button class="little_tools_button" title="转到底部">
+        <svg class="bi bi-caret-down" width="1em" height="1em"
+             viewBox="0 0 16 16" fill="currentColor"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M3.204 5L8 10.481 12.796 5H3.204zm-.753.659l4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+        </svg>
+    </button>
+    <button class="little_tools_button" title="评论">
+        <svg class="bi bi-chat-square-dots" width="1em" height="1em"
+             viewBox="0 0 16 16" fill="currentColor"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+    </button>
+    <button class="little_tools_button" title="分享">
+        <svg class="bi bi-reply" width="1em" height="1em" viewBox="0 0 16 16"
+             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M9.502 5.013a.144.144 0 0 0-.202.134V6.3a.5.5 0 0 1-.5.5c-.667 0-2.013.005-3.3.822-.984.624-1.99 1.76-2.595 3.876C3.925 10.515 5.09 9.982 6.11 9.7a8.741 8.741 0 0 1 1.921-.306 7.403 7.403 0 0 1 .798.008h.013l.005.001h.001L8.8 9.9l.05-.498a.5.5 0 0 1 .45.498v1.153c0 .108.11.176.202.134l3.984-2.933a.494.494 0 0 1 .042-.028.147.147 0 0 0 0-.252.494.494 0 0 1-.042-.028L9.502 5.013zM8.3 10.386a7.745 7.745 0 0 0-1.923.277c-1.326.368-2.896 1.201-3.94 3.08a.5.5 0 0 1-.933-.305c.464-3.71 1.886-5.662 3.46-6.66 1.245-.79 2.527-.942 3.336-.971v-.66a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.667z"/>
+        </svg>
+    </button>
+
+    <button class="little_tools_button" title="联系我">
+        <svg class="bi bi-person-plus" width="1em" height="1em"
+             viewBox="0 0 16 16" fill="currentColor"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4.5 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+            <path fill-rule="evenodd"
+                  d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+        </svg>
+    </button>
+</div>
 
 <div class="hr_line">
     <div style="height: 1200px; background-color: blue; width: 20px">11111</div>
@@ -125,7 +198,7 @@
 
 <div class="rig">
     <div style="height: 1000px; background-color: blue; width: 20px">
-11111
+        11111
     </div>
 </div>
 
@@ -143,6 +216,8 @@
     <br>
     <p style="font-size: 14px; margin:0;padding: 0; text-align: center">返回顶部</p>
 </button>
+
+<button class="return_bottom">底部</button>
 
 </body>
 </html>

@@ -5,87 +5,87 @@
     <title>css边角丝带效果</title>
     <style type="text/css">
 
-        .back {
-            display: block;
-            width: 200px;
-            height: 150px;
-            position: relative;
-            float: left;
-            margin-bottom: 30px;
-            background-color: #ccc;
-            color: white;
-        }
 
-        .back:nth-child(even) {
-            margin-right: 4%;
-        }
+.silk-ribbon {
+	display:block;
+	width:48%;
+	height:188px;
+	position:relative;
+	float:left;
+	margin-bottom:30px;
+    background-color: #ccc;
+	color:white;
+}
+.silk-ribbon:nth-child(even) {
+	margin-right:4%;
+}
 
-        @media (max-width: 500px) {
-
-            .back:nth-child(even) {
-                margin-right: 0;
-            }
-        }
-
-        .silk-ribbon-2 {
-            position: absolute;
-            top: -6px;
-            right: 10px;
-        }
-
-        .silk-ribbon-2:after {
-            position: absolute;
-            content: "";
-            display: block;
-            width: 0;
-            height: 0;
-            border-left: 38px solid transparent;
-            border-right: 38px solid transparent;
-            border-top: 10px solid #FF9933;
-        }
-
-        .silk-ribbon-2 span {
-            position: relative;
-            display: inline-block;
-            text-align: center;
-            background: #FF9933;
-            font-size: 14px;
-            line-height: 1;
-            padding: 8px 8px 4px;
-            border-top-right-radius: 8px;
-            width: 60px;
-        }
-
-        .silk-ribbon-2 span:before, .silk-ribbon-2 span:after {
-            position: absolute;
-            content: "";
-            display: block;
-        }
-
-        .silk-ribbon-2 span:before {
-            background: #FF9933;
-            height: 6px;
-            width: 6px;
-            left: -6px;
-            top: 0;
-        }
-
-        .silk-ribbon-2 span:after {
-            background: #993300;
-            height: 6px;
-            width: 8px;
-            border-radius: 8px 8px 0 0;
-            left: -8px;
-            top: 0;
-        }
+.wrap {
+	width:100%;
+	height:188px;
+	position:absolute;
+	top:-8px;
+	left:8px;
+	overflow:hidden;
+}
+.wrap:before {
+	content:"";
+	display:block;
+	border-radius:8px 8px 0px 0px;
+	width:40px;
+	height:8px;
+	position:absolute;
+	right:100px;
+	background:#4D6530;
+}
+.wrap:after {
+	content:"";
+	display:block;
+	border-radius:0px 8px 8px 0px;
+	width:8px;
+	height:14px;
+	position:absolute;
+	right:0px;
+	top:100px;
+	background:#4D6530;
+}
+.silk-ribbon6 {
+	display:inline-block;
+	text-align:center;
+	width:200px;
+	height:14px;
+	line-height:14px;
+	position:absolute;
+	top:30px;
+	right:-50px;
+	z-index:2;
+	overflow:hidden;
+	transform:rotate(45deg);
+	-ms-transform:rotate(45deg);
+	-moz-transform:rotate(45deg);
+	-webkit-transform:rotate(45deg);
+	-o-transform:rotate(45deg);
+	border:1px dashed;
+	box-shadow:0 0 0 3px #57DD43,0px 21px 5px -18px rgba(0,0,0,0.6);
+	background:#57DD43;
+    font-size: 12px;
+}
     </style>
 </head>
 <body>
 
 
-    <div class="back">
-        <span class="silk-ribbon-2"><span>测试</span></span>
+<div class="silk-ribbon">
+    <div class="wrap"><span class="silk-ribbon6">New</span></div>
+</div>
+
+<br>
+<br>
+<div style="top:300px;position:relative;width: 900px;height: 150px; background-color: #DDDDDD">
+    <div style="overflow: hidden; padding: 20px 0 15px;line-height: 14px; text-align:center;position: absolute; float: left; top: 0; right: 0; width: 50px;height: 14px;z-index: 2;">
+        <span style="display:inline-block;width:80px; text-align:left; padding-left:15px;color:#FFFFFF;background-color: #FF9933; font-size:14px; font-weight:bold;transform:rotate(45deg);">New</span>
     </div>
+</div>
 
 </body>
 </html>

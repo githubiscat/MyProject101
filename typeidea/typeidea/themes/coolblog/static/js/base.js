@@ -3,8 +3,8 @@ $(document).ready(function () {
     // 设置轮播图高是宽的一半
     var carosel_cont_height = $('#sticky_posts_carousel_container').width();
     $('.carousel-inner').height(carosel_cont_height * 0.4);
-    $(window).resize(function(){
-            $('.carousel-inner').height(carosel_cont_height * 0.4);
+    $(window).resize(function () {
+        $('.carousel-inner').height(carosel_cont_height * 0.4);
     });
     //为当前窗口添加滚动条滚动事件（适用于所有可滚动的元素和 window 对象（浏览器窗口））
     var window_height = $(window).height();  // 窗口的高度
@@ -36,22 +36,41 @@ $(document).ready(function () {
         'top': 0,
         'width': '100%',
     });
+    //为返回顶部元素添加点击事件
+    $('.return_top').click(function () {
+        //将当前窗口的内容区滚动高度改为0，即顶部
+        $("html,body").animate({scrollTop: 1111}, "normal");
+    });
+
+    $('#return_top').click(function () {
+        //将当前窗口的内容区滚动高度改为0，即顶部
+
+        $("html,body").animate({scrollTop: 0}, "slow");
+    });
+
+    $('#return_bottom').click(function () {
+        let s_h = $(document).height()-$(window).height();
+        // alert([a, $(document).height(),$(window).height()]);
+        $("html,body").animate({scrollTop: s_h}, "slow");
+    });
+
     $(window).scroll(function () {
         //创建一个变量存储当前窗口下移的高度
+        var doc_height = $(document).height();
         var scroTop = $(window).scrollTop();
         var s_height = scroTop + window_height;  //获取滚动条滚动距离+窗口高度
         //判断当前窗口滚动高度
         //如果大于设置值，则显示顶部元素，否则隐藏顶部元素
-        if (scroTop > w_height) {
-            $('.return_top').show();
-        } else {
-            $('.return_top').hide();
-        }
+        // if (scroTop > w_height) {
+        //     $('.little_tools').show();
+        // } else {
+        //     $('.little_tools').hide();
+        // }
 
         // 侧边栏 如果侧边栏的滑到了底部 设置为绝对定位 不让其再滑动
         // 如果窗口滑动距离大于侧边栏距离窗口顶部高度(前提是右侧内容区高于左侧侧边栏)
 
-        if (content_height > side_height ) {
+        if (content_height > side_height) {
             if (s_height > (side_height + 120)) {
                 $('.sidebar-left').addClass('sidebar-left-to-bottom');
                 $('.sidebar-left-to-bottom').css({
@@ -77,42 +96,58 @@ $(document).ready(function () {
             //如果向下滑动距离超过了导航栏下边框位置
             if (scrollAfter > nav_to_top_height && down_or_up < 1) {
                 //导航栏隐藏
-                console.log('导航条隐藏');
+                // console.log('导航条隐藏');
+                // alert([scrollBefore,scrollAfter]);
+                down_or_up = 1;  // 向下滑动状态设置为1
                 $('.navbar').slideUp(300);
-                down_or_up = 1  // 向下滑动状态设置为1
             }
             // 如果下滑动距离没有超过导航栏边框的位置
             if (scrollAfter <= nav_to_top_height) {
                 // 导航栏透明
-                console.log('导航条透明');
-                $('.navbar').css({'opacity': 0.9})
+                // console.log('导航条透明');
+                $('.navbar').css({'opacity': 0.9});
             }
-        }
+        }else if (scrollBefore > scrollAfter) {
 
-        // 向上滑动时
-        if (scrollBefore > scrollAfter) {
             // 如果滚动条距离大于导航栏高度
             if (scrollAfter > nav_to_top_height && down_or_up > -1) {
                 // 导航条显示
-                console.log('导航条显示');
+                // console.log('导航条显示');
+                // alert('show');
+                // alert([scrollBefore,scrollAfter]);
+                down_or_up = -1;  // 向上滑动状态设置为-1
                 $('.navbar').slideDown(300);
-                down_or_up = -1  // 向上滑动状态设置为-1
             }
             //如果滚动条距离小于导航栏高度
             if (scrollAfter < nav_to_top_height) {
                 //导航栏不透明
-                console.log('导航条不透明');
-                $('.navbar').css({'opacity': 1})
+                // console.log('导航条不透明');
+                $('.navbar').css({'opacity': 1});
             }
         }
+
+        // 向上滑动时
+        // if (scrollBefore > scrollAfter) {
+        //     // 如果滚动条距离大于导航栏高度
+        //     if (scrollAfter > nav_to_top_height && down_or_up > -1) {
+        //         // 导航条显示
+        //         // console.log('导航条显示');
+        //         down_or_up = -1;  // 向上滑动状态设置为-1
+        //         $('.navbar').slideDown(300);
+        //         return false;
+        //     }
+        //     //如果滚动条距离小于导航栏高度
+        //     if (scrollAfter < nav_to_top_height) {
+        //         //导航栏不透明
+        //         // console.log('导航条不透明');
+        //         $('.navbar').css({'opacity': 1});
+        //     }
+        // }
         scrollBefore = scrollAfter  // 重定义起始位置
     });
 
-    //为返回顶部元素添加点击事件
-    $('.return_top').click(function () {
-        //将当前窗口的内容区滚动高度改为0，即顶部
-        $("html,body").animate({scrollTop: 0}, "normal");
-    });
+
+
 });
 
 // $(function (){ var divW=$("div").width(); var divH = $("div").height();divW=divH;})

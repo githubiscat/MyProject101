@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block style %}
+    <script type="application/javascript" src="{% static 'js/get_post_catalog.js' %}"></script>
     <style type="text/css">
         .post_content {
             margin-bottom: 10px;
@@ -50,9 +51,10 @@
         }
 
         .list-group-item {
-            border-style: none !important;
+            border-style: none;
             margin-bottom: 5px;
             padding-left: 0;
+
         }
 
         .one_comment, .one_replys {
@@ -76,18 +78,29 @@
         }
 
         .user_image {
-        {#width: 80%;#}{#height: 80%;#} width: 5vw;
-            height: 5vw;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            line-height: 24px;
+            display: inline-block;
+            text-align: center;
+            font-size: 24px;
+            padding: 8px 0;
         }
 
         .user_image_reply {
-        {#width: 80%;#}{#height: 80%;#} width: 4vw;
-            height: 4vw;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
+            line-height: 20px;
+            display: inline-block;
+            text-align: center;
+            font-size: 20px;
+            padding: 8px 0;
         }
 
-        .comment_info_normel {
+
+        .comment_info_normel, .reply_info_normel {
             margin-bottom: 10px;
         }
 
@@ -444,7 +457,7 @@
                 background-color: #FFFFFF;
             }
 
-            .last_next_post_attr svg, .last_next_post_title svg{
+            .last_next_post_attr svg, .last_next_post_title svg {
                 display: none;
             }
 
@@ -491,6 +504,62 @@
             text-align: center;
         }
 
+        .b_c_1 {
+            background-color: #CC9933;
+        }
+
+        .b_c_2 {
+            background-color: #FF6600;
+        }
+
+        .b_c_3 {
+            background-color: #99CCFF;
+        }
+
+        .b_c_4 {
+            background-color: #336699;
+            color: #DDDDDD;
+        }
+
+        .b_c_5 {
+            background-color: #CC6699;
+        }
+
+        .b_c_6 {
+            background-color: #FF6666;
+        }
+
+        .b_c_7 {
+            background-color: #FF0033;
+        }
+
+        .b_c_8 {
+            background-color: #663300;
+            color: #DDDDDD;
+        }
+
+        .b_c_9 {
+            background-color: #66CC00;
+        }
+
+        .b_c_10 {
+            background-color: #CC9999;
+        }
+
+        .b_c_11 {
+            background-color: #CCCCCC;
+        }
+
+        .b_c_12 {
+            background-color: #99CC99;
+        }
+
+        .b_c_13 {
+            background-color: #006633;
+        }
+        @media screen and (min-width: 768px) {
+
+        }
 
     </style>
 
@@ -540,7 +609,7 @@
                       d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                 <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
             </svg>
-            {{ post.comment_set.count }}&nbsp;&nbsp;
+            {{ post.get_normal_comment.count }}&nbsp;&nbsp;
             {# 访问量 #}
             <svg class="bi bi-eye" style="margin-bottom: 2px" width="1em"
                  height="1em" viewBox="0 0 16 16" fill="currentColor"
@@ -594,62 +663,68 @@
 
     <div id="last_next_post">
         {% if post.get_last_post %}
-            <div id="last_post" onclick="window.open('{% url "post" post.get_last_post.id %}', '_self')">
-            <div class="last_next_post_attr text_font_14">
-                <svg class="bi bi-caret-left-fill" style="margin-bottom: 2px"
-                     width="1em" height="1em" viewBox="0 0 16 16"
-                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                </svg>
-                上一篇
+            <div id="last_post"
+                 onclick="window.open('{% url "post" post.get_last_post.id %}', '_self')">
+                <div class="last_next_post_attr text_font_14">
+                    <svg class="bi bi-caret-left-fill"
+                         style="margin-bottom: 2px"
+                         width="1em" height="1em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                    </svg>
+                    上一篇
+                </div>
+                <div class="last_next_post_title text_font_14">{{ post.get_last_post.title }}</div>
             </div>
-            <div class="last_next_post_title text_font_14">{{ post.get_last_post.title }}</div>
-        </div>
         {% else %}
             <div id="last_post">
-            <div class="last_next_post_attr text_font_14">
-                <svg class="bi bi-caret-left-fill" style="margin-bottom: 2px"
-                     width="1em" height="1em" viewBox="0 0 16 16"
-                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                </svg>
-                上一篇
+                <div class="last_next_post_attr text_font_14">
+                    <svg class="bi bi-caret-left-fill"
+                         style="margin-bottom: 2px"
+                         width="1em" height="1em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                    </svg>
+                    上一篇
+                </div>
+                <div class="last_next_post_title text_font_14">已经是最新的文章了</div>
             </div>
-            <div class="last_next_post_title text_font_14">已经是最新的文章了</div>
-        </div>
         {% endif %}
 
 
         {% if post.get_next_post %}
-            <div id="next_post" onclick="window.open('{% url "post" post.get_next_post.id %}', '_self')">
-            <div class="last_next_post_attr text_font_14">
-                下一篇
-                <svg class="bi bi-caret-right-fill" style="margin-bottom: 2px"
-                     width="1em" height="1em" viewBox="0 0 16 16"
-                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                </svg>
-            </div>
-            <div class="last_next_post_title text_font_14">{{ post.get_next_post.title }}</div>
+            <div id="next_post"
+                 onclick="window.open('{% url "post" post.get_next_post.id %}', '_self')">
+                <div class="last_next_post_attr text_font_14">
+                    下一篇
+                    <svg class="bi bi-caret-right-fill"
+                         style="margin-bottom: 2px"
+                         width="1em" height="1em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                    </svg>
+                </div>
+                <div class="last_next_post_title text_font_14">{{ post.get_next_post.title }}</div>
             </div>
         {% else %}
             <div id="next_post">
-            <div class="last_next_post_attr text_font_14">
-                下一篇
-                <svg class="bi bi-caret-right-fill" style="margin-bottom: 2px"
-                     width="1em" height="1em" viewBox="0 0 16 16"
-                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                </svg>
-            </div>
-            <div class="last_next_post_title text_font_14">已经是最后文章了</div>
+                <div class="last_next_post_attr text_font_14">
+                    下一篇
+                    <svg class="bi bi-caret-right-fill"
+                         style="margin-bottom: 2px"
+                         width="1em" height="1em" viewBox="0 0 16 16"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                    </svg>
+                </div>
+                <div class="last_next_post_title text_font_14">已经是最后文章了</div>
             </div>
         {% endif %}
 
 
     </div>
 
-    <div id="comment" class="div_boder">
+    <div id="comment" name="comment" class="div_boder">
         <div id="comment_title"
              class="title_font_24">{{ post.get_normal_comment.count }}条评论
         </div>
@@ -660,9 +735,10 @@
                     <div class="one_comment row">
                         <div class="image_col col-2">
                             <div class="user_image_div"
-                                 style="float:right; width: 70%">
-                                <img class="user_image"
-                                     src="{% static 'image/youke.jpg' %}">
+                                 style="float:right; width: 70%; padding-top: 5px">
+                                <div class="user_image b_c_{{ comment.nickname|length }}">
+                                    {{ comment.nickname|first }}
+                                </div>
                             </div>
                         </div>
                         <div class="comment_info col-10">
@@ -670,7 +746,8 @@
                                 <span class="comment_nickname">{{ comment.nickname }}</span>
                                 <span class="normel_font"
                                       style="margin-right: 20px;"> 发表了评论: </span>
-                                <span class="comment_time">{{ comment.created_time }}</span>
+                                <br class="comment_br">
+                                <span class="comment_time normel_font">{{ comment.created_time }}</span>
                                 <a class="reply_button"
                                    href="javascript:void(0)"
                                    onclick="show_reply_form(
@@ -718,8 +795,9 @@
                                 <div class="image_col col-2">
                                     <div class="user_image_div"
                                          style="float:right; width: 60%">
-                                        <img class="user_image_reply"
-                                             src="{% static 'image/youke.jpg' %}">
+                                        <div class="user_image_reply b_c_{{ reply.from_name|length }}">
+                                            {{ reply.from_name|first }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="reply_info col-10">
@@ -729,7 +807,8 @@
                                               style="margin-right:5px;margin-left: 5px;">回复了:</span>
                                         <span class="reply_nickname"
                                               style="margin-right: 20px">{{ reply.to_name }}</span>
-                                        <span class="comment_time">{{ reply.created_time }}</span>
+                                        <br class="comment_br">
+                                        <span class="comment_time normel_font">{{ reply.created_time }}</span>
                                         <a class="reply_button"
                                            href="javascript:void(0)"
                                            onclick="show_reply_form(this,

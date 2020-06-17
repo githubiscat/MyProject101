@@ -79,11 +79,11 @@ class PostAdmin(BaseOwnerAdmin):
     form = PostAdminForm  # 个性化定制form表单
     # admin 表中显示的字段
     list_display = ['title', 'category', 'status',
-                    'owner', 'created_time', 'operator', 'pv', 'uv']
+                    'owner', 'created_time', 'operator', 'pv', 'uv', 'is_top']
     # 那些字段可以作为链接, 点击可以进入编辑页面
     list_display_links = []
 
-    list_filter = ['category']  # 用于侧边过滤栏的字段
+    list_filter = ['category', 'is_top']  # 用于侧边过滤栏的字段
     search_fields = ['title', 'category__name', 'owner__username']  # 用于搜索的字段
 
     actions_on_top = True  # admin 动作类操作按钮在上面
@@ -97,8 +97,11 @@ class PostAdmin(BaseOwnerAdmin):
         Fieldset(
             '基础信息',
             Row('title', ),
+            Row('title_image'),
             Row('status', 'category'),
-            Row('tag',)
+            Row('tag',),
+            Row('is_top', 'top_carousel_image')
+
 
         ),
         Fieldset(

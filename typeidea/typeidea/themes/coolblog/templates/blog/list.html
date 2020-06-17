@@ -9,29 +9,63 @@
 {% endblock %}
 
 {% block title %}
-    {% if tag %}
-        标签页: {{ tag.name }}
-    {% elif category %}
-        分类页: {{ category.name }}
-    {% else %}
-        首页
-    {% endif %}
+    {% ifequal path_mark 'category' %}
+        分类: {{ category.name }}
+    {% endifequal %}
+
+    {% ifequal path_mark 'tag' %}
+        标签: {{ tag.name }}
+    {% endifequal %}
+
+    {% ifequal path_mark 'search' %}
+        搜索: {{ keyword }}
+    {% endifequal %}
+
+    {% ifequal path_mark 'index' %}
+        首页-gai520.com
+    {% endifequal %}
 {% endblock %}
 
 
 
 {% block content %}
     {{ block.super }}
+
+    {% if not postlist %}
+        <div style="width: 100%; min-height: 70vh; text-align: center; padding-top: 20vh; font-size: 18px; color: #666666">
+            <svg class="bi bi-emoji-frown" width="2em" height="2em"
+                 viewBox="0 0 16 16" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill-rule="evenodd"
+                      d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683z"/>
+                <path d="M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+            </svg>
+            很抱歉! 没有找到你查询的内容!
+        </div>
+    {% endif %}
     {% for post in postlist %}
         {# 新写的文章卡片列#}
         <div class="card post div_boder" style="padding: 10px;"
              onclick="window.open('{% url 'post' post.id %}','_self')">
+            {% now 'U' as nt %}
+            {% with nt|add:-259200 as bt %}
+                {% if post.created_time|date:'U'|add:0 >=  bt %}
+                    <div style="overflow: hidden; padding: 15px 0 15px;line-height: 14px; text-align:center;position: absolute; float: left; top: 0; right: 0; width: 50px;height: 50px;z-index: 2;">
+                        <span style="display:inline-block;width:80px; text-align:left; padding-left:17px;color:#FFFFFF;background-color: #FF9933; font-size:14px; font-weight:bold;transform:rotate(45deg);">New</span>
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="post_read_tag" style="">
+                阅读全文
+            </div>
             <div class="card_img_cont">
                 <span class="silk-ribbon-2"><span>{{ post.category.name }}</span></span>
                 <div class="card_img_back">
                     <img class="card_img"
-                     src="/media/article_images/root/2020/05/28/1a1f6f0b3be22eaebc5f70a0989b4a25.png"
-                     alt="">
+                         src="{{ post.title_image.url }}"
+                         alt="">
                 </div>
 
             </div>
@@ -45,13 +79,13 @@
                 </div>
                 <div class="card_post_other post_desc_font">
                     <span class=" desc_font_14">分类: <a class="desc_font_14"
-                                                       href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>
+                                                       href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>&nbsp;&nbsp;
                     <span class=" desc_font_14">标签:
                         {% for tag in post.tag.all %}
                             <a class="desc_font_14"
                                href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
                         {% endfor %}
-                    </span>
+                    </span>&nbsp;&nbsp;
                     <span class="card-link post_desc_font">更新时间: {{ post.created_time }}</span>
                 </div>
                 <div class="card_post_other_minscreen desc_font_14">
@@ -76,16 +110,44 @@
     <div id="paginator">
         {% if page_obj %}
 
-            {% if page_obj.has_previous %}
-                <span><a
-                        href="?page={{ page_obj.previous_page_number }}">上一页</a></span>
-            {% endif %}
-            <span>第{{ page_obj.number }}页 / 共{{ paginator.num_pages }}页.</span>
-            {% if page_obj.has_next %}
-                <span><a
-                        href="?page={{ page_obj.next_page_number }}">下一页</a></span>
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"
+                               aria-disabled="true">上一页</a>
+                        </li>
+                    {% endif %}
+                    {% for page in paginator.page_range %}
+                        {% ifequal page page_obj.number %}
+                            <li class="page-item active"><a class="page-link"
+                                                            href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                        {% endifequal %}
 
-            {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ page_obj.next_page_number }}">下一页</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"
+                               aria-disabled="true">下一页</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
 
         {% endif %}
     </div>

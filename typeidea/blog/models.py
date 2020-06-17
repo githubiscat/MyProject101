@@ -1,6 +1,11 @@
+import os
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils.html import format_html
+
+from typeidea.settings.base import MEDIA_ROOT
 
 
 class Category(models.Model):
@@ -93,7 +98,20 @@ class Post(models.Model):
     pv = models.PositiveIntegerField(default=1, verbose_name='访问量')
     uv = models.PositiveIntegerField(default=1, verbose_name='访客量')
     attached_file = models.CharField(max_length=2048, blank=True, verbose_name='附件')
+    title_image = models.ImageField(upload_to='title_image',
+                                    verbose_name='标题图片',
+                                    default='title_image.png',
+                                    blank=True)
+    is_top = models.BooleanField(default=False, verbose_name='是否置顶',
+                                 choices=((True, '置顶'), (False, '不置顶')))
+    top_carousel_image = models.ImageField(upload_to='carousel_iamge',
+                                           verbose_name='置顶轮播图',
+                                           blank=True)
 
+    def title_image_data(self):
+        return format_html(
+            '<img src="{}" style="width:200px; height:150px;"/>'.format(self.title_image.url)
+        )
 
     def __str__(self):
         return self.title
@@ -140,6 +158,10 @@ class Post(models.Model):
     @classmethod
     def get_all(cls):
         return  cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')
+
+    @classmethod
+    def get_top(cls):
+        return cls.objects.filter(is_top=True).order_by('created_time')
 
     @cached_property
     def tags(self):

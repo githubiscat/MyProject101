@@ -35,4 +35,5 @@ class PostAdminForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('category', 'tag', 'title', 'desc', 'content', 'status')
+        fields = ('category', 'tag', 'title_image','title', 'desc', 'content',
+                  'status','is_top', 'top_carousel_image')

@@ -65,6 +65,28 @@
 
 
 @media screen and (min-width: 768px) {
+    #top_post_title_mobile {
+        display: none;
+    }
+
+    .post_read_tag {
+        display: none;
+        padding: 5px 10px;
+        position: absolute;
+        z-index: 2;
+        float: right;
+        bottom: 25px;
+        right: 0;
+        background-color: #FF9900;
+        color: #FFFFFF;
+        font-size: 14px;
+    }
+
+    .post:hover .post_read_tag {
+        display: block;
+    }
+
+
     .card_img_cont {
         width: 200px;
         height: 150px;
@@ -80,6 +102,7 @@
         padding: 0;
         margin: 0;
         overflow: hidden;
+        background-color: #66cc99;
     }
 
     .card_img {
@@ -137,6 +160,14 @@
 }
 
 @media screen and (max-width: 767px) {
+    #top_post_title_pc {
+        display: none;
+    }
+
+    .post_read_tag {
+        display: none;
+    }
+
     .card_img_cont {
         width: 100px;
         height: 75px;
@@ -152,6 +183,7 @@
         padding: 0;
         margin: 0;
         overflow: hidden;
+        background-color: #66cc99;
     }
 
     .silk-ribbon-2 {

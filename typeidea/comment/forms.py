@@ -7,12 +7,12 @@ from comment.models import Comment, Reply
 class CommentForm(forms.ModelForm):
     nickname = forms.CharField(
         label='昵称',
-        max_length=16,
+        max_length=12,
         min_length=2,
         required=True,
         error_messages={
             'required': 'Error: 昵称是必填项',
-            'max_length': '最大长度不应超过16位',
+            'max_length': '最大长度不应超过12位',
             'min_length': '最小长度不应小于2位',
         },
         widget=forms.widgets.Input(
@@ -44,7 +44,9 @@ class CommentForm(forms.ModelForm):
         label='内容',
         max_length=1600,
         widget=forms.widgets.Textarea(
-            attrs={'class': 'form-control', 'placeholder': '评论内容', 'rows': 6}
+            attrs={'class': 'form-control',
+                   'placeholder': '你的评论将在管理员审核通过后才可展示!  所以请朋友你提交与文章内容相关的评论, 垃圾灌水评论一律删并封IP!!!',
+                   'rows': 6}
         )
     )
 
@@ -63,7 +65,7 @@ class CommentForm(forms.ModelForm):
 class ReplyForm(forms.ModelForm):
     from_name = forms.CharField(
         label='昵称',
-        max_length=16,
+        max_length=12,
         required=True,
         widget=forms.widgets.Input(
             attrs={'class': 'form-control',
@@ -71,7 +73,7 @@ class ReplyForm(forms.ModelForm):
                    'placeholder': '你的昵称   *必填项'}
         ),
         error_messages={
-            'max_length': '昵称最大长度不超过16位',
+            'max_length': '昵称最大长度不超过12位',
             'required': '昵称不能为空',
         }
     )
@@ -99,7 +101,7 @@ class ReplyForm(forms.ModelForm):
         label='内容',
         max_length=1600,
         widget=forms.widgets.Textarea(
-            attrs={'class': 'form-control', 'placeholder': '回复内容', 'rows': 6}
+            attrs={'class': 'form-control', 'placeholder': '你的评论将在管理员审核通过后才可展示!  所以请朋友你提交与文章内容相关的评论, 垃圾灌水评论一律删并封IP!!!', 'rows': 6}
         )
     )
 

@@ -27,38 +27,50 @@
         <div id="carouselExampleCaptions" class="carousel slide"
              data-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-target="#carouselExampleCaptions" data-slide-to="0"
-                    class="active"></li>
-                <li data-target="#carouselExampleCaptions"
-                    data-slide-to="1"></li>
-                <li data-target="#carouselExampleCaptions"
-                    data-slide-to="2"></li>
+                {% for top_post in top_posts %}
+                    {% ifequal forloop.counter0 0 %}
+                        <li data-target="#carouselExampleCaptions"
+                            data-slide-to="{{ forloop.counter0 }}"
+                            class="active"></li>
+                    {% else %}
+                        <li data-target="#carouselExampleCaptions"
+                            data-slide-to="{{ forloop.counter0 }}"></li>
+                    {% endifequal %}
+
+                {% endfor %}
+
             </ol>
+
+
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/media/article_images/root/2020/05/28/img_1483.PNG"
-                         class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 style="color: red">第一张图片</h5>
-                        <p>第一图</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="/media/article_images/root/2020/05/28/img_1484.PNG"
-                         class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 style="color: red">第二张图片</h5>
-                        <p>第二图</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="/media/article_images/root/2020/05/27/lsneho.PNG"
-                         class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 style="color: red">第三张图片</h5>
-                        <p>第三图</p>
-                    </div>
-                </div>
+                {% for top_post in top_posts %}
+                    {% ifequal forloop.counter0 0 %}
+                        <div class="carousel-item active" data-interval="3500">
+                            <a href="{% url 'post' top_post.id %}">
+                                <img src="{{ top_post.top_carousel_image.url }}"
+                                     class="d-block w-100" alt="..."></a>
+                            <div class="carousel-caption d-none d-block">
+                                <h5 id="top_post_title_pc"
+                                    style="color: #FF6600">{{ top_post.title }}</h5>
+                                <span id="top_post_title_mobile"
+                                      style="color: #FF6600; font-size: 14px">{{ top_post.title }}</span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="carousel-item" data-interval="3500">
+                            <a href="{% url 'post' top_post.id %}">
+                                <img src="{{ top_post.top_carousel_image.url }}"
+                                     class="d-block w-100" alt="..."></a>
+                            <div class="carousel-caption d-none d-block">
+                                <h5 id="top_post_title_pc"
+                                    style="color: #FF6600">{{ top_post.title }}</h5>
+                                <span id="top_post_title_mobile"
+                                      style="color: #FF6600; font-size: 14px">{{ top_post.title }}</span>
+                            </div>
+                        </div>
+                    {% endifequal %}
+                {% endfor %}
+
             </div>
             <a class="carousel-control-prev" href="#carouselExampleCaptions"
                role="button" data-slide="prev">
@@ -79,12 +91,24 @@
         {# 新写的文章卡片列#}
         <div class="card post div_boder" style="padding: 10px;"
              onclick="window.open('{% url 'post' post.id %}','_self')">
+            {% now 'U' as nt %}
+            {% with nt|add:-259200 as bt %}
+                {% if post.created_time|date:'U'|add:0 >=  bt %}
+                    <div style="overflow: hidden; padding: 15px 0 15px;line-height: 14px; text-align:center;position: absolute; float: left; top: 0; right: 0; width: 50px;height: 50px;z-index: 2;">
+                        <span style="display:inline-block;width:80px; text-align:left; padding-left:17px;color:#FFFFFF;background-color: #FF9933; font-size:14px; font-weight:bold;transform:rotate(45deg);">New</span>
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="post_read_tag" style="">
+                阅读全文
+
+            </div>
             <div class="card_img_cont">
                 <span class="silk-ribbon-2"><span>{{ post.category.name }}</span></span>
                 <div class="card_img_back">
                     <img class="card_img"
-                     src="/media/article_images/root/2020/05/28/1a1f6f0b3be22eaebc5f70a0989b4a25.png"
-                     alt="">
+                         src="{{ post.title_image.url }}"
+                         alt="">
                 </div>
 
             </div>
@@ -99,12 +123,13 @@
                 <div class="card_post_other post_desc_font">
                     <span class=" desc_font_14">分类: <a class="desc_font_14"
                                                        href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>
+                    &nbsp;&nbsp;
                     <span class=" desc_font_14">标签:
                         {% for tag in post.tag.all %}
                             <a class="desc_font_14"
                                href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
                         {% endfor %}
-                    </span>
+                    </span>&nbsp;&nbsp;
                     <span class="card-link post_desc_font">更新时间: {{ post.created_time }}</span>
                 </div>
                 <div class="card_post_other_minscreen desc_font_14">
@@ -123,46 +148,50 @@
             </div>
         </div>
 
-        {#        <div class="card post div_boder">#}
-        {##}
-        {#            <div class="card-body ">#}
-        {#                <h5 class="catd-title post_title_font_big"><a#}
-        {#                        class="post_title_font_big"#}
-        {#                        href="{% url 'post' post.id %}">{{ post.title }}</a>#}
-        {#                </h5>#}
-        {#                <span class="card-link post_desc_font">作者: <a#}
-        {#                        href="{% url 'auther' post.owner.id %}">{{ post.owner.username }}</a></span>#}
-        {#                <span class="card-link post_desc_font">分类: <a#}
-        {#                        href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></span>#}
-        {#                <span class="card-link post_desc_font">标签:#}
-        {#                    {% for tag in post.tag.all %}#}
-        {#                        <a href="{% url 'tag' tag.id %}">{{ tag.name }}</a>#}
-        {#                    {% endfor %}#}
-        {#                </span>#}
-        {#                <span class="card-link post_desc_font">更新时间: {{ post.created_time }}</span>#}
-        {#                <p class="card-text post_desc_font">{{ post.desc }} <a#}
-        {#                        href="{% url 'post' post.id %}"> 详情>></a></p>#}
-        {##}
-        {#            </div>#}
-        {##}
-        {#        </div>#}
     {% endfor %}
 
 
     <div id="paginator">
         {% if page_obj %}
 
-            {% if page_obj.has_previous %}
-                <span><a
-                        href="?page={{ page_obj.previous_page_number }}">上一页</a></span>
-            {% endif %}
-            <span>第{{ page_obj.number }}页 / 共{{ paginator.num_pages }}页.</span>
-            {% if page_obj.has_next %}
-                <span><a
-                        href="?page={{ page_obj.next_page_number }}">下一页</a></span>
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"
+                               aria-disabled="true">上一页</a>
+                        </li>
+                    {% endif %}
+                    {% for page in paginator.page_range %}
+                        {% ifequal page page_obj.number %}
+                            <li class="page-item active"><a class="page-link"
+                                                            href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                        {% endifequal %}
 
-            {% endif %}
-
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ page_obj.next_page_number }}">下一页</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"
+                               aria-disabled="true">下一页</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         {% endif %}
     </div>
 
