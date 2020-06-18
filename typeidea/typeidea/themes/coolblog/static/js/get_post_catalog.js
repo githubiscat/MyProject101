@@ -25,6 +25,7 @@ $(document).ready(function () {
     console.log(catalog_list);
 
     $('#catalog').click(function () {
+        $('#qrcode_img, #contact_me_img').hide();
         $('#post_catalog').slideToggle(500);
     });
 

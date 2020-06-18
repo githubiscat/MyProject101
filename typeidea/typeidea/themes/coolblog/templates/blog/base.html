@@ -20,6 +20,8 @@
     <script type="application/javascript"
             src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script type="application/javascript"
+            src="{% static 'js/jquery.qrcode.min.js' %}"></script>
+    <script type="application/javascript"
             src="{% static 'js/popper.min.js' %}"></script>
     <script type="application/javascript"
             src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -27,6 +29,7 @@
             src="{% static 'js/base.js' %}"></script>
     <script src="{% static 'js/highlight.pack.js' %}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+
 
     {% block style %}
 
@@ -193,14 +196,9 @@
 </div>
 
 <div class="little_tools">
-    <button class="little_tools_button" id="catalog" title="目录">
-        <svg class="bi bi-list-ul" width="1.1em" height="1.1em"
-             viewBox="0 0 16 16"
-             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-        </svg>
-    </button>
+    {% block tools_catalog %}
+    
+    {% endblock %}
     <button class="little_tools_button" id="return_top" title="返回顶部">
         <svg class="bi bi-caret-up" width="1.1em" height="1.1em"
              viewBox="0 0 16 16"
@@ -217,17 +215,11 @@
                   d="M3.204 5L8 10.481 12.796 5H3.204zm-.753.659l4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
         </svg>
     </button>
-    <button class="little_tools_button" title="评论"
-            onclick="window.open('#comment','_self')">
-        <svg class="bi bi-chat-square-dots" width="1em" height="1em"
-             viewBox="0 0 16 16" fill="currentColor"
-             xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-        </svg>
-    </button>
-    <button class="little_tools_button" title="分享">
+    {% block tools_commint %}
+
+    {% endblock %}
+
+    <button class="little_tools_button" id="share" title="分享">
         <svg class="bi bi-reply" style="margin-bottom: 4px" width="1.1em"
              height="1.1em" viewBox="0 0 16 16"
              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -236,7 +228,7 @@
         </svg>
     </button>
 
-    <button class="little_tools_button" title="联系我">
+    <button class="little_tools_button" id="contact_me" title="联系我">
         <svg class="bi bi-person-plus" style="margin-bottom: 4px" width="1.1em"
              height="1.1em"
              viewBox="0 0 16 16" fill="currentColor"
@@ -249,28 +241,17 @@
     </button>
 </div>
 
-<div id="post_catalog">
-    <div id="post_catalog_list">
-        <ul style="padding-inline-start: 25px">
-        </ul>
-    </div>
-    <div id="post_catalog_title">
-        <button id="post_catalog_button">
-            <svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16"
-             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path fill-rule="evenodd"
-                  d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
-            <path fill-rule="evenodd"
-                  d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
-            </svg>
-        </button>
-
-        目录
-    </div>
+<div id="contact_me_img" class="little_tools_content">
+    <div>微信扫一扫·加我好友</div>
+    <img src="{% static 'image/wechat.JPG' %}" alt="">
 </div>
 
+
+<div id="qrcode_img" class="little_tools_content">
+    <div>手机扫一扫·转发本页</div>
+    <div id="qrcode"></div>
+</div>
+<script type="application/javascript">$('#qrcode').qrcode({width: 160,height: 160,text:"{{req_path}}"})</script>
 
 <div id="sitefoot" style="">
     Copyright © gai520.com 版权所有 <br>

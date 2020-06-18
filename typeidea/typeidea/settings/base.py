@@ -108,7 +108,7 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": ''
+            "PASSWORD": os.getenv('MY_REDIS_PW')
         }
     }
 }
@@ -148,14 +148,14 @@ USE_TZ = True
 # 邮件通知
 EMAIL_HOST = "smtp.163.com"
 EMAIL_PORT = 25 # 大多都是25；若使用SSL，端口号465或587
-EMAIL_HOST_USER = "" #发送邮箱
-EMAIL_HOST_PASSWORD = "" # 使用的是QQ的授权码，不是你的密码
+EMAIL_HOST_USER = "gai520website@163.com" #发送邮箱
+EMAIL_HOST_PASSWORD = os.getenv('MY_SMTP_PW') # 使用的是QQ的授权码，不是你的密码
 EMAILE_USE_TLS = True #一定要是True，否则发不了
-EMAIL_FROM = "" #邮件发送人(邮件中所显示的发送人，和EMAIL_HOST_USER同)
-EMAIL_TO = []
+EMAIL_FROM = "gai520website@163.com" #邮件发送人(邮件中所显示的发送人，和EMAIL_HOST_USER同)
+EMAIL_TO = ['643177348@qq.com','17610139558@163.com']
 
 # 绑定的域名
-HOST_NAME = 'http://localhost:8099'
+HOST_NAME = 'http://192.168.0.108:8000'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

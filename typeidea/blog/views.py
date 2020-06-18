@@ -13,6 +13,7 @@ from blog.models import Tag, Post, Category
 from comment.forms import CommentForm, ReplyForm
 from comment.models import Comment
 from config.models import SideBar
+from typeidea.settings.base import HOST_NAME
 
 """ 类视图
 类视图有着更好的封装, 解耦了http 的get post put delete patch 等请求, 对应不同的请求method
@@ -54,6 +55,7 @@ class IndexView(CommonViewMixin, ListView):
         context.update({
             'path_mark': 'index',
             'top_posts': top_posts,
+            'req_path': HOST_NAME + self.request.get_full_path(),
         })
         return context
     # model = Post  # model 指定class based View要使用的数据库model
@@ -122,7 +124,8 @@ class PostDetailView(CommonViewMixin, DetailView):
             #     .order_by('created_time'),
             'comment_form': CommentForm,
             'reply_form': ReplyForm,
-            'path_mark': 'post'
+            'path_mark': 'post',
+            'req_path': HOST_NAME + self.request.get_full_path(),
         })
         return context
 

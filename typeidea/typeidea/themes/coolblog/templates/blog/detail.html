@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block style %}
-    <script type="application/javascript" src="{% static 'js/get_post_catalog.js' %}"></script>
+    <script type="application/javascript"
+            src="{% static 'js/get_post_catalog.js' %}"></script>
     <style type="text/css">
         .post_content {
             margin-bottom: 10px;
@@ -557,6 +558,7 @@
         .b_c_13 {
             background-color: #006633;
         }
+
         @media screen and (min-width: 768px) {
 
         }
@@ -962,5 +964,51 @@
         </div>
     </div>
 {% endblock %}
+
+{% block tools_catalog %}
+    <button class="little_tools_button" id="catalog" title="目录">
+        <svg class="bi bi-list-ul" width="1.1em" height="1.1em"
+             viewBox="0 0 16 16"
+             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+    </button>
+
+    <div id="post_catalog">
+    <div id="post_catalog_list">
+        <ul style="padding-inline-start: 25px">
+        </ul>
+    </div>
+    <div id="post_catalog_title" class="little_tools_content">
+        <button id="post_catalog_button">
+            <svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16"
+             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path fill-rule="evenodd"
+                  d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+            <path fill-rule="evenodd"
+                  d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+            </svg>
+        </button>
+        目录
+    </div>
+</div>
+{% endblock %}
+
+{% block tools_commint %}
+    <button class="little_tools_button" title="评论"
+            onclick="window.open('#comment','_self')">
+        <svg class="bi bi-chat-square-dots" width="1em" height="1em"
+             viewBox="0 0 16 16" fill="currentColor"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+    </button>
+{% endblock %}
+
 
 {#<script >$(document).ready(function (){ alert('yunxi');var divW = $(".user_image").width(); var divH = $(".user_image").height(); divH=divW;})</script>#}

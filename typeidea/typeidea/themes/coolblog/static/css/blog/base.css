@@ -213,17 +213,13 @@ pre {
 
 .little_tools_button:focus,
 .little_tools_button:hover,
-.little_tools_button:active,
-.little_tools_button:visited {
+.little_tools_button:active{
     border: 1px solid #DDDDDD;
     box-shadow: none;
     outline: none;
+    color: #ed5736;
 }
 
-.little_tools_button:hover {
-    color: #ed5736;
-    outline: none;
-}
 
 #post_catalog {
     position: fixed;
@@ -274,3 +270,55 @@ pre {
     box-shadow: none;
     outline: none;
 }
+
+#contact_me_img {
+    position: fixed;
+    z-index: 999;
+    right: 55px;
+    bottom: 50px;
+    width: 200px;
+    height: 240px;
+    border-top: 4px solid #FF6600;
+    border-bottom: 4px solid #FF6600;
+    border-left: 1px solid #FF6600;
+    border-right: 1px solid #FF6600;
+    background-color: #FFFFFF;
+    text-align: center;
+    display: none;
+}
+
+#contact_me_img div {
+    margin: 12px 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#contact_me_img img {
+    width: 160px;
+    height: 160px;
+}
+
+#qrcode_img {
+    position: fixed;
+    z-index: 999;
+    right: 55px;
+    bottom: 50px;
+    width: 200px;
+    height: 240px;
+    border-top: 4px solid #FF6600;
+    border-bottom: 4px solid #FF6600;
+    border-left: 1px solid #FF6600;
+    border-right: 1px solid #FF6600;
+    background-color: #FFFFFF;
+    text-align: center;
+    display: none;
+}
+
+#qrcode_img div {
+    margin: 12px 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+

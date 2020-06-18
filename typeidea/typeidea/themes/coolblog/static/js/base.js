@@ -36,23 +36,7 @@ $(document).ready(function () {
         'top': 0,
         'width': '100%',
     });
-    //为返回顶部元素添加点击事件
-    $('.return_top').click(function () {
-        //将当前窗口的内容区滚动高度改为0，即顶部
-        $("html,body").animate({scrollTop: 1111}, "normal");
-    });
 
-    $('#return_top').click(function () {
-        //将当前窗口的内容区滚动高度改为0，即顶部
-
-        $("html,body").animate({scrollTop: 0}, "slow");
-    });
-
-    $('#return_bottom').click(function () {
-        let s_h = $(document).height()-$(window).height();
-        // alert([a, $(document).height(),$(window).height()]);
-        $("html,body").animate({scrollTop: s_h}, "slow");
-    });
 
     $(window).scroll(function () {
         //创建一个变量存储当前窗口下移的高度
@@ -125,7 +109,7 @@ $(document).ready(function () {
                 $('.navbar').css({'opacity': 1});
             }
         }
-
+        scrollBefore = scrollAfter  // 重定义起始位置
         // 向上滑动时
         // if (scrollBefore > scrollAfter) {
         //     // 如果滚动条距离大于导航栏高度
@@ -143,8 +127,54 @@ $(document).ready(function () {
         //         $('.navbar').css({'opacity': 1});
         //     }
         // }
-        scrollBefore = scrollAfter  // 重定义起始位置
+
     });
+
+
+
+    //为返回顶部元素添加点击事件
+    $('.return_top').click(function () {
+        //将当前窗口的内容区滚动高度改为0，即顶部
+        $("html,body").animate({scrollTop: 1111}, "normal");
+    });
+
+    $('#return_top').click(function () {
+        //将当前窗口的内容区滚动高度改为0，即顶部
+
+        $("html,body").animate({scrollTop: 0}, "slow");
+    });
+
+    $('#return_bottom').click(function () {
+        let s_h = $(document).height()-$(window).height();
+        // alert([a, $(document).height(),$(window).height()]);
+        $("html,body").animate({scrollTop: s_h}, "slow");
+    });
+
+    $('#contact_me').click(function () {
+        $('#qrcode_img, #post_catalog').hide();
+        $('#contact_me_img').toggle('fast')
+    })
+    // 显示联系我的微信二维码
+    // $('#contact_me').hover(function () {
+    //     // $('#contact_me_img').show('fast')
+    // },function () {
+    //     $('#contact_me_img').hide('fast')
+    // });
+
+     // 显示分享页面的二位码
+    $('#share').click(function () {
+        $('#contact_me_img, #post_catalog').hide();
+        $('#qrcode_img').toggle('fast')
+    });
+
+    // $('#share').hover(function () {
+    //     // $('#contact_me_img').show('fast')
+    // },function () {
+    //     $('#qrcode_img').hide('fast')
+    // });
+
+
+
 
 
 
