@@ -11,8 +11,7 @@ m = """
 紧急处理:    禁止该用户访问本站
 """
 smtp_server = 'smtp.163.com'
-smtp_passwd = 'PHHHTIYSGGYTVPFF'
-print(smtp_passwd)
+smtp_passwd = ''
 from_addr = 'gai520website@163.com'
 to_addr = '643177348@qq.com'
 msg = MIMEText(m, 'html', 'utf-8')
