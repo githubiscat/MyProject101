@@ -23,10 +23,20 @@ class CommentForm(forms.ModelForm):
     email = forms.EmailField(
         label='Email',
         max_length=50,
+        required=False,
         widget=forms.widgets.EmailInput(
             attrs={'class': 'form-control',
                    'aria-label': '邮箱',
-                   'placeholder': '你的个人邮箱   *必填项'}
+                   'placeholder': '你的个人邮箱   *可不填'}
+        )
+    )
+    phone = forms.CharField(
+        label='手机号',
+        max_length=11,
+        widget=forms.widgets.Input(
+            attrs={'class': 'form-control phone',
+                   'aria-label': '手机号',
+                   'placeholder': '11位中国大陆手机号码   *必填项'}
         )
     )
     website = forms.URLField(
@@ -59,7 +69,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields= ['nickname', 'email', 'website', 'content']
+        fields= ['nickname', 'email', 'phone', 'website', 'content']
 
 
 class ReplyForm(forms.ModelForm):
@@ -84,6 +94,15 @@ class ReplyForm(forms.ModelForm):
             attrs={'class': 'form-control',
                    'aria-label': '邮箱',
                    'placeholder': '你的邮箱   *必填项'}
+        )
+    )
+    from_phone = forms.CharField(
+        label='手机号',
+        max_length=11,
+        widget=forms.widgets.Input(
+            attrs={'class': 'form-control phone',
+                   'aria-label': '手机号',
+                   'placeholder': '11位中国大陆手机号码   *必填项'}
         )
     )
     from_website = forms.URLField(
@@ -114,4 +133,4 @@ class ReplyForm(forms.ModelForm):
 
     class Meta:
         model = Reply
-        fields= ['from_name', 'from_email', 'from_website', 'from_content']
+        fields= ['from_name', 'from_email','from_phone', 'from_website', 'from_content']

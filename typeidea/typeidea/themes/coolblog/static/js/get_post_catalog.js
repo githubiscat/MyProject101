@@ -22,7 +22,6 @@ $(document).ready(function () {
     }else {
         $('#post_catalog_list').text('博主有点懒,这个文章没有目录!')
     }
-    console.log(catalog_list);
 
     $('#catalog').click(function () {
         $('#qrcode_img, #contact_me_img').hide();

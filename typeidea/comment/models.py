@@ -19,6 +19,7 @@ class Comment(models.Model):
     nickname = models.CharField(max_length=32, verbose_name='昵称')
     website = models.URLField(verbose_name='网站', blank=True)
     email = models.EmailField(verbose_name='邮箱')
+    phone = models.CharField(max_length=11, verbose_name='电话',default='')
     ip = models.CharField(max_length=16, verbose_name='IP地址', blank=True)
     active_code = models.CharField(max_length=32, verbose_name='激活码', blank=True)
     status = models.PositiveIntegerField(default=STATUS_ACTIVE,
@@ -74,6 +75,7 @@ class Reply(models.Model):
     from_name = models.CharField(max_length=32, verbose_name='回复人昵称')
     from_email = models.EmailField(verbose_name='回复人邮箱')
     from_website = models.URLField(verbose_name='回复人站点', blank=True)
+    from_phone = models.CharField(max_length=11, verbose_name='电话', blank=True)
     ip = models.CharField(max_length=16, verbose_name='IP地址', blank=True)
     active_code = models.CharField(max_length=32, verbose_name='激活码',
                                    blank=True)

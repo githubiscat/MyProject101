@@ -10,19 +10,19 @@
 
 {% block title %}
     {% ifequal path_mark 'category' %}
-        分类: {{ category.name }}
+        分类: {{ category.name }} - gai520.com
     {% endifequal %}
 
     {% ifequal path_mark 'tag' %}
-        标签: {{ tag.name }}
+        标签: {{ tag.name }} - gai520.com
     {% endifequal %}
 
     {% ifequal path_mark 'search' %}
-        搜索: {{ keyword }}
+        搜索: {{ keyword }} - gai520.com
     {% endifequal %}
 
     {% ifequal path_mark 'index' %}
-        首页-gai520.com
+        首页 - gai520.com
     {% endifequal %}
 {% endblock %}
 

@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
     $('.navbar').css({
         'position': 'fixed',
-        'z-index': 9999,
+        'z-index': 999,
         'left': 0,
         'top': 0,
         'width': '100%',

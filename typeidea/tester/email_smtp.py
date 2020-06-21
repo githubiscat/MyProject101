@@ -1,30 +1,16 @@
-import os
-import smtplib
-from email.header import Header
-from email.mime.text import MIMEText
+import datetime
+import random
+import time
 
-a = os.getenv('MY_SMTP_PW')
-m = """
-你的意见是:    通过    拒绝
+today = datetime.datetime.strptime(str(datetime.date.today()), '%Y-%m-%d')
+oneday = datetime.timedelta(days=1) # 定义时间增量
+tomorrow = today+ oneday
+now_time = datetime.datetime.today()
+seconds_remaining =  (tomorrow - now_time).seconds
+print(type(seconds_remaining))
+print(seconds_remaining//3600,'h', seconds_remaining%3600//60, 'm')
 
-
-紧急处理:    禁止该用户访问本站
-"""
-smtp_server = 'smtp.163.com'
-smtp_passwd = ''
-from_addr = 'gai520website@163.com'
-to_addr = '643177348@qq.com'
-msg = MIMEText(m, 'html', 'utf-8')
-msg['Subject'] = Header('新的评论--gai520.com', charset='utf-8')
-msg['From'] = 'gai520website@163.com'
-msg['To'] = '643177348@qq.com'
-
-
-def send_email():
-    server = smtplib.SMTP(host=smtp_server, port=25)
-    server.login(user=from_addr, password=smtp_passwd)
-    server.sendmail(from_addr=from_addr, to_addrs=['643177348@qq.com', 'gai520website@163.com'], msg=msg.as_string())
-
-
-if __name__ == '__main__':
-    send_email()
+cap_num = ''
+for i in range(6):
+    cap_num += str(random.randint(0,9))
+print(cap_num)

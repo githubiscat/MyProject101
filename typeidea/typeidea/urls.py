@@ -27,7 +27,7 @@ from blog.sitemap import PostSitemap
 from blog.views import IndexView, CategoryView, TagView, PostDetailView, \
     SearchView, AutherView
 from comment.views import CommentView, reply_comment, active_comment, \
-    refuse_comment, set_black
+    refuse_comment, set_black, gen_active_code
 from config.views import LinkListView
 from typeidea.autocomplete import TagAutocomplete, CategoryAutocomplete
 from typeidea.custom_site import custom_site
@@ -45,6 +45,7 @@ urlpatterns = [
     re_path(r'^links/$', LinkListView.as_view(), name='link'),
     re_path(r'^comment/$', CommentView, name='comment'),
     re_path(r'^reply/$', reply_comment, name='reply'),
+    re_path(r'^get_active_code/$', gen_active_code, name='gen_active_code'),
     # RSS
     re_path(r'^rss/$', LatestPostFeed(), name='rss'),
     re_path(r'^sitemap\.xml$', sitemap_views.sitemap, {'sitemaps': {'posts': PostSitemap}}),
