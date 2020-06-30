@@ -1,7 +1,7 @@
 import mistune
 from django import forms
 
-from comment.models import Comment, Reply
+from comment.models import Comment, Reply, Feedback
 
 
 class CommentForm(forms.ModelForm):
@@ -16,7 +16,7 @@ class CommentForm(forms.ModelForm):
             'min_length': '最小长度不应小于2位',
         },
         widget=forms.widgets.Input(
-            attrs={'class': 'form-control',  'aria-label': '昵称',
+            attrs={'class': 'form-control', 'aria-label': '昵称',
                    'placeholder': '你的昵称   *必填项'}
         ),
     )
@@ -36,7 +36,11 @@ class CommentForm(forms.ModelForm):
         widget=forms.widgets.Input(
             attrs={'class': 'form-control phone',
                    'aria-label': '手机号',
-                   'placeholder': '11位中国大陆手机号码   *必填项'}
+                   'placeholder': '11位中国大陆手机号码   *必填项',
+                   'pattern': '^1[0-9]{10}',
+                   'oninvalid': "setCustomValidity('必须填写11位中国大陆手机号码！');",
+                   'oninput': "setCustomValidity('')"
+                   }
         )
     )
     website = forms.URLField(
@@ -69,7 +73,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields= ['nickname', 'email', 'phone', 'website', 'content']
+        fields = ['nickname', 'email', 'phone', 'website', 'content']
 
 
 class ReplyForm(forms.ModelForm):
@@ -96,13 +100,15 @@ class ReplyForm(forms.ModelForm):
                    'placeholder': '你的邮箱   *必填项'}
         )
     )
-    from_phone = forms.CharField(
+    phone = forms.CharField(
         label='手机号',
         max_length=11,
         widget=forms.widgets.Input(
             attrs={'class': 'form-control phone',
                    'aria-label': '手机号',
-                   'placeholder': '11位中国大陆手机号码   *必填项'}
+                   'placeholder': '11位中国大陆手机号码   *必填项',
+                   'pattern': '1[0-9]{10}',
+                   'oninvalid': 'setCustomValidity("必须填写11位中国大陆手机号码！")', }
         )
     )
     from_website = forms.URLField(
@@ -120,7 +126,9 @@ class ReplyForm(forms.ModelForm):
         label='内容',
         max_length=1600,
         widget=forms.widgets.Textarea(
-            attrs={'class': 'form-control', 'placeholder': '你的评论将在管理员审核通过后才可展示!  所以请朋友你提交与文章内容相关的评论, 垃圾灌水评论一律删并封IP!!!', 'rows': 6}
+            attrs={'class': 'form-control',
+                   'placeholder': '你的评论将在管理员审核通过后才可展示!  所以请朋友你提交与文章内容相关的评论, 垃圾灌水评论一律删并封IP!!!',
+                   'rows': 6}
         )
     )
 
@@ -133,4 +141,43 @@ class ReplyForm(forms.ModelForm):
 
     class Meta:
         model = Reply
-        fields= ['from_name', 'from_email','from_phone', 'from_website', 'from_content']
+        fields = ['from_name', 'from_email', 'phone', 'from_website',
+                  'from_content']
+
+
+class FeedbackForm(forms.ModelForm):
+    email = forms.EmailField(
+        label='Email',
+        max_length=64,
+        widget=forms.widgets.EmailInput(
+            attrs={'class': 'form-control',
+                   'aria-label': '邮箱',
+                   'placeholder': '你的邮箱   *必填项'}
+        )
+    )
+
+    phone = forms.CharField(
+        label='手机号',
+        max_length=11,
+        widget=forms.widgets.Input(
+            attrs={'class': 'form-control phone',
+                   'aria-label': '手机号',
+                   'placeholder': '11位中国大陆手机号码   *必填项',
+                   'pattern': '1[0-9]{10}',
+                   'oninvalid': 'setCustomValidity("必须填写11位中国大陆手机号码！")', }
+        )
+    )
+
+    content = forms.CharField(
+        label='反馈内容',
+        max_length=1024,
+        widget=forms.widgets.Textarea(
+            attrs={'class': 'form-control',
+                   'placeholder': '在此输入你的反馈， 最长不超过1024个字符！',
+                   'rows': 8}
+        )
+    )
+
+    class Meta:
+        model = Feedback
+        fields = ['email', 'phone', 'content']

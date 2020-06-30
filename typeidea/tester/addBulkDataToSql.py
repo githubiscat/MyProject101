@@ -1,7 +1,9 @@
 import os
 import sys
+import time
 
-
+from django.db import connection
+from django.db.models import Count, Q, Sum
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
@@ -17,49 +19,32 @@ if "DJANGO_SETTINGS_MODULE" not in os.environ:
     django.setup()
     print('no issue')
 
-
 from django.contrib.auth.models import User
+from blog.models import Category, Post
+from comment.models import Comment, Reply
 
-from blog.models import Category
+# 获取某个文章的所有评论和回复数量
 
-def AddCategory():
-    print('a')
-    user = User.objects.all().last()
-    print('b')
-    Category.objects.bulk_create([
-        Category(name='Test-%s' % i, owner=user) for i in range(10000, 30000)
-    ])
-    print('done')
+a = time.time()
+post = Post.objects.get(id=17)
+qs2 = post.get_normal_comment.annotate(
+    r_count=Count('reply__status', filter=Q(reply__status=1))).aggregate(
+    r_sum=Sum('r_count'), c_count=Count('id'))
+qs3 = post.comment_set.all().annotate(
+    r_count=Count('reply__status', filter=Q(reply__status=2))).aggregate(
+    r_sum=Sum('r_count'), c_count=Count('id', filter=Q(status=2)))
 
-def DelCategory():
-    print('开始删除')
-    Category.objects.filter(name__istartswith='Test').delete()
+qs = post.comment_set.all().annotate(
+    r_count_1=Count('reply__status', filter=Q(reply__status=1)),
+    r_count_2=Count('reply__status', filter=Q(reply__status=2))).aggregate(
+    r_sum_1=Sum('r_count_1'), r_sum_2=Sum('r_count_2'),
+    c_sum_1=Count('status', filter=Q(status=1)),
+    c_sum_2=Count('status', filter=Q(status=2)),
+)
 
-# AddCategory()
-# DelCategory()
-
-from blog.models import PostUploadFile
-
-# for i in range(5):
-#     p = PostUploadFile(cookie_stamp='aaaaaaa', file_path=str(i))
-#     p.save()
-#
-# p = PostUploadFile.objects
-# for i in p.filter(id = 1):
-#     print(1)
-# print('******************8')
-# f_path = p.filter(file_path__in=[str(i) for i in range(10)])
-# for i in f_path:
-#     print(i.file_path)
-from django.db import connection
-#这里执行一段复杂的查询代码
-print(connection.queries[-1]['sql'])
+print(qs)
 
 
-# for i in range(5):
-#     pa = p.get(file_path=str(i))
-#     print(pa.file_path)
-#
-# from django.db import connection
-# #这里执行一段复杂的查询代码
-# print(connection.queries[-1]['sql'])
+print('qs2', qs2)
+print('qs3', qs3)
+print(time.time()-a)

@@ -61,8 +61,8 @@ class ReplyAdmin:
         'from_website',
         'status'
     )
-    # search_fields = ['target', 'contents', 'nickname']
-    # list_filter = ['status', 'created_time', 'website']
+    search_fields = ['comment', 'from_content', 'from_name']
+    list_filter = ['status', 'created_time', 'from_website']
 
     actions_on_top = True
     save_on_top = True

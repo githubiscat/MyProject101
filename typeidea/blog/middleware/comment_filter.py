@@ -1,5 +1,5 @@
 from django.core.cache import cache
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 
@@ -20,11 +20,10 @@ class CommentFilterMiddleware(MiddlewareMixin):
                 timeout = 24 * 60 * 60
                 cache.set(str(remote_ip), 1, timeout=timeout)
             elif _ipkey == 'lock':
-                return HttpResponse('默认每个用户24小时内可以发表30条评论! 小站维护成本低, 请理解!  ')
-            elif _ipkey < 100:
+                return JsonResponse({'code':2, 'message': '默认每个用户24小时内可以发表30条评论! 小站维护成本低, 请理解!  '})
+            elif _ipkey < 30:
                 cache.incr(str(remote_ip))
             else:
                 t_o = cache.ttl(str(remote_ip))  #查看剩余过期时间
                 cache.set(str(remote_ip),'lock', timeout=t_o)
-
         return

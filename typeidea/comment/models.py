@@ -75,7 +75,7 @@ class Reply(models.Model):
     from_name = models.CharField(max_length=32, verbose_name='回复人昵称')
     from_email = models.EmailField(verbose_name='回复人邮箱')
     from_website = models.URLField(verbose_name='回复人站点', blank=True)
-    from_phone = models.CharField(max_length=11, verbose_name='电话', blank=True)
+    phone = models.CharField(max_length=11, verbose_name='电话', blank=True)
     ip = models.CharField(max_length=16, verbose_name='IP地址', blank=True)
     active_code = models.CharField(max_length=32, verbose_name='激活码',
                                    blank=True)
@@ -98,3 +98,12 @@ class Reply(models.Model):
             return self.get_reply_by_id(self.reply_id)
     class Meta:
         verbose_name = verbose_name_plural = '回复'
+
+
+class Feedback(models.Model):
+    email = models.EmailField(max_length=64,verbose_name='邮箱')
+    phone= models.CharField(max_length=11, verbose_name='手机号码')
+    content = models.CharField(max_length=1024, verbose_name='反馈内容')
+    ip = models.CharField(max_length=32, verbose_name='IP地址')
+    class Meta:
+        verbose_name = verbose_name_plural = '意见反馈'

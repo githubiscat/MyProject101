@@ -1,9 +1,18 @@
+html, body{
+    height: 100%;
+}
+
 pre {
     width: 90%;
 }
 
 @media screen and (min-width: 768px) {
     #main_div {
+        width: 100%;
+        margin: auto;
+        min-height: calc(100% - 130px);
+    }
+    #main_content {
         width: 96%;
         margin: auto;
     }
@@ -13,6 +22,10 @@ pre {
     #main_div {
         width: 100%;
         padding: 0;
+        min-height: calc(100% - 130px);
+    }
+    #main_content {
+        width: 100%;
     }
 }
 
@@ -44,7 +57,11 @@ pre {
     margin: 0;
     padding: 0;
     height: auto;
-    width: auto;
+    width: 100%;
+}
+
+#navbar {
+    width: 100%;
 }
 
 .nav-link:hover {
@@ -188,6 +205,7 @@ pre {
     font-size: 14px;
     line-height: 30px;
     color: #EEEEEE;
+    position: relative;
 }
 
 .little_tools {
@@ -220,7 +238,6 @@ pre {
     color: #ed5736;
 }
 
-
 #post_catalog {
     position: fixed;
     z-index: 999;
@@ -228,9 +245,9 @@ pre {
     bottom: 50px;
     width: 200px;
     height: 240px;
-    opacity: 0.95;
     border: 1px solid #999999;
     display: none;
+    background-color: #FFFFFF;
 }
 
 #post_catalog_list {
@@ -238,9 +255,8 @@ pre {
     overflow: paged-y;
     width: 173px;
     height: 100%;
-    background-color: #FFFFFF;
     padding: 10px 2px 5px 2px;
-
+    z-index: 1000;
 }
 
 #post_catalog_list a{
@@ -347,10 +363,17 @@ pre {
 
 #site_tip_icon {
     float:left;
-    width: 70px;
+    width: 60px;
     height: 100%;
     line-height: 80px;
     text-align: center;
+}
+
+#side_tip_title {
+    float: left;
+    min-width: 250px;
+    height: 80px;
+    padding-right: 5px;
 }
 
 #side_tip_title_1 {

@@ -12,9 +12,11 @@ from django.shortcuts import render, redirect, reverse
 # Create your views here.
 from django.template.loader import render_to_string
 
+from blog.models import Tag, Category
 from blog.tools.gen_message_api import gen_post_func
-from comment.forms import CommentForm, ReplyForm
+from comment.forms import CommentForm, ReplyForm, FeedbackForm
 from comment.models import Reply, Comment
+from config.models import SideBar
 from typeidea.settings.base import HOST_NAME
 
 def get_seconds_remaining():
@@ -38,6 +40,13 @@ def CommentView(request):
             remote_ip = 'Unknow'
         comment_form = CommentForm(request.POST)
         post_id = request.POST.get('postid')
+
+        # 获取验证码并验证有效性
+        active_code = request.POST.get('active_code', '')
+        phone = request.POST.get('phone', '')
+        cache_code = cache.get(phone + 'captcha')
+        if active_code != str(cache_code):
+            return JsonResponse({'code': 1, 'message': '错误验证码不一致'})
         if comment_form.is_valid():
             instance = comment_form.save(commit=False)
             instance.target_id = int(post_id)
@@ -75,6 +84,7 @@ def CommentView(request):
                 'ip': instance.ip,
                 'access_count': access_count,
                 'post': instance.target.title,
+                'phone': phone,
             }
             email_html_str = render_to_string('blog/email_template.html', context=cont)
             # 发送审核邮件
@@ -83,12 +93,16 @@ def CommentView(request):
                       from_email='gai520website@163.com',
                       recipient_list=['17610139558@163.com','643177348@qq.com'],
                       html_message=email_html_str)
-            return redirect(reverse('post',kwargs={'post_id': post_id}))
+            # return redirect(reverse('post',kwargs={'post_id': post_id}))
+            return JsonResponse({'code': 0, 'message': '评论成功！ 待管理员审核通过后即可显示！'})
 
         else:
-            return HttpResponse(
-                '提交失败, 请返回! <a href="{}">返回</a> <br> Error: {}'.format(
-                    reverse('post',kwargs={'post_id': post_id}), comment_form.errors))
+            # return HttpResponse(
+            #     '提交失败, 请返回! <a href="{}">返回</a> <br> Error: {}'.format(
+            #         reverse('post',kwargs={'post_id': post_id}), comment_form.errors))
+            return JsonResponse({},status=403)
+    else:
+        return HttpResponse('不支持的请求方式!', status=404)
 
 
 def reply_comment(request):
@@ -107,6 +121,14 @@ def reply_comment(request):
         to_name = request.POST.get('to_name')
         reply_id = request.POST.get('reply_id')
         reply_type = request.POST.get('reply_type')
+
+        # 获取验证码并验证有效性
+        active_code = request.POST.get('active_code', '')
+        phone = request.POST.get('phone', '')
+        cache_code = cache.get(phone + 'captcha')
+        if active_code != str(cache_code):
+            return JsonResponse({'code': 1, 'message': '错误验证码不一致'})
+
         if reply_form.is_valid():
             instance = reply_form.save(commit=False)
             instance.comment_id = int(comment_id)
@@ -146,7 +168,8 @@ def reply_comment(request):
                 'comment': instance.from_content,
                 'ip': instance.ip,
                 'access_count': access_count,
-                'post': instance.comment.target.title  # 查询速度会比较慢
+                'post': instance.comment.target.title,  # 查询速度会比较慢
+                'phone':phone,
             }
             email_html_str = render_to_string('blog/email_template.html',
                                               context=cont)
@@ -158,13 +181,96 @@ def reply_comment(request):
                                       '643177348@qq.com'],
                       html_message=email_html_str)
 
-            return redirect(reverse('post', kwargs={'post_id': post_id}))
+            return JsonResponse({'code': 0, 'message': '评论成功！ 待管理员审核通过后即可显示！'})
         else:
-            print(reply_form.errors)
-            return HttpResponse('提交失败, 请返回! <a href="{}">返回</a><br>{}'.format(
-                reverse('post', kwargs={'post_id': post_id}), reply_form.errors))
+            return JsonResponse({},status=403)
     else:
-        return HttpResponse('不支持的请求方式!')
+        return HttpResponse('不支持的请求方式!',status=404)
+
+
+def feedback(request):
+    """每日同一个IP只能提交一次评论"""
+    # 获取访问者用户IP
+    if request.META.__contains__('HTTP_X_FORWARDED_FOR'):
+        remote_ip = request.META.get('HTTP_X_FORWARDED_FOR', '')
+    elif request.META.__contains__('REMOTE_ADDR'):
+        remote_ip = request.META.get('REMOTE_ADDR', '')
+    else:
+        remote_ip = ''
+    ip_key = str(remote_ip) + 'feedback'
+    context = {'path_mark': 'feedback'}
+    if request.method == 'GET':
+        navs = Category.get_navs()
+        context.update(navs)
+        context.update({
+            'feedback_form': FeedbackForm,
+        })
+        if remote_ip:
+            ip_value = cache.get(ip_key)
+            if not ip_value:
+                # 如果IP_key 没有value 认为这个IP今日没有提交feedback
+                context['lock'] = 'false'
+            else:
+                # 有值代表今日已经提交了feedback
+                context['lock'] = 'true'
+                context['tip'] = '已提交成功！ 感谢你的支持！ 有了你的建议，我相信本站会越来越好！'
+        else:
+            return HttpResponse('ERROR， 请求失败！ 403',status=403)
+        return render(request, 'blog/feedback.html', context=context)
+    elif request.method == 'POST':
+        navs = Category.get_navs()
+        context.update(navs)
+        ip_value = cache.get(ip_key)
+        if ip_value:
+            context.update({
+                'lock': 'true',
+                'tip': '你已经提交过了feedback, 感谢你的支持！'
+            })
+            return render(request, 'blog/feedback.html', context=context)
+        else:
+            feedback_form = FeedbackForm(request.POST)
+            # 获取验证码并验证有效性
+            active_code = request.POST.get('active_code', '')
+            phone = request.POST.get('phone', '')
+            cache_code = cache.get(phone + 'captcha')
+            if active_code != str(cache_code):
+                context.update({
+                    'lock': 'true',
+                    'tip': '验证码不正确！ 请检查你的手机号和验证码是否正确！'
+                })
+                return render(request, 'blog/feedback.html', context=context)
+            if feedback_form.is_valid():
+                instance = feedback_form.save(commit=False)
+                instance.ip = str(remote_ip)
+                instance.save()
+                # 还需要短信提示！
+                cont = {
+                    'comment': instance.content,
+                    'email': instance.email,
+                    'phone': str(phone),
+                    'ip': str(remote_ip),
+                }
+                email_html_str = render_to_string('blog/feedback_email.html',
+                                                  context=cont)
+                # 发送审核邮件
+                send_mail(subject='收到一个新的建议',
+                          message='',
+                          from_email='gai520website@163.com',
+                          recipient_list=['17610139558@163.com',
+                                          '643177348@qq.com'],
+                          html_message=email_html_str)
+                expiration_time = get_seconds_remaining()
+                cache.set(ip_key, 'lock', expiration_time)
+                return redirect(reverse('feedback'))
+            else:
+                context.update({
+                    'lock': 'true',
+                    'tip': '提交失败！ 表单信息不正确！'
+                })
+                return render(request, 'blog/feedback.html', context=context)
+    else:
+        return HttpResponse('不支持的请求方式!',status=404)
+
 
 def active_comment(request):
     if request.method == 'GET':
@@ -299,7 +405,7 @@ def gen_active_code(request):
         remote_ip_key = str(remote_ip) + 'captcha'
         ip_captcha_info = cache.get(remote_ip_key)
         expiration_time = get_seconds_remaining()  # 获取有效时间
-        cache.set(remote_ip_key, ip_captcha_info, 0) ########################3
+        # cache.set(remote_ip_key, ip_captcha_info, 0) ########################3
         if ip_captcha_info:
             print('a')
             ip_count = ip_captcha_info.get('ip',0)
@@ -338,9 +444,8 @@ def gen_active_code(request):
             # 获得发送验证码方式
             send_msg = gen_post_func(phone_num, captcha_num)
             # 发送验证码
-            # return_msg = eval(os.popen(send_msg).read())
-            # send_msg_status = return_msg['Response']['SendStatusSet'][0]['Code']
-            send_msg_status = 'Ok'
+            return_msg = eval(os.popen(send_msg).read())
+            send_msg_status = return_msg['Response']['SendStatusSet'][0]['Code']
         except:
             return JsonResponse({'code': 3, 'message': '短信发送失败'})
         else:

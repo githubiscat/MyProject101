@@ -37,8 +37,8 @@
 </head>
 <body>
 
-<div id="main_div">
 
+<div id="main_div">
     <div id="head">
         {% block head %}
             <div id="category_nav">
@@ -72,6 +72,12 @@
                                            href="{% url 'category' nav.id %}">{{ nav.name }}</a>
                                     </li>
                                 {% endfor %}
+                                <li class="nav-item active">
+                                    <a class="nav-link"
+                                       href="{% url 'feedback' %}">反馈
+                                        <span
+                                                class="sr-only">(current)</span></a>
+                                </li>
                             </ul>
                             <form action="/search/"
                                   class="form-inline my-2 my-lg-0"
@@ -91,108 +97,116 @@
             </div>
         {% endblock %}
     </div>
-
-    <nav aria-label="breadcrumb" id="side_breadcrumb">
-        <ol class="breadcrumb"
-            style="margin-bottom: 0; background:none;padding-left:0; padding-right: 0;">
-            <li><span class="path_mark">当前位置:&nbsp;</span></li>
-            {% ifequal path_mark 'index' %}
-                <li class="breadcrumb-item"
-                    aria-current="page">
-                    <a class="path_mark_active" href="/">首页</a>
-                </li>
-            {% else %}
-                <li class="breadcrumb-item">
-                    <a class="path_mark" href="/">首页</a>
-                </li>
-            {% endifequal %}
-
-
-            {% ifequal path_mark 'category' %}
-                <li class="breadcrumb-item"
-                    aria-current="page">
-                    <a class="path_mark_active"
-                       href="{% url 'category' category.id %}">
-                        {{ category.name }}
-                    </a>
-                </li>
-            {% endifequal %}
-
-            {% ifequal path_mark 'tag' %}
-                <li class="breadcrumb-item"
-                    aria-current="page">
-                    <a class="path_mark_active"
-                       href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
-                </li>
-            {% endifequal %}
-
-            {% ifequal path_mark 'post' %}
-                <li class="breadcrumb-item">
-                    <a class="path_mark"
-                       href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <span class="path_mark_active">{{ post.title }}</span>
-                </li>
-            {% endifequal %}
+    <div id="main_content">
+        <nav aria-label="breadcrumb" id="side_breadcrumb">
+            <ol class="breadcrumb"
+                style="margin-bottom: 0; background:none;padding-left:0; padding-right: 0;">
+                <li><span class="path_mark">当前位置:&nbsp;</span></li>
+                {% ifequal path_mark 'index' %}
+                    <li class="breadcrumb-item"
+                        aria-current="page">
+                        <a class="path_mark_active" href="/">首页</a>
+                    </li>
+                {% else %}
+                    <li class="breadcrumb-item">
+                        <a class="path_mark" href="/">首页</a>
+                    </li>
+                {% endifequal %}
 
 
-            {% ifequal path_mark 'search' %}
-                <li class="breadcrumb-item">
-                    <span class="path_mark_active">搜索 {{ keyword }}</span>
-                </li>
-            {% endifequal %}
+                {% ifequal path_mark 'category' %}
+                    <li class="breadcrumb-item"
+                        aria-current="page">
+                        <a class="path_mark_active"
+                           href="{% url 'category' category.id %}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endifequal %}
 
-        </ol>
-    </nav>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="content-col">
-                    {% block content %}
+                {% ifequal path_mark 'tag' %}
+                    <li class="breadcrumb-item"
+                        aria-current="page">
+                        <a class="path_mark_active"
+                           href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
+                    </li>
+                {% endifequal %}
+
+                {% ifequal path_mark 'post' %}
+                    <li class="breadcrumb-item">
+                        <a class="path_mark"
+                           href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <span class="path_mark_active">{{ post.title }}</span>
+                    </li>
+                {% endifequal %}
 
 
-                    {% endblock %}
+                {% ifequal path_mark 'search' %}
+                    <li class="breadcrumb-item">
+                        <span class="path_mark_active">搜索 {{ keyword }}</span>
+                    </li>
+                {% endifequal %}
+                {% ifequal path_mark 'feedback' %}
+                    <li class="breadcrumb-item">
+                        <span class="path_mark_active">意见反馈</span>
+                    </li>
+                {% endifequal %}
+
+            </ol>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="content-col">
+                        {% block content %}
+
+
+                        {% endblock %}
+                    </div>
+
                 </div>
+                <div class="col-lg-4 sidebar-col">
+                    <div class="sidebar-left">
+                        {% block sidebar %}
+                            {% for sidebar in sidebars %}
+                                <div class="card div_boder"
+                                     style="margin-bottom: 10px">
+                                    <div class="card-body" style="padding: 0">
+                                        <div style="background-color:#f8f9fa; padding: 10px 20px; font-size: 18px; border-bottom: 1px solid #DDDDDD">
+                                            <svg class="bi bi-grid"
+                                                 style="margin-bottom: 4px"
+                                                 width="1em"
+                                                 height="1em"
+                                                 viewBox="0 0 16 16"
+                                                 fill="currentColor"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                      d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+                                            </svg>
+                                            <span class="card-title">{{ sidebar.title }}</span>
+                                        </div>
 
-            </div>
-            <div class="col-lg-4 sidebar-col">
-                <div class="sidebar-left">
-                    {% block sidebar %}
-                        {% for sidebar in sidebars %}
-                            <div class="card div_boder"
-                                 style="margin-bottom: 10px">
-                                <div class="card-body" style="padding: 0">
-                                    <div style="background-color:#f8f9fa; padding: 10px 20px; font-size: 18px; border-bottom: 1px solid #DDDDDD">
-                                        <svg class="bi bi-grid"
-                                             style="margin-bottom: 4px"
-                                             width="1em"
-                                             height="1em" viewBox="0 0 16 16"
-                                             fill="currentColor"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                  d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
-                                        </svg>
-                                        <span class="card-title">{{ sidebar.title }}</span>
+                                        {% ifequal sidebar.display_type 1 %}
+                                            <div style="padding: 10px 20px 10px 10px"
+                                                 class="card-text">{{ sidebar.content_html|safe }}</div>
+                                        {% else %}
+                                            <div style="padding: 10px 20px 10px 10px"
+                                                 class="card-text">{{ sidebar.content_html }}</div>
+                                        {% endifequal %}
+
                                     </div>
-
-                                    {% ifequal sidebar.display_type 1 %}
-                                        <div style="padding: 10px 20px 10px 10px"
-                                             class="card-text">{{ sidebar.content_html|safe }}</div>
-                                    {% else %}
-                                        <div style="padding: 10px 20px 10px 10px"
-                                             class="card-text">{{ sidebar.content_html }}</div>
-                                    {% endifequal %}
-
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
 
-                    {% endblock %}
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <div class="little_tools">
@@ -246,6 +260,27 @@
     <img src="{% static 'image/wechat.JPG' %}" alt="">
 </div>
 
+<div id="post_catalog">
+    <div id="post_catalog_list">
+        <ul style="padding-inline-start: 25px">
+        </ul>
+    </div>
+    <div id="post_catalog_title" class="little_tools_content">
+        <button id="post_catalog_button">
+            <svg class="bi bi-x-circle" width="1em" height="1em"
+                 viewBox="0 0 16 16"
+                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill-rule="evenodd"
+                      d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                <path fill-rule="evenodd"
+                      d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+            </svg>
+        </button>
+        目录
+    </div>
+</div>
 
 <div id="qrcode_img" class="little_tools_content">
     <div>手机扫一扫·转发本页</div>
@@ -262,23 +297,8 @@
     </div>
     <div id="site_tip_icon">
 
-        <svg class="bi bi-exclamation-circle-fill" width="35px"
-             style="margin-bottom: 4px" height="35px"
-             viewBox="0 0 16 16" fill="currentColor"
-             xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-        </svg>
-
-        <svg class="bi bi-info-circle-fill" width="35px"
-             style="margin-bottom: 4px" height="35px"
-             viewBox="0 0 16 16" fill="currentColor"
-             xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-        </svg>
     </div>
-    <div style="float: left; min-width: 240px;height: 80px">
+    <div id="side_tip_title" style="float: left; min-width: 240px;height: 80px">
         <div id="side_tip_title_1" style=""></div>
         <br>
         <div id="side_tip_title_2" style=""></div>

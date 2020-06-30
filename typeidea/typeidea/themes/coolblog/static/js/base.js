@@ -110,24 +110,6 @@ $(document).ready(function () {
             }
         }
         scrollBefore = scrollAfter  // 重定义起始位置
-        // 向上滑动时
-        // if (scrollBefore > scrollAfter) {
-        //     // 如果滚动条距离大于导航栏高度
-        //     if (scrollAfter > nav_to_top_height && down_or_up > -1) {
-        //         // 导航条显示
-        //         // console.log('导航条显示');
-        //         down_or_up = -1;  // 向上滑动状态设置为-1
-        //         $('.navbar').slideDown(300);
-        //         return false;
-        //     }
-        //     //如果滚动条距离小于导航栏高度
-        //     if (scrollAfter < nav_to_top_height) {
-        //         //导航栏不透明
-        //         // console.log('导航条不透明');
-        //         $('.navbar').css({'opacity': 1});
-        //     }
-        // }
-
     });
 
 

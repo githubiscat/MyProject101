@@ -27,7 +27,7 @@ from blog.sitemap import PostSitemap
 from blog.views import IndexView, CategoryView, TagView, PostDetailView, \
     SearchView, AutherView
 from comment.views import CommentView, reply_comment, active_comment, \
-    refuse_comment, set_black, gen_active_code
+    refuse_comment, set_black, gen_active_code, feedback
 from config.views import LinkListView
 from typeidea.autocomplete import TagAutocomplete, CategoryAutocomplete
 from typeidea.custom_site import custom_site
@@ -42,6 +42,7 @@ urlpatterns = [
     re_path(r'^tag/(?P<tag_id>\d+)/$', TagView.as_view(), name='tag'),
     re_path(r'^post/(?P<post_id>\d+).html$', PostDetailView.as_view(), name='post'),
     re_path(r'^search/$', SearchView.as_view(), name='search'),
+    re_path(r'^feedback/$', feedback, name='feedback'),
     re_path(r'^links/$', LinkListView.as_view(), name='link'),
     re_path(r'^comment/$', CommentView, name='comment'),
     re_path(r'^reply/$', reply_comment, name='reply'),
@@ -68,7 +69,15 @@ urlpatterns = [
     re_path(r'^tag-autocomplete/$', TagAutocomplete.as_view(), name='tag-autocomplete'),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
+
     # path(r'admin/', custom_site.urls)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "blog.views.return404"
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        re_path(r'^__debug__/', include(debug_toolbar.urls))
+    ] + urlpatterns
+

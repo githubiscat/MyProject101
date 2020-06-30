@@ -2,6 +2,7 @@ import os
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Count, Sum, Q
 from django.utils.functional import cached_property
 from django.utils.html import format_html
 
@@ -11,7 +12,7 @@ from typeidea.settings.base import MEDIA_ROOT
 class Category(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
-    STATUS_ITEMS  = (
+    STATUS_ITEMS = (
         (STATUS_NORMAL, '正常'),
         (STATUS_DELETE, '删除'),
     )
@@ -51,7 +52,7 @@ class Tag(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
     STATUS_ITEMS = (
-        (STATUS_NORMAL,'正常'),
+        (STATUS_NORMAL, '正常'),
         (STATUS_DELETE, '删除'),
     )
 
@@ -71,7 +72,6 @@ class Tag(models.Model):
 
     class Meta:
         verbose_name = verbose_name_plural = '标签'
-
 
 
 class Post(models.Model):
@@ -97,7 +97,8 @@ class Post(models.Model):
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     pv = models.PositiveIntegerField(default=1, verbose_name='访问量')
     uv = models.PositiveIntegerField(default=1, verbose_name='访客量')
-    attached_file = models.CharField(max_length=2048, blank=True, verbose_name='附件')
+    attached_file = models.CharField(max_length=2048, blank=True,
+                                     verbose_name='附件')
     title_image = models.ImageField(upload_to='title_image',
                                     verbose_name='标题图片',
                                     default='title_image.png',
@@ -110,7 +111,8 @@ class Post(models.Model):
 
     def title_image_data(self):
         return format_html(
-            '<img src="{}" style="width:200px; height:150px;"/>'.format(self.title_image.url)
+            '<img src="{}" style="width:200px; height:150px;"/>'.format(
+                self.title_image.url)
         )
 
     def __str__(self):
@@ -130,7 +132,7 @@ class Post(models.Model):
             tag = None
             postlist = []
         else:
-            postlist = tag.post_set.filter(status=Post.STATUS_NORMAL)\
+            postlist = tag.post_set.filter(status=Post.STATUS_NORMAL) \
                 .select_related('owner', 'category')
         return postlist, tag
 
@@ -142,7 +144,7 @@ class Post(models.Model):
             category = None
             postlist = []
         else:
-            postlist = category.post_set.filter(status=Post.STATUS_NORMAL)\
+            postlist = category.post_set.filter(status=Post.STATUS_NORMAL) \
                 .select_related('owner').prefetch_related('tag')
         return postlist, category
 
@@ -153,11 +155,14 @@ class Post(models.Model):
 
     @classmethod
     def latest_posts(cls):
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')[:5]
+        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by(
+            '-created_time')[:5]
 
     @classmethod
     def get_all(cls):
-        return  cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')
+
+        return cls.objects.select_related('owner', 'category').filter(status=cls.STATUS_NORMAL).order_by(
+            '-created_time')
 
     @classmethod
     def get_top(cls):
@@ -169,20 +174,41 @@ class Post(models.Model):
 
     @property
     def get_next_post(self):
-        return Post.objects.values('id', 'title').\
-            filter(status=Post.STATUS_NORMAL).\
+        return Post.objects.values('id', 'title'). \
+            filter(status=Post.STATUS_NORMAL). \
             filter(id__lt=self.id).order_by('id').last()
 
     @property
     def get_last_post(self):
-        return Post.objects.values('id', 'title').\
-            filter(status=Post.STATUS_NORMAL).\
+        return Post.objects.values('id', 'title'). \
+            filter(status=Post.STATUS_NORMAL). \
             filter(id__gt=self.id).order_by('id').first()
-
 
     @property
     def get_normal_comment(self):
         return self.comment_set.filter(status=1)  # Comment中status=1代表已经激活
+
+    @property
+    def comment_count(self):
+        """计算评论数量
+        本来想在模板中计算，但是因为评论和回复是两张表，计算总量时比较麻烦
+        所以使用了cc这个orm查询，这样一次db查询就可以统计出数量！ 但不确定查询速度如何！
+        """
+        cc = self.comment_set.all().annotate(
+            r_count_1=Count('reply__status', filter=Q(reply__status=1)),
+            r_count_2=Count('reply__status',
+                            filter=Q(reply__status=2))).aggregate(
+            r_sum_1=Sum('r_count_1'),
+            r_sum_2=Sum('r_count_2'),
+            c_sum_1=Count('status', filter=Q(status=1)),
+            c_sum_2=Count('status', filter=Q(status=2)),
+        )
+        for k, v in cc.items():
+            if v is None:
+                cc[k] = 0
+        c_normal_count = cc['c_sum_1'] + cc['r_sum_1']  # 审核过可以显示的总的数量
+        c_review_count = cc['c_sum_2'] + cc['r_sum_2']  # 待审核的数量
+        return [c_normal_count, c_review_count]
 
 
 class PostUploadFile(models.Model):
@@ -202,9 +228,6 @@ class PostUploadFile(models.Model):
     post = models.PositiveIntegerField(verbose_name='所属文章', null=True)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
-
     def how_long_time(self):
         """查看数据对象已经创建了多长时间"""
         pass
-
-

@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 
 # Create your views here.
 from django.template.loader import render_to_string
+from django.views import View
 from django.views.generic import ListView, DetailView
 
 from blog.models import Tag, Post, Category
@@ -166,7 +167,6 @@ class SearchView(IndexView):
         keyword = self.request.GET.get('keyword', '')
         if not keyword:
             return queryset
-        print(keyword)
         # Q(owner__username__icontains=keyword) 根据用户名做查询
         q = queryset.filter(Q(title__icontains=keyword)
                                | Q(desc__icontains=keyword)
@@ -189,6 +189,12 @@ class AutherView(IndexView):
         return queryset.filter(owner_id=auther_id)
 
     template_name = 'blog/list.html'
+
+
+class FeedbackView(CommonViewMixin, View):
+    def get(self, request):
+        return render(request, 'blog/feedback.html',)
+
 
 
 

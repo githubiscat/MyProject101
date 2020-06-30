@@ -1,0 +1,116 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block style %}
+    <script type="application/javascript" src="{% static 'js/comment.js' %}"></script>
+    <style>
+        #feedback_form_div {
+            padding: 0 20px;
+        }
+        form *{
+            font-size: 14px !important;
+        }
+        .active_code_imput:visited,
+        .active_code_imput {
+            border: unset;
+            float: left;
+            width: 50%;
+            height: 100%;
+        }
+
+        .get_active_code_button {
+            border: 1px solid #DDDDDD;
+            height: 100%;
+            padding-left: 4px;
+            padding-right: 4px;
+            background-color: #EEEEEE;
+            color: #666666;
+            float: right;
+            border-radius: 6px;
+            font-size: 12px !important;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    {% ifequal lock 'false'  %}
+        <div id="feedback_form_div">
+        <div style="padding: 5px 0">
+            <span class="text_font_14">你的意见是我不断前进的动力！欢迎各位多吐槽、多建议！</span>
+        </div>
+        <form class="form-group" name="feedback_form" action="/feedback/" method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    {{ feedback_form.content }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">{{ feedback_form.email.label }}</span>
+                        </div>
+                        {{ feedback_form.email }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">{{ feedback_form.phone.label }}</span>
+                        </div>
+                        {{ feedback_form.phone }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">验证码</span>
+                        </div>
+                        <div class="form-control" style="display: inline-block">
+                            <input type="text" class="active_code_imput"
+                                   name="active_code"
+                                   style=""
+                                   maxlength="6"
+                                   pattern="[0-9]{6}"
+                                   oninvalid="setCustomValidity('必须填写6位数字验证码！');"
+                                   oninput="setCustomValidity('')"
+                                   required>
+                            <button form="comment_form" type="button"
+                                    class="get_active_code_button"
+                                    style="" onclick="get_captcha(this)">
+                                获取验证码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <button id="comment_form_button" type="submit"
+                    class="btn btn-primary normel_font">
+                提交评论
+            </button>
+            <br>
+        </form>
+    </div>
+    {% endifequal %}
+
+    {% ifequal lock 'true'  %}
+        <div id="feedback_form_div">
+            <br>
+            <span class="title_font_16">{{ tip }}</span>
+        </div>
+    {% endifequal %}
+
+
+
+{% endblock %}
