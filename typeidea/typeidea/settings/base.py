@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6)uwfo+1*u@3h4c5168&!$=_yq90dvi-#mrav*i&59%9d)ni7e'
-
+# SECRET_KEY = '6)uwfo+1*u@3h4c5168&!$=_yq90dvi-#mrav*i&59%9d)ni7e'
+SECRET_KEY = os.environ('GAIDEV_SECRET_KEY_DJANGO')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -146,6 +146,10 @@ USE_L10N = True
 USE_TZ = True
 
 # 邮件通知
+ADMINS = MANAGERS = (
+    ('gai', '643177348@qq.com')
+)
+
 EMAIL_HOST = "smtp.163.com"
 EMAIL_PORT = 25 # 大多都是25；若使用SSL，端口号465或587
 EMAIL_HOST_USER = "gai520website@163.com" #发送邮箱
@@ -155,7 +159,42 @@ EMAIL_FROM = "gai520website@163.com" #邮件发送人(邮件中所显示的发�
 EMAIL_TO = ['643177348@qq.com','17610139558@163.com']
 
 # 绑定的域名
-HOST_NAME = 'http://192.168.0.108:8000'
+HOST_NAME = 'http://www.gai520.com'
+
+
+# 日志模块
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '%(levelname)s %(asctime)s %(module)s:'
+                      '%(funcName)s:%(lineno)d %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/tmp/log/typeidea.log',
+            'formatter': 'default',
+            'maxBytes': 1024*1024*8,  # 8M
+            'backupCount': 5,
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        }
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
