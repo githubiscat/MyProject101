@@ -16,6 +16,9 @@ pre {
         width: 96%;
         margin: auto;
     }
+    .foot_mb {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -27,6 +30,10 @@ pre {
     #main_content {
         width: 100%;
     }
+    .foot_pc {
+        display: none;
+    }
+
 }
 
 
@@ -196,7 +203,7 @@ pre {
 
 #sitefoot {
     width: 100%;
-    height: 80px;
+    min-height: 80px;
     background-color: #666666;
     bottom: 0;
     margin-top: 50px;
