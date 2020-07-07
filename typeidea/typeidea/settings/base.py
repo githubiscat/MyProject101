@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '6)uwfo+1*u@3h4c5168&!$=_yq90dvi-#mrav*i&59%9d)ni7e'
-SECRET_KEY = os.environ('GAIDEV_SECRET_KEY_DJANGO')
+#SECRET_KEY = '6)uwfo+1*u@3h4c5168&!$=_yq90dvi-#mrav*i&59%9d)ni7e'
+SECRET_KEY = os.getenv('GAIDEV_SECRET_KEY_DJANGO')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -163,45 +163,44 @@ HOST_NAME = 'http://www.gai520.com'
 
 
 # 日志模块
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'default': {
-            'format': '%(levelname)s %(asctime)s %(module)s:'
-                      '%(funcName)s:%(lineno)d %(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'default',
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/tmp/log/typeidea.log',
-            'formatter': 'default',
-            'maxBytes': 1024*1024*8,  # 8M
-            'backupCount': 5,
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': True,
-        }
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'default': {
+#             'format': '%(levelname)s %(asctime)s %(module)s:'
+#                       '%(funcName)s:%(lineno)d %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'INFO',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'default',
+#         },
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': '/var/log/typeidea.log',
+#             'formatter': 'default',
+#             'maxBytes': 1024*1024*8,  # 8M
+#             'backupCount': 5,
+#         },
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['console'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         }
+#     }
+# }
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/tmp/static'
+#STATIC_ROOT = '/tmp/static'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'themes', THEME, 'static'),]
 
