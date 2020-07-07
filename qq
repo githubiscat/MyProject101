@@ -1,0 +1,209 @@
+[33mcommit dbe1914c5960d3388373bc40f494fbdcbbdb03b2[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed Jun 10 23:37:20 2020 +0800
+
+    [dev] 自定义404页面
+    
+    sign-off: Wang Gai
+
+[33mcommit edcc1c5e1cf87d5ebee00635d1adccf50c59bfe3[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Mon Jun 8 18:42:51 2020 +0800
+
+    [dev] 通过邮箱通知完成评论的审核!
+    
+    sign-off: Wang Gai
+
+[33mcommit 4df9a05ef589f0f130c917b182d44f0cc7b051bb[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed Jun 3 00:18:07 2020 +0800
+
+    [New Func] 主题更新-3.1
+    
+    sign-off: Gai Wang
+
+[33mcommit 9c0a3ccdb90c334d0da14cfb80dc2fb2a051552b[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Sat May 30 23:30:48 2020 +0800
+
+    [New Func] 主题更新-3
+    
+    sign-off: Gai Wang
+
+[33mcommit 0016ae99f1d714080d610da4e5f18f76453ee754[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Fri May 29 19:26:10 2020 +0800
+
+    [New Func] 主题更新-2
+    
+    sign-off: Gai Wang
+
+[33mcommit bff6f3b79038fe997a00f649c9775691d85e1390[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Thu May 28 10:46:23 2020 +0800
+
+    [New Func] 主题更新-2
+    
+    sign-off: Gai Wang
+
+[33mcommit 73f82f54d98a362a5c329d2a6b9eef864e203988[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed May 27 23:45:37 2020 +0800
+
+    [DEV] 修改前端样式-1
+    
+    sign-off: Wang Gai
+
+[33mcommit ae68ba0ef87f6980cb06a8958e6638288a3e6616[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Tue May 26 22:06:20 2020 +0800
+
+    [DEV]增加coolblog主题下导航栏隐藏显示效果
+    
+    sign-off: Wang Gai
+
+[33mcommit bfa5794a4bf8477020d86ef1afaf9764d7754258[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Mon May 25 21:04:23 2020 +0800
+
+    [New Func] 实现侧边栏动态滚动, 一键返回顶部等功能,并新建coolblog主题
+    
+    sign-off: Gai Wang
+
+[33mcommit 053be16911b1eff053abd2d767c4bee02de94bc2[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed May 20 14:57:18 2020 +0800
+
+    [New Func] 完成上传文件形成的垃圾文件清理机制
+    
+    [sign-off] Wang Gai
+
+[33mcommit 2bb9b624880f7a72341cb26cb3999b79a7d57d3a[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Sat May 9 14:58:26 2020 +0800
+
+    [FIX] 修复admin管理后台不能过滤用户
+    使得当前登录的用户只可以修改与自己相关的文章内容
+    
+    sign-off: Gai Wang
+
+[33mcommit fcda1aff3624086d79c8abdde187f5f2fd8b6950[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Sat May 9 14:10:00 2020 +0800
+
+    [DEV] 完成站点访问统计,RSS,以及sitemap
+    
+    sign-off: Gai Wang
+
+[33mcommit d65794779a3daa2d5b9ad860e1185a6bd1bd25ff[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Mon May 4 19:15:14 2020 +0800
+
+    [DEV] 完成评论模块前后端
+    
+    sign-off: Gai Wang
+
+[33mcommit eb739235e4adebb32f52bd5677c92c9317102e37[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Mon May 4 18:08:01 2020 +0800
+
+    [DEV] 完成回复模块前后端
+    
+    sign-off: Gai Wang
+
+[33mcommit 07a13efc76b3bf0f28f9aa0369c8b24bc8e9fbf7[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed Apr 29 22:19:49 2020 +0800
+
+    [dev]
+
+[33mcommit 4cb0d070e2b515820261b4031cb89e30b16d57c4[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed Apr 29 22:04:02 2020 +0800
+
+    [DEV]
+    
+    sign-off: Gai Wang
+
+[33mcommit 779ea880230f6f75a7d202a69a3548dcb52808e8[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Mon Apr 27 16:24:46 2020 +0800
+
+    [DEV] 更改使用类视图, 并使用bootstrap主题
+    
+    sign-off: Gai Wang
+
+[33mcommit bf0193206bea839e0d8f96d60654a333602678f3[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Thu Apr 23 11:36:33 2020 +0800
+
+    [Update]搭建了基础数据流程和基础模板--func views
+    
+    sign-off: Wang Gai
+
+[33mcommit 03c8bb1f66585120ba2082e263f4e7d4d60b70b3[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Fri Apr 17 10:48:38 2020 +0800
+
+    [DEV] 配置blog comment config 三个app的admin
+    
+    sign-off: Gai Wang
+
+[33mcommit f3af91ae8131ac6ac7723b6c9db6d1cc4a5831a2[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed Apr 15 16:13:19 2020 +0800
+
+    [Bug Fix]修复model on_delete字段
+    
+    django2.0后, 外键需要设置on_delete参数, 已经添加完毕
+    
+    sign-off: <Wang Gai>
+
+[33mcommit ef970bcdd0660d6063d28939992a9c85ecee2139[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Wed Apr 15 15:23:14 2020 +0800
+
+    [Add] 创建blog comment config 三个APP
+    
+    创建APP,并创建数据库模型
+    
+    sign-off: <Wang Gai>
+
+[33mcommit e1e9248d1cdfb6514b43c5d7e31719a7d21a3795[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Tue Apr 14 17:26:09 2020 +0800
+
+    [DEV] 创建 blog APP
+    
+    sign-off: Gai Wang
+
+[33mcommit d5168c1026e3350c570c32c5a8581c0bc7843f9b[m
+Merge: da00041 c0357f6
+Author: Wang Gai <643177348@qq.com>
+Date:   Tue Apr 14 16:59:41 2020 +0800
+
+    Merge branch 'master' of github.com:gai1999/MyProject101
+
+[33mcommit da000418ba1fb2b45f2430405227e9d68879427e[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Tue Apr 14 16:46:31 2020 +0800
+
+    [init] 初始化提交项目目录
+    
+    sign-in: Gai Wang
+
+[33mcommit c0357f668538dbe9e4786271ac8df300068a417c[m
+Author: Wang Gai <643177348@qq.com>
+Date:   Mon Apr 13 17:54:31 2020 +0800
+
+    [Update] add more auther information to README.md
+    
+    Add more auther information to README.md
+    
+    sign-in: Gai Wang, 643177348@qq.com
+
+[33mcommit 99a6f1d0811e98068a7672c0c1b758324398c414[m
+Author: gai1999 <39004847+gai1999@users.noreply.github.com>
+Date:   Mon Apr 13 17:25:35 2020 +0800
+
+    Initial commit

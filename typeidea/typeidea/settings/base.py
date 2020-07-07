@@ -161,41 +161,6 @@ EMAIL_TO = ['643177348@qq.com','17610139558@163.com']
 # 绑定的域名
 HOST_NAME = 'http://www.gai520.com'
 
-
-# 日志模块
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'default': {
-#             'format': '%(levelname)s %(asctime)s %(module)s:'
-#                       '%(funcName)s:%(lineno)d %(message)s'
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'INFO',
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'default',
-#         },
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.handlers.RotatingFileHandler',
-#             'filename': '/var/log/typeidea.log',
-#             'formatter': 'default',
-#             'maxBytes': 1024*1024*8,  # 8M
-#             'backupCount': 5,
-#         },
-#     },
-#     'loggers': {
-#         '': {
-#             'handlers': ['console'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         }
-#     }
-# }
-
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
