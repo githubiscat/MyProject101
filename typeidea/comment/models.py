@@ -21,7 +21,7 @@ class Comment(models.Model):
     email = models.EmailField(verbose_name='邮箱')
     phone = models.CharField(max_length=11, verbose_name='电话',default='')
     ip = models.CharField(max_length=16, verbose_name='IP地址', blank=True)
-    active_code = models.CharField(max_length=32, verbose_name='激活码', blank=True)
+    active_code = models.CharField(max_length=64, verbose_name='激活码', blank=True)
     status = models.PositiveIntegerField(default=STATUS_ACTIVE,
                                          choices=STATUS_ITEMS,
                                          verbose_name='状态')
@@ -77,7 +77,7 @@ class Reply(models.Model):
     from_website = models.URLField(verbose_name='回复人站点', blank=True)
     phone = models.CharField(max_length=11, verbose_name='电话', blank=True)
     ip = models.CharField(max_length=16, verbose_name='IP地址', blank=True)
-    active_code = models.CharField(max_length=32, verbose_name='激活码',
+    active_code = models.CharField(max_length=64, verbose_name='激活码',
                                    blank=True)
     to_name = models.CharField(max_length=32, verbose_name='被回复人昵称')
     from_content = models.CharField(max_length=1024, verbose_name='回复内容')

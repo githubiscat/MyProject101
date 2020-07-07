@@ -41,7 +41,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/typeidea.log',
+            'filename': '/var/log/gai520.log',
             'formatter': 'default',
             'maxBytes': 1024*1024*8,  # 8M
             'backupCount': 5,

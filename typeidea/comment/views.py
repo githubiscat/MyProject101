@@ -26,7 +26,6 @@ def get_seconds_remaining():
     tomorrow = today + oneday
     now_time = datetime.datetime.today()
     seconds_remaining = (tomorrow - now_time).seconds
-    print(type(seconds_remaining))
     return seconds_remaining
 
 def CommentView(request):
@@ -444,7 +443,9 @@ def gen_active_code(request):
             # 获得发送验证码方式
             send_msg = gen_post_func(phone_num, captcha_num)
             # 发送验证码
-            return_msg = eval(os.popen(send_msg).read())
+            cmd = os.popen(send_msg)
+            return_msg = eval(cmd.read())
+            cmd.close()
             send_msg_status = return_msg['Response']['SendStatusSet'][0]['Code']
         except:
             return JsonResponse({'code': 3, 'message': '短信发送失败'})
