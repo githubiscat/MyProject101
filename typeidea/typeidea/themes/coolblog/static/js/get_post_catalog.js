@@ -1,9 +1,9 @@
 $(document).ready(function () {
     var catalog_list = [];
-    $('#post_text_content').children('p').children('a').each(function () {
+    $('#post_text_content').children().children('a').each(function () {
         console.log($(this).attr('name'))
-    })
-    var a_list = $('#post_text_content').children('p').children('a');
+    });
+    var a_list = $('#post_text_content').children().children('a');
     for (i=0; i<a_list.length; i++){
 
         let elem_a = a_list[i];
@@ -15,9 +15,9 @@ $(document).ready(function () {
     }
     if (catalog_list.length > 0){
         for (let i=0; i<catalog_list.length; i++){
-            let c = catalog_list[i]
+            let c = catalog_list[i];
             let n = i + 1;
-            $('#post_catalog_list>ul').append('<li><a href="'+'#'+c+'">'+n+'- '+c+'</a></li>')
+            $('#post_catalog_list>ul').append('<li><a href="'+'#'+c+'">'+c+'</a></li>')
         }
     }else {
         $('#post_catalog_list').text('博主有点懒,这个文章没有目录!')
