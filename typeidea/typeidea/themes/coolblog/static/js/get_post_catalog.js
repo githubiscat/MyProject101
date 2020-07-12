@@ -1,15 +1,12 @@
 $(document).ready(function () {
     var catalog_list = [];
-    $('#post_text_content').children().children('a').each(function () {
-        console.log($(this).attr('name'))
-    });
     var a_list = $('#post_text_content').children().children('a');
     for (i=0; i<a_list.length; i++){
 
         let elem_a = a_list[i];
         let a_id = elem_a.id;
         let a_name = elem_a.name;
-        if (a_id == a_name){
+        if (a_id == a_name && a_id.length > 0){
             catalog_list.push(a_name)
         }
     }

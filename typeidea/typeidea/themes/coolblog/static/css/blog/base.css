@@ -259,7 +259,7 @@ pre {
 
 #post_catalog_list {
     float: left;
-    overflow: paged-y;
+    overflow: auto;
     width: 173px;
     height: 100%;
     padding: 10px 2px 5px 2px;
