@@ -21,9 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '6)uwfo+1*u@3h4c5168&!$=_yq90dvi-#mrav*i&59%9d)ni7e'
-SECRET_KEY = os.getenv('GAIDEV_SECRET_KEY_DJANGO')
+SECRET_KEY = os.environ.get('GAIDEV_SECRET_KEY_DJANGO')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+
+VERSION = '${version}'
 
 ALLOWED_HOSTS = ['*']
 
@@ -165,7 +167,7 @@ HOST_NAME = 'http://www.gai520.com'
 
 STATIC_URL = '/static/'
 
-#STATIC_ROOT = '/tmp/static'
+STATIC_ROOT = '/tmp/static'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'themes', THEME, 'static'),]
 

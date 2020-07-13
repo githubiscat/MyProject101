@@ -2,7 +2,9 @@
 *.swp
 *.sqlite3
 .idea/
-
+conf/*.*
+fabfile.py
+setup.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
